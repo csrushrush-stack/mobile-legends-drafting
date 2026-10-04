@@ -97,6 +97,13 @@ button.sm{padding:6px 11px;font-size:12px}
 .rank{flex:0 0 24px;height:24px;border-radius:7px;background:#0f172a;color:#fff;
   display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11.5px}
 .rec.top .rank{background:var(--green)}
+.showmore{display:block;width:100%;margin-top:9px;padding:11px;border-radius:10px;
+  border:1px dashed var(--line);background:#f8fafc;color:#475569;font-weight:650;
+  font-size:12.5px;cursor:pointer;font-family:inherit}
+.showmore:hover{background:#f1f5f9;border-color:#94a3b8}
+.slot.hiddenban{background:#e2e8f0 !important;border-color:#94a3b8 !important;
+  color:#64748b !important;font-weight:700}
+.slot.hiddenban small{color:#64748b !important}
 .recbody{flex:1;min-width:0}
 .recname{font-weight:700;font-size:13.5px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
 .recwhy{font-size:11.5px;color:#475569;margin-top:2px;line-height:1.45}
@@ -140,6 +147,13 @@ input[type=search]:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 
 .note{background:#fffbeb;border:1px solid #fde68a;border-left:4px solid var(--gold);
   border-radius:10px;padding:11px 14px;font-size:12px;color:#78350f;margin-bottom:12px}
 .note b{color:#92400e}
+.note summary{cursor:pointer;font-weight:700;font-size:12.5px;color:#92400e;
+  list-style:none;display:flex;align-items:center;gap:7px}
+.note summary::-webkit-details-marker{display:none}
+.note summary::before{content:"";width:0;height:0;border-left:5px solid #b45309;
+  border-top:4px solid transparent;border-bottom:4px solid transparent;transition:transform .15s}
+.note[open] summary::before{transform:rotate(90deg)}
+.note[open] summary{margin-bottom:9px;padding-bottom:9px;border-bottom:1px solid #fde68a}
 
 .gp{border:1px solid var(--line);border-radius:14px;background:#fff;padding:18px 20px;margin-bottom:14px}
 .gphead{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;
@@ -193,6 +207,90 @@ input[type=search]:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 
 
 .foot{margin-top:22px;padding-top:14px;border-top:1px solid var(--line);
   color:var(--mut);font-size:11.5px}
+
+/* ---- tab scaffolding: inert on desktop, drives the mobile layout ---- */
+.mtabs{display:none}
+.tabpane{display:block}
+
+@media(max-width:900px){
+  .wrap{padding:8px 9px 92px}
+
+  header.top{padding:11px 13px;border-radius:12px;margin-bottom:7px;gap:9px}
+  header.top h1{font-size:16.5px}
+  header.top .tag{display:none}
+  .sidepick{gap:6px;width:100%}
+  .sidepick span{display:none}
+  button{padding:9px 11px;font-size:12.5px;border-radius:8px}
+  button.sm{padding:9px 10px}
+  #pickBlue,#pickRed,#dAg,#dAll{flex:1;text-align:center}
+
+  .srcbar{padding:8px 12px;font-size:11px;margin-bottom:7px;gap:8px}
+  .srcbar .lg{display:none}
+
+  .turnbar{position:sticky;top:0;z-index:20;padding:9px 12px;margin-bottom:7px;
+    border-radius:12px;gap:8px;box-shadow:0 2px 10px rgba(15,23,42,.07)}
+  .turnlabel{font-size:13.5px;width:100%}
+  .seq{gap:3px;margin-left:0}
+  .seqdot{width:17px;height:17px;font-size:8.5px;border-radius:4px}
+
+  .mtabs{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:40;
+    background:#fff;border-top:1px solid var(--line);padding:7px 9px;
+    padding-bottom:calc(7px + env(safe-area-inset-bottom));gap:7px}
+  .mtab{flex:1;padding:11px 4px;font-size:12px;border:0;background:#f1f5f9;
+    color:#64748b;border-radius:9px;font-weight:650}
+  .mtab.active{background:#0f172a;color:#fff}
+  .mtab .badge{display:inline-block;background:#dc2626;color:#fff;border-radius:999px;
+    font-size:9.5px;font-weight:800;padding:1px 5px;margin-left:4px;vertical-align:1px}
+  /* the class rule above outranks the UA [hidden] rule, so restate it */
+  .mtab .badge[hidden]{display:none}
+
+  .tabpane{display:none}
+  .tabpane.active{display:block}
+
+  .board{grid-template-columns:1fr;gap:8px;margin-bottom:9px}
+  .team{padding:10px 12px;border-radius:12px;border-left-width:4px}
+  .team h2{font-size:13.5px;margin-bottom:7px}
+  .rowlbl{margin:7px 0 4px;font-size:9.5px}
+  .slots{gap:4px}
+  .slot{height:42px;font-size:9.5px;border-radius:7px;padding:2px}
+  .slot.filled{font-size:11px;line-height:1.15}
+  .slot.filled small{font-size:8px}
+  .slot.banslot{height:29px;font-size:10px}
+
+  .cols{grid-template-columns:1fr;gap:9px;margin-bottom:9px}
+  .panel{padding:13px 14px;border-radius:12px}
+  .panel h3{font-size:13.5px}
+  .rec{padding:10px 11px;gap:9px}
+  .recname{font-size:13px}
+  .recwhy{font-size:11.5px}
+  .recmetrics{gap:9px}
+  .rank{flex:0 0 22px;height:22px;font-size:11px}
+
+  .gp{padding:14px 15px;border-radius:12px}
+  .gphead h2{font-size:16px}
+  .gpcols{gap:11px}
+  .gpcol{padding:12px 13px}
+  .edge{gap:11px}
+  .mrow{grid-template-columns:66px 1fr;font-size:12px;gap:7px}
+
+  .poolbar{gap:7px}
+  input[type=search]{min-width:0;flex:1 1 100%}
+  select{flex:1;min-width:0}
+  .pool{grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:6px;
+    max-height:none;overflow:visible;padding:0}
+  .hcard{padding:8px;min-height:62px}
+  .hcard .hn{font-size:11.5px}
+  .hcard .hm{font-size:9.5px}
+  .lane{padding:1px 5px;font-size:9px}
+
+  .note{font-size:11.5px;padding:11px 13px}
+  .foot{font-size:11px;margin-top:16px}
+}
+
+@media(max-width:400px){
+  .pool{grid-template-columns:repeat(auto-fill,minmax(78px,1fr))}
+  .seqdot{width:15px;height:15px;font-size:8px}
+}
 </style>
 </head>
 <body>
@@ -205,8 +303,9 @@ input[type=search]:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 
   </div>
   <div class="sidepick">
     <span>Data</span>
-    <button id="dAg" class="dsrc on">Asian Games 2026</button>
+    <button id="dAg" class="dsrc on">AG 2026</button>
     <button id="dAll" class="dsrc">AG + MPL</button>
+    <button id="dRk" class="dsrc">Ranked + All</button>
   </div>
   <div class="sidepick">
     <span>I am</span>
@@ -224,6 +323,12 @@ input[type=search]:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 
   <div class="seq" id="seqBar"></div>
 </div>
 
+<nav class="mtabs" id="mtabs">
+  <button class="mtab" data-tab="board">Board</button>
+  <button class="mtab active" data-tab="draft">Draft<span class="badge" id="pickBadge" hidden></span></button>
+</nav>
+
+<div class="tabpane" id="pane-board">
 <div class="board">
   <div class="team blue">
     <h2>Blue team</h2>
@@ -257,7 +362,9 @@ input[type=search]:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 
     </div>
   </div>
 </section>
+</div>
 
+<div class="tabpane active" id="pane-draft">
 <div class="cols">
   <div class="panel">
     <h3 id="recTitle">Recommendations</h3>
@@ -291,7 +398,8 @@ input[type=search]:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 
   <div class="pool" id="pool"></div>
 </div>
 
-<div class="note">
+<details class="note">
+  <summary>How the recommendations work</summary>
   <b>How the recommendations work.</b> Each candidate is scored on:
   <b>lane fit</b> (does it fill a lane you still need) &middot;
   <b>measured synergy</b> (real games it played alongside your picks at the 2026 Asian Games) &middot;
@@ -307,7 +415,7 @@ input[type=search]:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 
   Switch the data source at the top: <b>Asian Games 2026</b> uses only the 32-game international dataset, while
   <b>AG + MPL</b> pools every current league. Small samples are labelled &mdash; a hero with fewer than 3 pro games
   is flagged as unproven rather than scored highly.
-</div>
+</details>
 
 <div class="foot" id="foot"></div>
 </div>
@@ -321,6 +429,34 @@ const LEAGUES = DATA.leagues || [];
 let MODE = 'ag';   // 'ag' = Asian Games 2026 only | 'all' = AG + all MPL leagues
 
 function lgOf(h){ return MODE === 'ag' ? h.ag : h.all; }
+function rkOf(h){ return MODE === 'ranked' ? h.rk : null; }
+function isRanked(){ return MODE === 'ranked'; }
+
+/* In ranked mode the enemy's bans are blind: round 1 stays hidden until the round
+   ends, round 2 stays hidden until picks begin. Your own bans are always visible. */
+function banHidden(i){
+  if(!isRanked()) return false;
+  const st = SEQ[i];
+  if(!st || st.t !== 'ban' || !st.b) return false;
+  if(st.s === mySide) return false;
+  return cursor < (REVEAL_AT[st.b] || 0);
+}
+
+/* Apply a data source. Ranked also switches the draft to the ranked ban/pick order. */
+function setMode(m){
+  const seqChanged = (m === 'ranked') !== isRanked();
+  MODE = m;
+  SEQ = (m === 'ranked') ? SEQ_RANKED : SEQ_TOURNEY;
+  ['dAg','dAll','dRk'].forEach(function(id){
+    const el = $(id); if(el) el.classList.toggle('on', id === ({ag:'dAg',all:'dAll',ranked:'dRk'})[m]);
+  });
+  if(seqChanged || filled.length !== SEQ.length){
+    filled = new Array(SEQ.length).fill(null);
+    cursor = 0;
+    gpAutoShown = false;
+  }
+  renderAll();
+}
 
 /* Pooled win rate of a lineup = total wins / total picks across its heroes.
    A naive mean lets a 6-0 hero report a "100% lineup" - pooling prevents that. */
@@ -351,7 +487,8 @@ function matchupEst(cand, enemyPicks){
   return {wr: Math.max(30, Math.min(70, 50 + net * 4.5)), beats:beats, beaten:beaten, net:net};
 }
 
-const SEQ = [
+/* Tournament draft: 6 bans, 6 picks, 4 bans, 4 picks. Bans are open. */
+const SEQ_TOURNEY = [
   {t:'ban',s:'blue'},{t:'ban',s:'red'},{t:'ban',s:'blue'},{t:'ban',s:'red'},
   {t:'ban',s:'blue'},{t:'ban',s:'red'},
   {t:'pick',s:'blue'},{t:'pick',s:'red'},{t:'pick',s:'red'},{t:'pick',s:'blue'},
@@ -360,9 +497,29 @@ const SEQ = [
   {t:'pick',s:'red'},{t:'pick',s:'blue'},{t:'pick',s:'blue'},{t:'pick',s:'red'}
 ];
 
+/* Ranked draft: 5 bans each in two BLIND rounds, then B1 R2 B2 R2 B2 R1.
+   b:1 = first blind round (enemy's bans revealed once the round ends)
+   b:2 = second blind round (revealed only when picks begin)               */
+const SEQ_RANKED = [
+  {t:'ban',s:'blue',b:1},{t:'ban',s:'red',b:1},{t:'ban',s:'blue',b:1},
+  {t:'ban',s:'red',b:1},{t:'ban',s:'blue',b:1},{t:'ban',s:'red',b:1},
+  {t:'ban',s:'blue',b:2},{t:'ban',s:'red',b:2},
+  {t:'ban',s:'blue',b:2},{t:'ban',s:'red',b:2},
+  {t:'pick',s:'blue'},
+  {t:'pick',s:'red'},{t:'pick',s:'red'},
+  {t:'pick',s:'blue'},{t:'pick',s:'blue'},
+  {t:'pick',s:'red'},{t:'pick',s:'red'},
+  {t:'pick',s:'blue'},{t:'pick',s:'blue'},
+  {t:'pick',s:'red'}
+];
+
+let SEQ = SEQ_TOURNEY;
+const REVEAL_AT = {1: 6, 2: 10};   // step index at which each blind round ends
+
 let mySide = null;
 let cursor = 0;
-const filled = new Array(SEQ.length).fill(null);
+let filled = new Array(SEQ.length).fill(null);
+let recLimit = 8;
 
 const $ = id => document.getElementById(id);
 const isBan = i => SEQ[i].t === 'ban';
@@ -442,6 +599,14 @@ function scorePick(h, myPicks, enemyPicks, used){
     why.push('<span class="warn">never picked in this dataset</span>');
   }
 
+  const rk = rkOf(h);
+  if(rk){
+    const rw = Math.max(-1, Math.min(1.2, (rk.win - 50) / 10));
+    sc += 20 * rw;
+    why.push('<b>'+rk.win.toFixed(1)+'%</b> win rate at '+(DATA.rankedMeta ? DATA.rankedMeta.rank : 'top rank'));
+    if(rk.ban >= 40) why.push('<span class="warn">banned in '+rk.ban.toFixed(0)+'% of high-rank games &mdash; may not reach you</span>');
+  }
+
   sc += 18 * (h.meta/100);
   if(h.meta >= 70) why.push('top-tier ranked meta ('+h.meta.toFixed(0)+')');
 
@@ -490,6 +655,14 @@ function scoreBan(h, myPicks, enemyPicks, used){
     sc -= 8;
   }
 
+  const rk = rkOf(h);
+  if(rk){
+    const rw = Math.max(-1, Math.min(1.2, (rk.win - 50) / 10));
+    sc += 20 * (rk.ban / 100) + 16 * rw;
+    if(rk.ban >= 40) why.push('banned in <b>'+rk.ban.toFixed(0)+'%</b> of high-rank games');
+    if(rk.win >= 55) why.push('<b>'+rk.win.toFixed(1)+'%</b> win rate at high rank');
+  }
+
   sc += 14 * (h.ban / MAXBAN);
   if(h.ban >= 25) why.push('heavily banned in ranked ('+h.ban.toFixed(0)+'%)');
 
@@ -511,18 +684,19 @@ function recommend(){
   let list = [];
   if(mode === 'pick'){
     list = diversify(DATA.heroes.filter(h => !used.has(h.name))
-      .map(h => scorePick(h, my.picks, en.picks, used)).sort((a,b)=>b.sc-a.sc), 3, 8);
+      .map(h => scorePick(h, my.picks, en.picks, used)).sort((a,b)=>b.sc-a.sc), 3, recLimit);
   } else if(mode === 'ban'){
     list = diversify(DATA.heroes.filter(h => !used.has(h.name))
-      .map(h => scoreBan(h, my.picks, en.picks, used)).sort((a,b)=>b.sc-a.sc), 3, 8);
+      .map(h => scoreBan(h, my.picks, en.picks, used)).sort((a,b)=>b.sc-a.sc), 3, recLimit);
   } else if(mode === 'enemy_pick'){
     list = diversify(DATA.heroes.filter(h => !used.has(h.name))
-      .map(h => scorePick(h, en.picks, my.picks, used)).sort((a,b)=>b.sc-a.sc), 3, 6);
+      .map(h => scorePick(h, en.picks, my.picks, used)).sort((a,b)=>b.sc-a.sc), 3, Math.max(6, recLimit - 2));
   } else if(mode === 'enemy_ban'){
     list = diversify(DATA.heroes.filter(h => !used.has(h.name))
-      .map(h => scoreBan(h, en.picks, my.picks, used)).sort((a,b)=>b.sc-a.sc), 3, 6);
+      .map(h => scoreBan(h, en.picks, my.picks, used)).sort((a,b)=>b.sc-a.sc), 3, Math.max(6, recLimit - 2));
   }
-  return {list, mode, turn, myTurn, my, en};
+  const pool = DATA.heroes.filter(function(h){ return !used.has(h.name); }).length;
+  return {list, mode, turn, myTurn, my, en, pool};
 }
 
 /* ================= post-draft analysis ================= */
@@ -848,6 +1022,20 @@ function renderRecs(){
       + '<div class="recmetrics">'+metrics+'</div></div>'
       + '<div class="score">'+r.sc.toFixed(0)+'</div></div>';
   }).join('');
+
+  /* "show more" - reveal further down the ranked list */
+  const pool = DATA.heroes.length - usedSet().size;
+  if(pool > list.length){
+    const more = Math.min(12, pool - list.length);
+    L.innerHTML += '<button class="showmore" id="showMore">Show ' + more
+      + ' more &middot; showing ' + list.length + ' of ' + pool + '</button>';
+    const btn = $('showMore');
+    if(btn) btn.onclick = function(){ recLimit += 12; renderRecs(); };
+  } else if(recLimit > 8){
+    L.innerHTML += '<button class="showmore" id="showLess">Show fewer</button>';
+    const b2 = $('showLess');
+    if(b2) b2.onclick = function(){ recLimit = 8; renderRecs(); };
+  }
 }
 
 function renderCounters(){
@@ -870,10 +1058,14 @@ function renderBoard(){
       const idx = SEQ.findIndex((st,k)=> st.s===side && st.t===type
         && SEQ.slice(0,k).filter(x=>x.s===side&&x.t===type).length===i);
       const val = filled[idx];
+      const hid = banHidden(idx);
       const isCur = idx===cursor;
-      html += '<div class="slot '+(cls||'')+' '+(val?'filled':'')+' '+(val&&type==='ban'?'banned':'')+' '+(isCur?'cursor':'')+'" data-idx="'+idx+'">'
-        + (val ? val+'<small>'+(type==='ban'?'BAN':'PICK')+'</small>' : '&mdash;')
-        + '</div>';
+      let inner;
+      if(hid) inner = '&#128274;<small>BLIND</small>';
+      else if(val) inner = val+'<small>'+(type==='ban'?'BAN':'PICK')+'</small>';
+      else inner = '&mdash;';
+      html += '<div class="slot '+(cls||'')+' '+(val?'filled':'')+' '+(val&&type==='ban'&&!hid?'banned':'')+' '+(isCur?'cursor':'')+' '+(hid?'hiddenban':'')+'" data-idx="'+idx+'">'
+        + inner + '</div>';
     }
     el.innerHTML = html;
   };
@@ -902,13 +1094,15 @@ function renderTurn(){
   const tl = $('turnLabel');
   if(!mySide){ tl.innerHTML='Choose your side to begin'; return; }
   const st = SEQ[cursor];
-  if(!st){ tl.innerHTML='<span class="you">Draft complete</span>'; return; }
+  if(!st){ tl.innerHTML='<span class="you">Draft complete</span> &mdash; see the game plan on the Board tab'; return; }
   const you = st.s === mySide;
-  const n = SEQ.slice(0,cursor+1).filter(x=>x.s===st.s&&x.t===st.t).length;
-  const tot = SEQ.filter(x=>x.s===st.s&&x.t===st.t).length;
+  const n = SEQ.slice(0,cursor+1).filter(function(x){ return x.s===st.s && x.t===st.t; }).length;
+  const tot = SEQ.filter(function(x){ return x.s===st.s && x.t===st.t; }).length;
+  const step = Math.min(cursor + 1, SEQ.length);
   tl.innerHTML = '<span class="pill '+(st.s==='blue'?'blue':'red')+'">'+st.s.toUpperCase()+'</span> '
     + (you ? '<span class="you">YOUR TURN</span>' : '<span class="them">enemy turn</span>')
-    + ' &mdash; ' + st.t.toUpperCase() + ' ' + n + ' of ' + tot;
+    + ' &mdash; ' + st.t.toUpperCase() + ' ' + n + ' of ' + tot
+    + ' <span style="color:#94a3b8;font-weight:600">&middot; step ' + step + '/' + SEQ.length + '</span>';
 }
 
 function renderPool(){
@@ -943,13 +1137,18 @@ function renderPool(){
     const u = used.has(h.name);
     const cls = u ? (banSet.has(h.name)?'banned':'used') : (recOrder[h.name]!==undefined&&recOrder[h.name]<5?'sug':'');
     const d = lgOf(h);
-    const pro = d ? ('pro '+d.wr.toFixed(0)+'% <span style="color:#94a3b8">n'+d.picks+'</span>')
-                  : '<span style="color:#cbd5e1">no pro data</span>';
+    const rk = rkOf(h);
+    const bits = [];
+    if(rk) bits.push('<b style="color:#0f172a">'+rk.win.toFixed(0)+'%</b> <span style="color:#94a3b8">rank</span>');
+    if(d) bits.push(d.wr.toFixed(0)+'% <span style="color:#94a3b8">pro n'+d.picks+'</span>');
+    const stats = bits.length ? bits.join(' &middot; ') : '<span style="color:#cbd5e1">no data</span>';
+    const banLine = rk ? ('ban <b style="color:'+(rk.ban>=40?'#b91c1c':'#0f172a')+'">'+rk.ban.toFixed(0)+'%</b>')
+                       : ('meta '+h.meta.toFixed(0)+' &middot; ban '+h.ban.toFixed(0)+'%');
     return '<div class="hcard '+cls+'" data-hero="'+h.name+'">'
       + '<div class="hn">'+h.name+'<span class="tier '+(h.tier||'C')+'">'+(h.tier||'C')+'</span></div>'
       + '<div class="hm"><span class="lane '+h.lane+'">'+h.lane+'</span></div>'
-      + '<div class="hm">'+pro+'</div>'
-      + '<div class="hm">meta '+h.meta.toFixed(0)+' &middot; ban '+h.ban.toFixed(0)+'%</div></div>';
+      + '<div class="hm">'+stats+'</div>'
+      + '<div class="hm">'+banLine+'</div></div>';
   }).join('');
 
   document.querySelectorAll('.hcard').forEach(c=>{
@@ -966,42 +1165,114 @@ function assign(name){
   if(used.has(name)) return;
   if(cursor<0 || cursor>=SEQ.length) return;
   filled[cursor] = name;
+  recLimit = 8;
   const nx = nextEmpty(cursor+1);
   cursor = nx >= 0 ? nx : SEQ.length;
   renderAll();
 }
 
+let MTAB = 'draft';
+let gpAutoShown = false;
+
+function isMobile(){ return window.matchMedia('(max-width: 900px)').matches; }
+
+function setTab(name, scroll){
+  MTAB = name;
+  Array.prototype.forEach.call(document.querySelectorAll('.mtab'), function(b){
+    b.classList.toggle('active', b.getAttribute('data-tab') === name);
+  });
+  ['board','draft'].forEach(function(t){
+    const el = document.getElementById('pane-' + t);
+    if(el) el.classList.toggle('active', t === name);
+  });
+  if(scroll !== false && isMobile()) window.scrollTo(0, 0);
+}
+
 function renderSrcBar(){
-  const total = LEAGUES.reduce(function(a,l){ return a + l.games; }, 0);
   const active = MODE === 'ag' ? LEAGUES.filter(function(l){ return l.id === 'ag'; }) : LEAGUES;
   const games = active.reduce(function(a,l){ return a + l.games; }, 0);
+  const rm = DATA.rankedMeta || {};
+  const ranked = MODE === 'ranked';
+  const chips = LEAGUES.map(function(l){
+    const on = MODE !== 'ag' || l.id === 'ag';
+    return '<span class="lg '+(on?'on':'')+'">'+l.short+' '+l.games+'g</span>';
+  }).join('');
   $('srcBar').innerHTML =
-    '<span>Data source: <b>'+(MODE === 'ag' ? 'Asian Games 2026 only' : 'Asian Games + all current MPL leagues')+'</b></span>'
-    + '<span>&middot; <b>'+games+'</b> pro games across <b>'+active.length+'</b> event'+(active.length===1?'':'s')+'</span>'
-    + LEAGUES.map(function(l){
-        const on = MODE === 'all' || l.id === 'ag';
-        return '<span class="lg '+(on?'on':'')+'">'+l.short+' '+l.games+'g</span>';
-      }).join('');
+    '<span>Data source: <b>'+(MODE === 'ag' ? 'Asian Games 2026 only'
+      : MODE === 'all' ? 'Asian Games + all current MPL leagues'
+      : 'Ranked ('+(rm.rank || 'top tier')+') + AG + MPL')+'</b></span>'
+    + (ranked
+        ? '<span class="lg on">'+(rm.rank || 'Ranked')+' &middot; official</span>'
+          + '<span class="lg on">ranked draft order &middot; 5 blind bans each</span>'
+        : '<span>&middot; <b>'+games+'</b> pro games across <b>'+active.length+'</b> event'+(active.length===1?'':'s')+'</span>' + chips);
 }
 
 function renderAll(){
   renderTurn(); renderSeq(); renderBoard(); renderRecs(); renderCounters(); renderPool(); renderGamePlan(); renderSrcBar();
+  renderTabBadge();
   const done = filled.filter(Boolean).length;
   $('foot').textContent = 'Draft progress: ' + done + ' / ' + SEQ.length + ' steps  ·  You are ' + (mySide?mySide.toUpperCase():'—')
     + '  ·  Data: 2026 Asian Games (32 games) + Season 42 patch 2.2.16 counters for ' + DATA.heroes.length + ' heroes.';
 }
 
+/* Mobile: flag the Picks tab when it is your turn, and jump to the game plan
+   the first time both teams have five picks. */
+function renderTabBadge(){
+  const b = $('pickBadge');
+  if(!b) return;
+  const turn = SEQ[cursor];
+  const yourTurn = mySide && turn && turn.s === mySide;
+  b.hidden = !yourTurn || MTAB === 'draft';
+  b.textContent = turn ? (turn.t === 'ban' ? 'BAN' : 'PICK') : '';
+
+  if(!gpAutoShown){
+    const en = mySide ? (mySide === 'blue' ? 'red' : 'blue') : null;
+    if(mySide && en && teamData(mySide).picks.length >= 5 && teamData(en).picks.length >= 5){
+      gpAutoShown = true;
+      if(isMobile()) setTab('board');
+    }
+  }
+}
+
 $('pickBlue').onclick = ()=>{ mySide='blue'; $('pickBlue').classList.add('on'); $('pickRed').classList.remove('on'); cursor=nextEmpty(0); renderAll(); };
 $('pickRed').onclick  = ()=>{ mySide='red';  $('pickRed').classList.add('on');  $('pickBlue').classList.remove('on'); cursor=nextEmpty(0); renderAll(); };
-$('dAg').onclick = ()=>{ MODE='ag'; $('dAg').classList.add('on'); $('dAll').classList.remove('on'); renderAll(); };
-$('dAll').onclick = ()=>{ MODE='all'; $('dAll').classList.add('on'); $('dAg').classList.remove('on'); renderAll(); };
+$('dAg').onclick = ()=> setMode('ag');
+$('dAll').onclick = ()=> setMode('all');
+$('dRk').onclick = ()=> setMode('ranked');
 $('undoBtn').onclick  = ()=>{
+  recLimit = 8;
   for(let i=SEQ.length-1;i>=0;i--){ if(filled[i]){ filled[i]=null; cursor=i; renderAll(); return; } }
 };
-$('resetBtn').onclick = ()=>{ filled.fill(null); cursor=nextEmpty(0); renderAll(); };
+$('resetBtn').onclick = ()=>{ filled.fill(null); cursor=nextEmpty(0); gpAutoShown=false; recLimit=8; renderAll(); };
 $('search').oninput = renderPool;
 $('laneF').onchange = renderPool;
 $('sortF').onchange = renderPool;
+
+Array.prototype.forEach.call(document.querySelectorAll('.mtab'), function(b){
+  b.onclick = function(){ setTab(b.getAttribute('data-tab')); };
+});
+
+/* keep the pane state correct when crossing the mobile breakpoint */
+window.addEventListener('resize', function(){
+  if(!isMobile()) ['board','draft'].forEach(function(t){
+    const el = document.getElementById('pane-' + t); if(el) el.classList.add('active');
+  });
+  else setTab(MTAB, false);
+});
+
+/* allow deep-linking a tab, e.g. draft_app.html#tab-pool.
+   Prefix matters: a bare #pool would make the browser jump to the hero-pool
+   container, which shares that id and would scroll the search bar out of view. */
+function applyHash(){
+  if(typeof location === 'undefined') return;
+  const h = (location.hash || '').replace('#','');
+  if(h.indexOf('tab-') === 0){
+    const t = h.slice(4);
+    if(['board','draft'].indexOf(t) >= 0) setTab(t, false);
+  }
+}
+window.addEventListener('hashchange', applyHash);
+applyHash();
 
 renderAll();
 </script>

@@ -121,6 +121,18 @@ TAGSETS = dict(tanky=TANKY, hardCC=HARDCC, sustain=SUSTAIN, dive=DIVE, poke=POKE
 
 from league_data import LEAGUES
 
+# ---- Official Moonton ranked stats, highest tier (Mythical Glory+) -----------
+# Pulled from the public endpoint behind mobilelegends.com/rank with bigrank=9.
+# This is the publisher's own ranked data, not a third-party estimate.
+RANKED_OFFICIAL, RANKED_META = {}, {}
+try:
+    with open(os.path.join(OUT, "rank_official.json"), encoding="utf-8") as f:
+        _rk = json.load(f)
+    RANKED_OFFICIAL = {r["name"]: r for r in _rk.get("mt0", [])}
+    RANKED_META = _rk.get("_meta", {})
+except Exception:
+    RANKED_OFFICIAL = {}
+
 HEROES = []
 for name, s in STATS.items():
     lane = LANE.get(name, "Flex")
@@ -156,6 +168,7 @@ for name, s in STATS.items():
         return dict(picks=p, wins=w, losses=p - w, bans=b, leagues=n,
                     wr=round(w / p * 100, 2), presence=round((p + b) / g * 100, 2) if g else 0)
 
+    rk = RANKED_OFFICIAL.get(name)
     HEROES.append(dict(
         name=name, lane=lane,
         meta=float(s["RankedMetaScore"] or 0),
@@ -165,6 +178,7 @@ for name, s in STATS.items():
         tags=tags,
         ag=per.get("ag"),
         all=agg([x["id"] for x in LEAGUES]),
+        rk=dict(win=rk["win"], pick=rk["pick"], ban=rk["ban"]) if rk else None,
         per={k: v for k, v in per.items()},
         beats=[x.strip() for x in (CTR.get(name, {}).get("StrongAgainst") or "").split(";") if x.strip()],
         ctrBy=[x.strip() for x in (CTR.get(name, {}).get("CounteredBy") or "").split(";") if x.strip()],
@@ -175,6 +189,7 @@ DATA = dict(
     heroes=HEROES,
     pairs={"%s|%s" % (a, b): [g, w] for a, b, g, w, l in PAIRS},
     maxBan=MAXBAN,
+    rankedMeta=RANKED_META,
     leagues=[dict(id=x["id"], name=x["name"], short=x["short"], region=x["region"],
                   games=x["games"], note=x["note"], heroes=len(x["rows"])) for x in LEAGUES],
 )

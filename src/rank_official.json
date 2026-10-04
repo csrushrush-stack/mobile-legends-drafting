@@ -1,0 +1,7730 @@
+{
+ "mt0": [
+  {
+   "name": "Aulus",
+   "heroid": 108,
+   "pick": 1.67,
+   "win": 61.38,
+   "ban": 69.4,
+   "counters": [
+    {
+     "heroid": 6,
+     "delta": 3.96
+    },
+    {
+     "heroid": 35,
+     "delta": 3.28
+    },
+    {
+     "heroid": 32,
+     "delta": 3.27
+    },
+    {
+     "heroid": 29,
+     "delta": 2.75
+    },
+    {
+     "heroid": 26,
+     "delta": 2.67
+    }
+   ]
+  },
+  {
+   "name": "Masha",
+   "heroid": 88,
+   "pick": 1.1,
+   "win": 60.17,
+   "ban": 71.32,
+   "counters": [
+    {
+     "heroid": 87,
+     "delta": 5.01
+    },
+    {
+     "heroid": 90,
+     "delta": 4.78
+    },
+    {
+     "heroid": 66,
+     "delta": 4.65
+    },
+    {
+     "heroid": 111,
+     "delta": 3.71
+    },
+    {
+     "heroid": 54,
+     "delta": 3.69
+    }
+   ]
+  },
+  {
+   "name": "Rafaela",
+   "heroid": 14,
+   "pick": 1.98,
+   "win": 58.04,
+   "ban": 31.85,
+   "counters": [
+    {
+     "heroid": 58,
+     "delta": 4.8
+    },
+    {
+     "heroid": 57,
+     "delta": 3.81
+    },
+    {
+     "heroid": 40,
+     "delta": 3.38
+    },
+    {
+     "heroid": 9,
+     "delta": 3.25
+    },
+    {
+     "heroid": 86,
+     "delta": 2.94
+    }
+   ]
+  },
+  {
+   "name": "Diggie",
+   "heroid": 48,
+   "pick": 0.45,
+   "win": 56.72,
+   "ban": 12.03,
+   "counters": [
+    {
+     "heroid": 54,
+     "delta": 10.51
+    },
+    {
+     "heroid": 9,
+     "delta": 7.43
+    },
+    {
+     "heroid": 16,
+     "delta": 7.27
+    },
+    {
+     "heroid": 2,
+     "delta": 6.57
+    },
+    {
+     "heroid": 4,
+     "delta": 6.53
+    }
+   ]
+  },
+  {
+   "name": "Marcel",
+   "heroid": 132,
+   "pick": 0.47,
+   "win": 56.21,
+   "ban": 80.37,
+   "counters": [
+    {
+     "heroid": 96,
+     "delta": 7.59
+    },
+    {
+     "heroid": 20,
+     "delta": 6.68
+    },
+    {
+     "heroid": 76,
+     "delta": 6.59
+    },
+    {
+     "heroid": 2,
+     "delta": 6.51
+    },
+    {
+     "heroid": 93,
+     "delta": 6.48
+    }
+   ]
+  },
+  {
+   "name": "Baxia",
+   "heroid": 87,
+   "pick": 0.12,
+   "win": 56.17,
+   "ban": 0.09,
+   "counters": [
+    {
+     "heroid": 111,
+     "delta": 10.82
+    },
+    {
+     "heroid": 33,
+     "delta": 10.71
+    },
+    {
+     "heroid": 16,
+     "delta": 10.63
+    },
+    {
+     "heroid": 11,
+     "delta": 8.7
+    },
+    {
+     "heroid": 23,
+     "delta": 7.86
+    }
+   ]
+  },
+  {
+   "name": "Odette",
+   "heroid": 46,
+   "pick": 0.62,
+   "win": 54.34,
+   "ban": 0.17,
+   "counters": [
+    {
+     "heroid": 124,
+     "delta": 7.73
+    },
+    {
+     "heroid": 59,
+     "delta": 6.65
+    },
+    {
+     "heroid": 132,
+     "delta": 5.11
+    },
+    {
+     "heroid": 133,
+     "delta": 4.65
+    },
+    {
+     "heroid": 102,
+     "delta": 3.87
+    }
+   ]
+  },
+  {
+   "name": "Chip",
+   "heroid": 124,
+   "pick": 0.09,
+   "win": 54.18,
+   "ban": 0.43,
+   "counters": [
+    {
+     "heroid": 72,
+     "delta": 16.26
+    },
+    {
+     "heroid": 50,
+     "delta": 12.53
+    },
+    {
+     "heroid": 101,
+     "delta": 11.06
+    },
+    {
+     "heroid": 84,
+     "delta": 9.67
+    },
+    {
+     "heroid": 64,
+     "delta": 8.47
+    }
+   ]
+  },
+  {
+   "name": "Minotaur",
+   "heroid": 19,
+   "pick": 2.12,
+   "win": 54.07,
+   "ban": 21.37,
+   "counters": [
+    {
+     "heroid": 33,
+     "delta": 5.25
+    },
+    {
+     "heroid": 66,
+     "delta": 3.61
+    },
+    {
+     "heroid": 89,
+     "delta": 3.49
+    },
+    {
+     "heroid": 20,
+     "delta": 3.47
+    },
+    {
+     "heroid": 78,
+     "delta": 2.95
+    }
+   ]
+  },
+  {
+   "name": "Yve",
+   "heroid": 101,
+   "pick": 0.15,
+   "win": 53.95,
+   "ban": 0.02,
+   "counters": [
+    {
+     "heroid": 90,
+     "delta": 15.46
+    },
+    {
+     "heroid": 96,
+     "delta": 10.23
+    },
+    {
+     "heroid": 52,
+     "delta": 9.16
+    },
+    {
+     "heroid": 8,
+     "delta": 7.52
+    },
+    {
+     "heroid": 85,
+     "delta": 6.48
+    }
+   ]
+  },
+  {
+   "name": "Khufra",
+   "heroid": 78,
+   "pick": 0.81,
+   "win": 53.73,
+   "ban": 8.02,
+   "counters": [
+    {
+     "heroid": 87,
+     "delta": 7.81
+    },
+    {
+     "heroid": 24,
+     "delta": 7.2
+    },
+    {
+     "heroid": 66,
+     "delta": 5.66
+    },
+    {
+     "heroid": 35,
+     "delta": 5.41
+    },
+    {
+     "heroid": 16,
+     "delta": 4.74
+    }
+   ]
+  },
+  {
+   "name": "Argus",
+   "heroid": 45,
+   "pick": 0.56,
+   "win": 53.63,
+   "ban": 0.47,
+   "counters": [
+    {
+     "heroid": 128,
+     "delta": 7.95
+    },
+    {
+     "heroid": 89,
+     "delta": 6.01
+    },
+    {
+     "heroid": 51,
+     "delta": 5.96
+    },
+    {
+     "heroid": 35,
+     "delta": 5.85
+    },
+    {
+     "heroid": 83,
+     "delta": 4.98
+    }
+   ]
+  },
+  {
+   "name": "Carmilla",
+   "heroid": 92,
+   "pick": 1.9,
+   "win": 53.62,
+   "ban": 45.36,
+   "counters": [
+    {
+     "heroid": 124,
+     "delta": 5.58
+    },
+    {
+     "heroid": 34,
+     "delta": 3.83
+    },
+    {
+     "heroid": 118,
+     "delta": 3.51
+    },
+    {
+     "heroid": 94,
+     "delta": 3.25
+    },
+    {
+     "heroid": 128,
+     "delta": 2.88
+    }
+   ]
+  },
+  {
+   "name": "Floryn",
+   "heroid": 112,
+   "pick": 1.99,
+   "win": 53.43,
+   "ban": 16.31,
+   "counters": [
+    {
+     "heroid": 4,
+     "delta": 4.92
+    },
+    {
+     "heroid": 101,
+     "delta": 4.45
+    },
+    {
+     "heroid": 106,
+     "delta": 4.17
+    },
+    {
+     "heroid": 132,
+     "delta": 3.94
+    },
+    {
+     "heroid": 88,
+     "delta": 3.87
+    }
+   ]
+  },
+  {
+   "name": "Freya",
+   "heroid": 22,
+   "pick": 0.7,
+   "win": 53.42,
+   "ban": 1.27,
+   "counters": [
+    {
+     "heroid": 124,
+     "delta": 6.87
+    },
+    {
+     "heroid": 32,
+     "delta": 5.98
+    },
+    {
+     "heroid": 76,
+     "delta": 4.3
+    },
+    {
+     "heroid": 101,
+     "delta": 4.08
+    },
+    {
+     "heroid": 64,
+     "delta": 3.98
+    }
+   ]
+  },
+  {
+   "name": "Zhuxin",
+   "heroid": 125,
+   "pick": 0.65,
+   "win": 53.36,
+   "ban": 0.46,
+   "counters": [
+    {
+     "heroid": 20,
+     "delta": 5.88
+    },
+    {
+     "heroid": 32,
+     "delta": 4.81
+    },
+    {
+     "heroid": 35,
+     "delta": 4.65
+    },
+    {
+     "heroid": 29,
+     "delta": 4.41
+    },
+    {
+     "heroid": 72,
+     "delta": 4.4
+    }
+   ]
+  },
+  {
+   "name": "Kadita",
+   "heroid": 75,
+   "pick": 1.31,
+   "win": 53.18,
+   "ban": 2.9,
+   "counters": [
+    {
+     "heroid": 87,
+     "delta": 6.9
+    },
+    {
+     "heroid": 11,
+     "delta": 4.19
+    },
+    {
+     "heroid": 64,
+     "delta": 3.09
+    },
+    {
+     "heroid": 7,
+     "delta": 2.42
+    },
+    {
+     "heroid": 101,
+     "delta": 2.34
+    }
+   ]
+  },
+  {
+   "name": "Saber",
+   "heroid": 3,
+   "pick": 0.43,
+   "win": 53.13,
+   "ban": 2.34,
+   "counters": [
+    {
+     "heroid": 101,
+     "delta": 7.97
+    },
+    {
+     "heroid": 42,
+     "delta": 6.31
+    },
+    {
+     "heroid": 68,
+     "delta": 5.42
+    },
+    {
+     "heroid": 102,
+     "delta": 5.23
+    },
+    {
+     "heroid": 132,
+     "delta": 5.11
+    }
+   ]
+  },
+  {
+   "name": "Hirara",
+   "heroid": 133,
+   "pick": 0.76,
+   "win": 53,
+   "ban": 91.01,
+   "counters": [
+    {
+     "heroid": 2,
+     "delta": 7.46
+    },
+    {
+     "heroid": 89,
+     "delta": 6.1
+    },
+    {
+     "heroid": 20,
+     "delta": 4.95
+    },
+    {
+     "heroid": 50,
+     "delta": 4.95
+    },
+    {
+     "heroid": 118,
+     "delta": 4.77
+    }
+   ]
+  },
+  {
+   "name": "Beatrix",
+   "heroid": 105,
+   "pick": 1.34,
+   "win": 52.69,
+   "ban": 1.52,
+   "counters": [
+    {
+     "heroid": 87,
+     "delta": 8.72
+    },
+    {
+     "heroid": 96,
+     "delta": 4.02
+    },
+    {
+     "heroid": 121,
+     "delta": 3.87
+    },
+    {
+     "heroid": 60,
+     "delta": 3.83
+    },
+    {
+     "heroid": 48,
+     "delta": 3.64
+    }
+   ]
+  },
+  {
+   "name": "Bruno",
+   "heroid": 12,
+   "pick": 0.88,
+   "win": 52.5,
+   "ban": 0.26,
+   "counters": [
+    {
+     "heroid": 54,
+     "delta": 5.08
+    },
+    {
+     "heroid": 47,
+     "delta": 3.72
+    },
+    {
+     "heroid": 98,
+     "delta": 3.03
+    },
+    {
+     "heroid": 73,
+     "delta": 2.69
+    },
+    {
+     "heroid": 95,
+     "delta": 2.68
+    }
+   ]
+  },
+  {
+   "name": "Obsidia",
+   "heroid": 130,
+   "pick": 3.53,
+   "win": 52.33,
+   "ban": 21.67,
+   "counters": [
+    {
+     "heroid": 97,
+     "delta": 3.69
+    },
+    {
+     "heroid": 72,
+     "delta": 3.63
+    },
+    {
+     "heroid": 58,
+     "delta": 2.76
+    },
+    {
+     "heroid": 64,
+     "delta": 2.48
+    },
+    {
+     "heroid": 17,
+     "delta": 2.15
+    }
+   ]
+  },
+  {
+   "name": "Fredrinn",
+   "heroid": 117,
+   "pick": 0.97,
+   "win": 52.25,
+   "ban": 2.16,
+   "counters": [
+    {
+     "heroid": 54,
+     "delta": 6.12
+    },
+    {
+     "heroid": 124,
+     "delta": 5.79
+    },
+    {
+     "heroid": 76,
+     "delta": 3.53
+    },
+    {
+     "heroid": 81,
+     "delta": 3.38
+    },
+    {
+     "heroid": 50,
+     "delta": 3.38
+    }
+   ]
+  },
+  {
+   "name": "Faramis",
+   "heroid": 76,
+   "pick": 0.19,
+   "win": 52.1,
+   "ban": 0.23,
+   "counters": [
+    {
+     "heroid": 20,
+     "delta": 15.05
+    },
+    {
+     "heroid": 102,
+     "delta": 9.55
+    },
+    {
+     "heroid": 89,
+     "delta": 8.06
+    },
+    {
+     "heroid": 82,
+     "delta": 7.61
+    },
+    {
+     "heroid": 96,
+     "delta": 7.56
+    }
+   ]
+  },
+  {
+   "name": "Popol and Kupa",
+   "heroid": 94,
+   "pick": 0.25,
+   "win": 51.99,
+   "ban": 0.07,
+   "counters": [
+    {
+     "heroid": 16,
+     "delta": 11.06
+    },
+    {
+     "heroid": 102,
+     "delta": 10.19
+    },
+    {
+     "heroid": 128,
+     "delta": 9.23
+    },
+    {
+     "heroid": 109,
+     "delta": 8.44
+    },
+    {
+     "heroid": 73,
+     "delta": 8.4
+    }
+   ]
+  },
+  {
+   "name": "Ixia",
+   "heroid": 121,
+   "pick": 0.67,
+   "win": 51.88,
+   "ban": 0.82,
+   "counters": [
+    {
+     "heroid": 106,
+     "delta": 5.21
+    },
+    {
+     "heroid": 49,
+     "delta": 4.92
+    },
+    {
+     "heroid": 76,
+     "delta": 4.8
+    },
+    {
+     "heroid": 94,
+     "delta": 4.64
+    },
+    {
+     "heroid": 34,
+     "delta": 4.5
+    }
+   ]
+  },
+  {
+   "name": "Cecilion",
+   "heroid": 91,
+   "pick": 0.91,
+   "win": 51.85,
+   "ban": 0.08,
+   "counters": [
+    {
+     "heroid": 98,
+     "delta": 5.62
+    },
+    {
+     "heroid": 20,
+     "delta": 4.61
+    },
+    {
+     "heroid": 76,
+     "delta": 4.36
+    },
+    {
+     "heroid": 11,
+     "delta": 4.33
+    },
+    {
+     "heroid": 106,
+     "delta": 4.21
+    }
+   ]
+  },
+  {
+   "name": "Gord",
+   "heroid": 23,
+   "pick": 0.51,
+   "win": 51.61,
+   "ban": 0.08,
+   "counters": [
+    {
+     "heroid": 76,
+     "delta": 5.16
+    },
+    {
+     "heroid": 18,
+     "delta": 4.63
+    },
+    {
+     "heroid": 28,
+     "delta": 4.46
+    },
+    {
+     "heroid": 72,
+     "delta": 4.42
+    },
+    {
+     "heroid": 111,
+     "delta": 4.05
+    }
+   ]
+  },
+  {
+   "name": "Estes",
+   "heroid": 34,
+   "pick": 0.61,
+   "win": 51.59,
+   "ban": 14.65,
+   "counters": [
+    {
+     "heroid": 76,
+     "delta": 8.66
+    },
+    {
+     "heroid": 33,
+     "delta": 8.57
+    },
+    {
+     "heroid": 42,
+     "delta": 5.05
+    },
+    {
+     "heroid": 124,
+     "delta": 4.83
+    },
+    {
+     "heroid": 132,
+     "delta": 4.7
+    }
+   ]
+  },
+  {
+   "name": "Guinevere",
+   "heroid": 80,
+   "pick": 1.18,
+   "win": 51.53,
+   "ban": 1.52,
+   "counters": [
+    {
+     "heroid": 18,
+     "delta": 5.03
+    },
+    {
+     "heroid": 116,
+     "delta": 4.71
+    },
+    {
+     "heroid": 7,
+     "delta": 3.55
+    },
+    {
+     "heroid": 98,
+     "delta": 3.55
+    },
+    {
+     "heroid": 46,
+     "delta": 2.8
+    }
+   ]
+  },
+  {
+   "name": "Lukas",
+   "heroid": 127,
+   "pick": 1.49,
+   "win": 51.44,
+   "ban": 67.28,
+   "counters": [
+    {
+     "heroid": 89,
+     "delta": 6.65
+    },
+    {
+     "heroid": 66,
+     "delta": 5.78
+    },
+    {
+     "heroid": 120,
+     "delta": 4.27
+    },
+    {
+     "heroid": 76,
+     "delta": 3.96
+    },
+    {
+     "heroid": 43,
+     "delta": 3.72
+    }
+   ]
+  },
+  {
+   "name": "Aamon",
+   "heroid": 109,
+   "pick": 0.49,
+   "win": 51.4,
+   "ban": 0.47,
+   "counters": [
+    {
+     "heroid": 54,
+     "delta": 8.75
+    },
+    {
+     "heroid": 123,
+     "delta": 7.07
+    },
+    {
+     "heroid": 20,
+     "delta": 6.71
+    },
+    {
+     "heroid": 82,
+     "delta": 5.88
+    },
+    {
+     "heroid": 35,
+     "delta": 5.8
+    }
+   ]
+  },
+  {
+   "name": "Atlas",
+   "heroid": 93,
+   "pick": 1.44,
+   "win": 51.33,
+   "ban": 19.92,
+   "counters": [
+    {
+     "heroid": 121,
+     "delta": 6.55
+    },
+    {
+     "heroid": 48,
+     "delta": 5.51
+    },
+    {
+     "heroid": 54,
+     "delta": 4.4
+    },
+    {
+     "heroid": 94,
+     "delta": 3.67
+    },
+    {
+     "heroid": 87,
+     "delta": 3.32
+    }
+   ]
+  },
+  {
+   "name": "Yin",
+   "heroid": 113,
+   "pick": 0.25,
+   "win": 51.27,
+   "ban": 0.16,
+   "counters": [
+    {
+     "heroid": 124,
+     "delta": 10.07
+    },
+    {
+     "heroid": 106,
+     "delta": 6.72
+    },
+    {
+     "heroid": 20,
+     "delta": 5.63
+    },
+    {
+     "heroid": 40,
+     "delta": 5.46
+    },
+    {
+     "heroid": 101,
+     "delta": 5.19
+    }
+   ]
+  },
+  {
+   "name": "Kagura",
+   "heroid": 25,
+   "pick": 1.34,
+   "win": 51.24,
+   "ban": 1.13,
+   "counters": [
+    {
+     "heroid": 20,
+     "delta": 6.15
+    },
+    {
+     "heroid": 90,
+     "delta": 5.2
+    },
+    {
+     "heroid": 83,
+     "delta": 3.75
+    },
+    {
+     "heroid": 50,
+     "delta": 3.39
+    },
+    {
+     "heroid": 44,
+     "delta": 2.87
+    }
+   ]
+  },
+  {
+   "name": "Eudora",
+   "heroid": 15,
+   "pick": 2.24,
+   "win": 50.99,
+   "ban": 53.49,
+   "counters": [
+    {
+     "heroid": 132,
+     "delta": 3.5
+    },
+    {
+     "heroid": 133,
+     "delta": 3.37
+    },
+    {
+     "heroid": 16,
+     "delta": 3.05
+    },
+    {
+     "heroid": 124,
+     "delta": 2.81
+    },
+    {
+     "heroid": 112,
+     "delta": 2.48
+    }
+   ]
+  },
+  {
+   "name": "Nolan",
+   "heroid": 122,
+   "pick": 1.56,
+   "win": 50.88,
+   "ban": 2.47,
+   "counters": [
+    {
+     "heroid": 34,
+     "delta": 5.92
+    },
+    {
+     "heroid": 101,
+     "delta": 5.65
+    },
+    {
+     "heroid": 40,
+     "delta": 3.65
+    },
+    {
+     "heroid": 52,
+     "delta": 3.56
+    },
+    {
+     "heroid": 94,
+     "delta": 3.41
+    }
+   ]
+  },
+  {
+   "name": "Alice",
+   "heroid": 4,
+   "pick": 1.24,
+   "win": 50.86,
+   "ban": 2.85,
+   "counters": [
+    {
+     "heroid": 94,
+     "delta": 6.29
+    },
+    {
+     "heroid": 76,
+     "delta": 6.07
+    },
+    {
+     "heroid": 54,
+     "delta": 5.32
+    },
+    {
+     "heroid": 6,
+     "delta": 4.98
+    },
+    {
+     "heroid": 98,
+     "delta": 4.89
+    }
+   ]
+  },
+  {
+   "name": "Clint",
+   "heroid": 13,
+   "pick": 1.08,
+   "win": 50.81,
+   "ban": 0.43,
+   "counters": [
+    {
+     "heroid": 102,
+     "delta": 4.19
+    },
+    {
+     "heroid": 125,
+     "delta": 3.93
+    },
+    {
+     "heroid": 9,
+     "delta": 3.57
+    },
+    {
+     "heroid": 109,
+     "delta": 3.23
+    },
+    {
+     "heroid": 111,
+     "delta": 3.19
+    }
+   ]
+  },
+  {
+   "name": "Barats",
+   "heroid": 99,
+   "pick": 1.3,
+   "win": 50.76,
+   "ban": 7.67,
+   "counters": [
+    {
+     "heroid": 90,
+     "delta": 5.01
+    },
+    {
+     "heroid": 7,
+     "delta": 5.01
+    },
+    {
+     "heroid": 87,
+     "delta": 4.66
+    },
+    {
+     "heroid": 50,
+     "delta": 4.48
+    },
+    {
+     "heroid": 64,
+     "delta": 4.35
+    }
+   ]
+  },
+  {
+   "name": "Valir",
+   "heroid": 57,
+   "pick": 0.72,
+   "win": 50.75,
+   "ban": 0.68,
+   "counters": [
+    {
+     "heroid": 4,
+     "delta": 5.7
+    },
+    {
+     "heroid": 67,
+     "delta": 4.85
+    },
+    {
+     "heroid": 72,
+     "delta": 4.13
+    },
+    {
+     "heroid": 59,
+     "delta": 3.99
+    },
+    {
+     "heroid": 111,
+     "delta": 3.98
+    }
+   ]
+  },
+  {
+   "name": "Benedetta",
+   "heroid": 97,
+   "pick": 0.52,
+   "win": 50.65,
+   "ban": 0.15,
+   "counters": [
+    {
+     "heroid": 54,
+     "delta": 7.66
+    },
+    {
+     "heroid": 83,
+     "delta": 6.53
+    },
+    {
+     "heroid": 28,
+     "delta": 5.29
+    },
+    {
+     "heroid": 82,
+     "delta": 4.78
+    },
+    {
+     "heroid": 16,
+     "delta": 4.51
+    }
+   ]
+  },
+  {
+   "name": "Melissa",
+   "heroid": 114,
+   "pick": 0.33,
+   "win": 50.53,
+   "ban": 0.81,
+   "counters": [
+    {
+     "heroid": 45,
+     "delta": 6.96
+    },
+    {
+     "heroid": 35,
+     "delta": 6.21
+    },
+    {
+     "heroid": 67,
+     "delta": 5.73
+    },
+    {
+     "heroid": 85,
+     "delta": 4.8
+    },
+    {
+     "heroid": 131,
+     "delta": 4.52
+    }
+   ]
+  },
+  {
+   "name": "Lolita",
+   "heroid": 20,
+   "pick": 0.07,
+   "win": 50.49,
+   "ban": 0.15,
+   "counters": [
+    {
+     "heroid": 124,
+     "delta": 18.7
+    },
+    {
+     "heroid": 18,
+     "delta": 16.57
+    },
+    {
+     "heroid": 111,
+     "delta": 15.73
+    },
+    {
+     "heroid": 57,
+     "delta": 14.63
+    },
+    {
+     "heroid": 42,
+     "delta": 11.82
+    }
+   ]
+  },
+  {
+   "name": "Gloo",
+   "heroid": 104,
+   "pick": 1.13,
+   "win": 50.41,
+   "ban": 22.84,
+   "counters": [
+    {
+     "heroid": 109,
+     "delta": 6.63
+    },
+    {
+     "heroid": 42,
+     "delta": 5.71
+    },
+    {
+     "heroid": 82,
+     "delta": 5.48
+    },
+    {
+     "heroid": 20,
+     "delta": 4.57
+    },
+    {
+     "heroid": 94,
+     "delta": 3.71
+    }
+   ]
+  },
+  {
+   "name": "Moskov",
+   "heroid": 31,
+   "pick": 1.24,
+   "win": 50.41,
+   "ban": 0.11,
+   "counters": [
+    {
+     "heroid": 113,
+     "delta": 4.59
+    },
+    {
+     "heroid": 50,
+     "delta": 4.04
+    },
+    {
+     "heroid": 104,
+     "delta": 3.53
+    },
+    {
+     "heroid": 76,
+     "delta": 3.25
+    },
+    {
+     "heroid": 44,
+     "delta": 3.05
+    }
+   ]
+  },
+  {
+   "name": "Ling",
+   "heroid": 84,
+   "pick": 1.17,
+   "win": 50.4,
+   "ban": 0.88,
+   "counters": [
+    {
+     "heroid": 20,
+     "delta": 7.1
+    },
+    {
+     "heroid": 89,
+     "delta": 4.14
+    },
+    {
+     "heroid": 69,
+     "delta": 3.99
+    },
+    {
+     "heroid": 36,
+     "delta": 3.86
+    },
+    {
+     "heroid": 41,
+     "delta": 3.37
+    }
+   ]
+  },
+  {
+   "name": "Joy",
+   "heroid": 118,
+   "pick": 0.31,
+   "win": 50.36,
+   "ban": 0.1,
+   "counters": [
+    {
+     "heroid": 44,
+     "delta": 9.52
+    },
+    {
+     "heroid": 115,
+     "delta": 5.65
+    },
+    {
+     "heroid": 27,
+     "delta": 5.29
+    },
+    {
+     "heroid": 3,
+     "delta": 5.04
+    },
+    {
+     "heroid": 59,
+     "delta": 4.93
+    }
+   ]
+  },
+  {
+   "name": "Sora",
+   "heroid": 131,
+   "pick": 0.86,
+   "win": 50.36,
+   "ban": 0.88,
+   "counters": [
+    {
+     "heroid": 34,
+     "delta": 6.31
+    },
+    {
+     "heroid": 76,
+     "delta": 5.46
+    },
+    {
+     "heroid": 39,
+     "delta": 5.31
+    },
+    {
+     "heroid": 8,
+     "delta": 4.31
+    },
+    {
+     "heroid": 54,
+     "delta": 4.23
+    }
+   ]
+  },
+  {
+   "name": "Edith",
+   "heroid": 111,
+   "pick": 0.31,
+   "win": 50.33,
+   "ban": 0.12,
+   "counters": [
+    {
+     "heroid": 46,
+     "delta": 7.74
+    },
+    {
+     "heroid": 109,
+     "delta": 5.79
+    },
+    {
+     "heroid": 39,
+     "delta": 5.66
+    },
+    {
+     "heroid": 108,
+     "delta": 5.4
+    },
+    {
+     "heroid": 33,
+     "delta": 5.23
+    }
+   ]
+  },
+  {
+   "name": "Natan",
+   "heroid": 107,
+   "pick": 0.48,
+   "win": 50.28,
+   "ban": 0.08,
+   "counters": [
+    {
+     "heroid": 16,
+     "delta": 6.33
+    },
+    {
+     "heroid": 11,
+     "delta": 5.95
+    },
+    {
+     "heroid": 81,
+     "delta": 5.14
+    },
+    {
+     "heroid": 10,
+     "delta": 4.31
+    },
+    {
+     "heroid": 18,
+     "delta": 4.13
+    }
+   ]
+  },
+  {
+   "name": "Irithel",
+   "heroid": 43,
+   "pick": 0.43,
+   "win": 50.14,
+   "ban": 0.04,
+   "counters": [
+    {
+     "heroid": 89,
+     "delta": 7.5
+    },
+    {
+     "heroid": 51,
+     "delta": 6.95
+    },
+    {
+     "heroid": 74,
+     "delta": 4.51
+    },
+    {
+     "heroid": 71,
+     "delta": 4.45
+    },
+    {
+     "heroid": 114,
+     "delta": 4.4
+    }
+   ]
+  },
+  {
+   "name": "Zhask",
+   "heroid": 50,
+   "pick": 0.2,
+   "win": 50.04,
+   "ban": 0.03,
+   "counters": [
+    {
+     "heroid": 16,
+     "delta": 9.69
+    },
+    {
+     "heroid": 120,
+     "delta": 9.63
+    },
+    {
+     "heroid": 51,
+     "delta": 9.28
+    },
+    {
+     "heroid": 59,
+     "delta": 7.46
+    },
+    {
+     "heroid": 72,
+     "delta": 7.19
+    }
+   ]
+  },
+  {
+   "name": "Natalia",
+   "heroid": 24,
+   "pick": 0.14,
+   "win": 50.03,
+   "ban": 0.3,
+   "counters": [
+    {
+     "heroid": 89,
+     "delta": 19.54
+    },
+    {
+     "heroid": 87,
+     "delta": 13.72
+    },
+    {
+     "heroid": 50,
+     "delta": 10.99
+    },
+    {
+     "heroid": 74,
+     "delta": 10.21
+    },
+    {
+     "heroid": 124,
+     "delta": 10.15
+    }
+   ]
+  },
+  {
+   "name": "Arlott",
+   "heroid": 120,
+   "pick": 0.56,
+   "win": 49.89,
+   "ban": 0.14,
+   "counters": [
+    {
+     "heroid": 20,
+     "delta": 5.23
+    },
+    {
+     "heroid": 90,
+     "delta": 5.17
+    },
+    {
+     "heroid": 73,
+     "delta": 5.08
+    },
+    {
+     "heroid": 76,
+     "delta": 4.59
+    },
+    {
+     "heroid": 51,
+     "delta": 4.35
+    }
+   ]
+  },
+  {
+   "name": "Selena",
+   "heroid": 63,
+   "pick": 1.84,
+   "win": 49.83,
+   "ban": 2.83,
+   "counters": [
+    {
+     "heroid": 97,
+     "delta": 3.5
+    },
+    {
+     "heroid": 54,
+     "delta": 3.13
+    },
+    {
+     "heroid": 83,
+     "delta": 3.11
+    },
+    {
+     "heroid": 69,
+     "delta": 2.61
+    },
+    {
+     "heroid": 52,
+     "delta": 2.61
+    }
+   ]
+  },
+  {
+   "name": "Harith",
+   "heroid": 73,
+   "pick": 0.26,
+   "win": 49.81,
+   "ban": 0.03,
+   "counters": [
+    {
+     "heroid": 24,
+     "delta": 12.13
+    },
+    {
+     "heroid": 20,
+     "delta": 8.74
+    },
+    {
+     "heroid": 107,
+     "delta": 7.81
+    },
+    {
+     "heroid": 97,
+     "delta": 6.83
+    },
+    {
+     "heroid": 35,
+     "delta": 6.64
+    }
+   ]
+  },
+  {
+   "name": "Aldous",
+   "heroid": 64,
+   "pick": 0.21,
+   "win": 49.79,
+   "ban": 0.1,
+   "counters": [
+    {
+     "heroid": 48,
+     "delta": 11.46
+    },
+    {
+     "heroid": 98,
+     "delta": 10.54
+    },
+    {
+     "heroid": 121,
+     "delta": 9.54
+    },
+    {
+     "heroid": 4,
+     "delta": 8.36
+    },
+    {
+     "heroid": 132,
+     "delta": 7.89
+    }
+   ]
+  },
+  {
+   "name": "Kimmy",
+   "heroid": 71,
+   "pick": 0.69,
+   "win": 49.65,
+   "ban": 0.13,
+   "counters": [
+    {
+     "heroid": 82,
+     "delta": 7.09
+    },
+    {
+     "heroid": 89,
+     "delta": 6.06
+    },
+    {
+     "heroid": 39,
+     "delta": 5.99
+    },
+    {
+     "heroid": 50,
+     "delta": 5.98
+    },
+    {
+     "heroid": 35,
+     "delta": 5.92
+    }
+   ]
+  },
+  {
+   "name": "Yi Sun-shin",
+   "heroid": 30,
+   "pick": 2.32,
+   "win": 49.53,
+   "ban": 10.94,
+   "counters": [
+    {
+     "heroid": 66,
+     "delta": 4.32
+    },
+    {
+     "heroid": 16,
+     "delta": 3.81
+    },
+    {
+     "heroid": 72,
+     "delta": 3.47
+    },
+    {
+     "heroid": 48,
+     "delta": 3.24
+    },
+    {
+     "heroid": 54,
+     "delta": 3.22
+    }
+   ]
+  },
+  {
+   "name": "Dyrroth",
+   "heroid": 85,
+   "pick": 0.67,
+   "win": 49.51,
+   "ban": 0.31,
+   "counters": [
+    {
+     "heroid": 76,
+     "delta": 7.72
+    },
+    {
+     "heroid": 51,
+     "delta": 7.56
+    },
+    {
+     "heroid": 64,
+     "delta": 5.44
+    },
+    {
+     "heroid": 35,
+     "delta": 5.36
+    },
+    {
+     "heroid": 106,
+     "delta": 4.57
+    }
+   ]
+  },
+  {
+   "name": "Granger",
+   "heroid": 79,
+   "pick": 1.83,
+   "win": 49.47,
+   "ban": 1.56,
+   "counters": [
+    {
+     "heroid": 87,
+     "delta": 8.4
+    },
+    {
+     "heroid": 89,
+     "delta": 4.17
+    },
+    {
+     "heroid": 8,
+     "delta": 3.27
+    },
+    {
+     "heroid": 2,
+     "delta": 3.07
+    },
+    {
+     "heroid": 48,
+     "delta": 3.06
+    }
+   ]
+  },
+  {
+   "name": "Brody",
+   "heroid": 100,
+   "pick": 1.38,
+   "win": 49.36,
+   "ban": 1.34,
+   "counters": [
+    {
+     "heroid": 51,
+     "delta": 5.29
+    },
+    {
+     "heroid": 124,
+     "delta": 5.2
+    },
+    {
+     "heroid": 7,
+     "delta": 4.25
+    },
+    {
+     "heroid": 8,
+     "delta": 4.07
+    },
+    {
+     "heroid": 73,
+     "delta": 3.51
+    }
+   ]
+  },
+  {
+   "name": "Uranus",
+   "heroid": 59,
+   "pick": 0.4,
+   "win": 49.27,
+   "ban": 0.11,
+   "counters": [
+    {
+     "heroid": 76,
+     "delta": 8.18
+    },
+    {
+     "heroid": 16,
+     "delta": 7
+    },
+    {
+     "heroid": 83,
+     "delta": 6.46
+    },
+    {
+     "heroid": 89,
+     "delta": 6.37
+    },
+    {
+     "heroid": 82,
+     "delta": 6.26
+    }
+   ]
+  },
+  {
+   "name": "Miya",
+   "heroid": 1,
+   "pick": 1.34,
+   "win": 49.16,
+   "ban": 2.47,
+   "counters": [
+    {
+     "heroid": 124,
+     "delta": 5.59
+    },
+    {
+     "heroid": 87,
+     "delta": 3.93
+    },
+    {
+     "heroid": 123,
+     "delta": 3.68
+    },
+    {
+     "heroid": 125,
+     "delta": 3.11
+    },
+    {
+     "heroid": 130,
+     "delta": 2.78
+    }
+   ]
+  },
+  {
+   "name": "Leomord",
+   "heroid": 67,
+   "pick": 0.48,
+   "win": 49.16,
+   "ban": 0.1,
+   "counters": [
+    {
+     "heroid": 9,
+     "delta": 6.33
+    },
+    {
+     "heroid": 7,
+     "delta": 5.93
+    },
+    {
+     "heroid": 41,
+     "delta": 5.64
+    },
+    {
+     "heroid": 3,
+     "delta": 5.43
+    },
+    {
+     "heroid": 24,
+     "delta": 4.67
+    }
+   ]
+  },
+  {
+   "name": "Harley",
+   "heroid": 42,
+   "pick": 0.4,
+   "win": 49.05,
+   "ban": 0.22,
+   "counters": [
+    {
+     "heroid": 98,
+     "delta": 8.7
+    },
+    {
+     "heroid": 128,
+     "delta": 8.19
+    },
+    {
+     "heroid": 96,
+     "delta": 7.74
+    },
+    {
+     "heroid": 125,
+     "delta": 6.29
+    },
+    {
+     "heroid": 107,
+     "delta": 4.87
+    }
+   ]
+  },
+  {
+   "name": "Ruby",
+   "heroid": 29,
+   "pick": 0.46,
+   "win": 49.02,
+   "ban": 0.05,
+   "counters": [
+    {
+     "heroid": 118,
+     "delta": 6.73
+    },
+    {
+     "heroid": 68,
+     "delta": 6.59
+    },
+    {
+     "heroid": 11,
+     "delta": 4.96
+    },
+    {
+     "heroid": 114,
+     "delta": 4.94
+    },
+    {
+     "heroid": 59,
+     "delta": 4.87
+    }
+   ]
+  },
+  {
+   "name": "Novaria",
+   "heroid": 119,
+   "pick": 1.52,
+   "win": 48.98,
+   "ban": 1.09,
+   "counters": [
+    {
+     "heroid": 89,
+     "delta": 5.36
+    },
+    {
+     "heroid": 48,
+     "delta": 4.06
+    },
+    {
+     "heroid": 86,
+     "delta": 3.46
+    },
+    {
+     "heroid": 83,
+     "delta": 3.34
+    },
+    {
+     "heroid": 106,
+     "delta": 3.32
+    }
+   ]
+  },
+  {
+   "name": "Lylia",
+   "heroid": 86,
+   "pick": 0.51,
+   "win": 48.89,
+   "ban": 0.07,
+   "counters": [
+    {
+     "heroid": 2,
+     "delta": 10.63
+    },
+    {
+     "heroid": 37,
+     "delta": 6.59
+    },
+    {
+     "heroid": 49,
+     "delta": 5.65
+    },
+    {
+     "heroid": 76,
+     "delta": 5.14
+    },
+    {
+     "heroid": 82,
+     "delta": 5.07
+    }
+   ]
+  },
+  {
+   "name": "Lunox",
+   "heroid": 68,
+   "pick": 0.43,
+   "win": 48.84,
+   "ban": 0.04,
+   "counters": [
+    {
+     "heroid": 54,
+     "delta": 12.3
+    },
+    {
+     "heroid": 123,
+     "delta": 6.75
+    },
+    {
+     "heroid": 7,
+     "delta": 5.19
+    },
+    {
+     "heroid": 33,
+     "delta": 4.97
+    },
+    {
+     "heroid": 104,
+     "delta": 4.73
+    }
+   ]
+  },
+  {
+   "name": "Aurora",
+   "heroid": 36,
+   "pick": 0.35,
+   "win": 48.62,
+   "ban": 0.05,
+   "counters": [
+    {
+     "heroid": 87,
+     "delta": 10.93
+    },
+    {
+     "heroid": 64,
+     "delta": 7.42
+    },
+    {
+     "heroid": 34,
+     "delta": 7.37
+    },
+    {
+     "heroid": 3,
+     "delta": 6.25
+    },
+    {
+     "heroid": 128,
+     "delta": 6.15
+    }
+   ]
+  },
+  {
+   "name": "Belerick",
+   "heroid": 70,
+   "pick": 2.02,
+   "win": 48.57,
+   "ban": 54.31,
+   "counters": [
+    {
+     "heroid": 89,
+     "delta": 5.71
+    },
+    {
+     "heroid": 98,
+     "delta": 4.23
+    },
+    {
+     "heroid": 36,
+     "delta": 3.61
+    },
+    {
+     "heroid": 7,
+     "delta": 3.39
+    },
+    {
+     "heroid": 10,
+     "delta": 3.23
+    }
+   ]
+  },
+  {
+   "name": "Yu Zhong",
+   "heroid": 95,
+   "pick": 0.67,
+   "win": 48.55,
+   "ban": 0.11,
+   "counters": [
+    {
+     "heroid": 54,
+     "delta": 8.96
+    },
+    {
+     "heroid": 23,
+     "delta": 4.82
+    },
+    {
+     "heroid": 83,
+     "delta": 4.68
+    },
+    {
+     "heroid": 9,
+     "delta": 4.2
+    },
+    {
+     "heroid": 18,
+     "delta": 3.54
+    }
+   ]
+  },
+  {
+   "name": "Pharsa",
+   "heroid": 52,
+   "pick": 0.25,
+   "win": 48.45,
+   "ban": 0.02,
+   "counters": [
+    {
+     "heroid": 96,
+     "delta": 11.64
+    },
+    {
+     "heroid": 18,
+     "delta": 8.38
+    },
+    {
+     "heroid": 41,
+     "delta": 8.23
+    },
+    {
+     "heroid": 72,
+     "delta": 7.28
+    },
+    {
+     "heroid": 99,
+     "delta": 7.05
+    }
+   ]
+  },
+  {
+   "name": "Suyou",
+   "heroid": 126,
+   "pick": 1.16,
+   "win": 48.21,
+   "ban": 0.38,
+   "counters": [
+    {
+     "heroid": 28,
+     "delta": 4.07
+    },
+    {
+     "heroid": 47,
+     "delta": 3.72
+    },
+    {
+     "heroid": 48,
+     "delta": 3.43
+    },
+    {
+     "heroid": 111,
+     "delta": 3.04
+    },
+    {
+     "heroid": 54,
+     "delta": 3.04
+    }
+   ]
+  },
+  {
+   "name": "Cyclops",
+   "heroid": 33,
+   "pick": 0.39,
+   "win": 48.17,
+   "ban": 0.06,
+   "counters": [
+    {
+     "heroid": 113,
+     "delta": 6.74
+    },
+    {
+     "heroid": 47,
+     "delta": 5.92
+    },
+    {
+     "heroid": 51,
+     "delta": 5.88
+    },
+    {
+     "heroid": 132,
+     "delta": 5.53
+    },
+    {
+     "heroid": 64,
+     "delta": 5.19
+    }
+   ]
+  },
+  {
+   "name": "Bane",
+   "heroid": 11,
+   "pick": 0.19,
+   "win": 48.17,
+   "ban": 0.06,
+   "counters": [
+    {
+     "heroid": 66,
+     "delta": 10.49
+    },
+    {
+     "heroid": 67,
+     "delta": 8.68
+    },
+    {
+     "heroid": 32,
+     "delta": 6.99
+    },
+    {
+     "heroid": 50,
+     "delta": 6.71
+    },
+    {
+     "heroid": 17,
+     "delta": 6.43
+    }
+   ]
+  },
+  {
+   "name": "Xavier",
+   "heroid": 115,
+   "pick": 0.62,
+   "win": 48.11,
+   "ban": 0.04,
+   "counters": [
+    {
+     "heroid": 2,
+     "delta": 5.55
+    },
+    {
+     "heroid": 83,
+     "delta": 4.21
+    },
+    {
+     "heroid": 71,
+     "delta": 4.04
+    },
+    {
+     "heroid": 76,
+     "delta": 3.48
+    },
+    {
+     "heroid": 104,
+     "delta": 3.47
+    }
+   ]
+  },
+  {
+   "name": "Kaja",
+   "heroid": 62,
+   "pick": 0.99,
+   "win": 48.1,
+   "ban": 35.91,
+   "counters": [
+    {
+     "heroid": 9,
+     "delta": 8.16
+    },
+    {
+     "heroid": 18,
+     "delta": 6.09
+    },
+    {
+     "heroid": 98,
+     "delta": 6.03
+    },
+    {
+     "heroid": 24,
+     "delta": 5.97
+    },
+    {
+     "heroid": 96,
+     "delta": 5.58
+    }
+   ]
+  },
+  {
+   "name": "Valentina",
+   "heroid": 110,
+   "pick": 0.56,
+   "win": 48.07,
+   "ban": 0.33,
+   "counters": [
+    {
+     "heroid": 58,
+     "delta": 8.62
+    },
+    {
+     "heroid": 73,
+     "delta": 5.99
+    },
+    {
+     "heroid": 125,
+     "delta": 5.65
+    },
+    {
+     "heroid": 87,
+     "delta": 5.31
+    },
+    {
+     "heroid": 94,
+     "delta": 5.12
+    }
+   ]
+  },
+  {
+   "name": "Cici",
+   "heroid": 123,
+   "pick": 0.45,
+   "win": 47.97,
+   "ban": 0.19,
+   "counters": [
+    {
+     "heroid": 20,
+     "delta": 9.44
+    },
+    {
+     "heroid": 49,
+     "delta": 8.75
+    },
+    {
+     "heroid": 66,
+     "delta": 7.81
+    },
+    {
+     "heroid": 28,
+     "delta": 7.2
+    },
+    {
+     "heroid": 89,
+     "delta": 6.57
+    }
+   ]
+  },
+  {
+   "name": "Paquito",
+   "heroid": 103,
+   "pick": 2.47,
+   "win": 47.96,
+   "ban": 32.59,
+   "counters": [
+    {
+     "heroid": 83,
+     "delta": 3.23
+    },
+    {
+     "heroid": 47,
+     "delta": 2.81
+    },
+    {
+     "heroid": 101,
+     "delta": 2.69
+    },
+    {
+     "heroid": 61,
+     "delta": 2.4
+    },
+    {
+     "heroid": 20,
+     "delta": 2.27
+    }
+   ]
+  },
+  {
+   "name": "Minsitthar",
+   "heroid": 74,
+   "pick": 0.41,
+   "win": 47.84,
+   "ban": 2.14,
+   "counters": [
+    {
+     "heroid": 87,
+     "delta": 9.37
+    },
+    {
+     "heroid": 96,
+     "delta": 6.73
+    },
+    {
+     "heroid": 90,
+     "delta": 4.84
+    },
+    {
+     "heroid": 35,
+     "delta": 4.42
+    },
+    {
+     "heroid": 101,
+     "delta": 4.39
+    }
+   ]
+  },
+  {
+   "name": "Gusion",
+   "heroid": 56,
+   "pick": 1.03,
+   "win": 47.69,
+   "ban": 1.61,
+   "counters": [
+    {
+     "heroid": 87,
+     "delta": 8.68
+    },
+    {
+     "heroid": 101,
+     "delta": 5.55
+    },
+    {
+     "heroid": 59,
+     "delta": 4.6
+    },
+    {
+     "heroid": 20,
+     "delta": 3.79
+    },
+    {
+     "heroid": 24,
+     "delta": 3.57
+    }
+   ]
+  },
+  {
+   "name": "Thamuz",
+   "heroid": 72,
+   "pick": 0.33,
+   "win": 47.68,
+   "ban": 0.19,
+   "counters": [
+    {
+     "heroid": 74,
+     "delta": 9.32
+    },
+    {
+     "heroid": 54,
+     "delta": 8.62
+    },
+    {
+     "heroid": 47,
+     "delta": 8.29
+    },
+    {
+     "heroid": 90,
+     "delta": 6.93
+    },
+    {
+     "heroid": 85,
+     "delta": 6.2
+    }
+   ]
+  },
+  {
+   "name": "Hanabi",
+   "heroid": 60,
+   "pick": 0.81,
+   "win": 47.59,
+   "ban": 0.98,
+   "counters": [
+    {
+     "heroid": 3,
+     "delta": 5.24
+    },
+    {
+     "heroid": 9,
+     "delta": 4.74
+    },
+    {
+     "heroid": 94,
+     "delta": 4.03
+    },
+    {
+     "heroid": 117,
+     "delta": 3.49
+    },
+    {
+     "heroid": 110,
+     "delta": 3.14
+    }
+   ]
+  },
+  {
+   "name": "Phoveus",
+   "heroid": 106,
+   "pick": 0.23,
+   "win": 47.51,
+   "ban": 0.09,
+   "counters": [
+    {
+     "heroid": 20,
+     "delta": 13.84
+    },
+    {
+     "heroid": 89,
+     "delta": 10.8
+    },
+    {
+     "heroid": 131,
+     "delta": 7.45
+    },
+    {
+     "heroid": 9,
+     "delta": 7.3
+    },
+    {
+     "heroid": 98,
+     "delta": 7.09
+    }
+   ]
+  },
+  {
+   "name": "Terizla",
+   "heroid": 82,
+   "pick": 0.21,
+   "win": 47.2,
+   "ban": 0.02,
+   "counters": [
+    {
+     "heroid": 87,
+     "delta": 9.79
+    },
+    {
+     "heroid": 118,
+     "delta": 8.13
+    },
+    {
+     "heroid": 58,
+     "delta": 7.57
+    },
+    {
+     "heroid": 111,
+     "delta": 7.13
+    },
+    {
+     "heroid": 78,
+     "delta": 5.78
+    }
+   ]
+  },
+  {
+   "name": "Badang",
+   "heroid": 77,
+   "pick": 1.49,
+   "win": 47.15,
+   "ban": 6.65,
+   "counters": [
+    {
+     "heroid": 17,
+     "delta": 4.82
+    },
+    {
+     "heroid": 52,
+     "delta": 4.39
+    },
+    {
+     "heroid": 16,
+     "delta": 4.31
+    },
+    {
+     "heroid": 51,
+     "delta": 3.87
+    },
+    {
+     "heroid": 94,
+     "delta": 3.71
+    }
+   ]
+  },
+  {
+   "name": "Lesley",
+   "heroid": 53,
+   "pick": 1.22,
+   "win": 47.13,
+   "ban": 1.63,
+   "counters": [
+    {
+     "heroid": 20,
+     "delta": 4.83
+    },
+    {
+     "heroid": 58,
+     "delta": 4.07
+    },
+    {
+     "heroid": 37,
+     "delta": 3.19
+    },
+    {
+     "heroid": 78,
+     "delta": 3.03
+    },
+    {
+     "heroid": 59,
+     "delta": 3.02
+    }
+   ]
+  },
+  {
+   "name": "Zetian",
+   "heroid": 129,
+   "pick": 1.58,
+   "win": 47.11,
+   "ban": 0.86,
+   "counters": [
+    {
+     "heroid": 90,
+     "delta": 3.16
+    },
+    {
+     "heroid": 94,
+     "delta": 3.05
+    },
+    {
+     "heroid": 61,
+     "delta": 3.03
+    },
+    {
+     "heroid": 53,
+     "delta": 2.73
+    },
+    {
+     "heroid": 18,
+     "delta": 2.7
+    }
+   ]
+  },
+  {
+   "name": "Wanwan",
+   "heroid": 89,
+   "pick": 0.13,
+   "win": 47.11,
+   "ban": 0.03,
+   "counters": [
+    {
+     "heroid": 121,
+     "delta": 10.78
+    },
+    {
+     "heroid": 49,
+     "delta": 9.76
+    },
+    {
+     "heroid": 85,
+     "delta": 8.51
+    },
+    {
+     "heroid": 51,
+     "delta": 8.07
+    },
+    {
+     "heroid": 48,
+     "delta": 7.89
+    }
+   ]
+  },
+  {
+   "name": "Vexana",
+   "heroid": 38,
+   "pick": 0.7,
+   "win": 46.88,
+   "ban": 0.13,
+   "counters": [
+    {
+     "heroid": 94,
+     "delta": 6.21
+    },
+    {
+     "heroid": 104,
+     "delta": 5.09
+    },
+    {
+     "heroid": 20,
+     "delta": 5
+    },
+    {
+     "heroid": 11,
+     "delta": 4.25
+    },
+    {
+     "heroid": 98,
+     "delta": 4.23
+    }
+   ]
+  },
+  {
+   "name": "Claude",
+   "heroid": 65,
+   "pick": 0.99,
+   "win": 46.76,
+   "ban": 0.07,
+   "counters": [
+    {
+     "heroid": 124,
+     "delta": 7.15
+    },
+    {
+     "heroid": 101,
+     "delta": 5.25
+    },
+    {
+     "heroid": 47,
+     "delta": 5.03
+    },
+    {
+     "heroid": 64,
+     "delta": 3.92
+    },
+    {
+     "heroid": 95,
+     "delta": 3.55
+    }
+   ]
+  },
+  {
+   "name": "Mathilda",
+   "heroid": 102,
+   "pick": 0.33,
+   "win": 46.76,
+   "ban": 0.41,
+   "counters": [
+    {
+     "heroid": 52,
+     "delta": 9.59
+    },
+    {
+     "heroid": 47,
+     "delta": 6.24
+    },
+    {
+     "heroid": 41,
+     "delta": 6.06
+    },
+    {
+     "heroid": 50,
+     "delta": 5.8
+    },
+    {
+     "heroid": 45,
+     "delta": 4.7
+    }
+   ]
+  },
+  {
+   "name": "Vale",
+   "heroid": 66,
+   "pick": 0.19,
+   "win": 46.75,
+   "ban": 0.02,
+   "counters": [
+    {
+     "heroid": 24,
+     "delta": 10.68
+    },
+    {
+     "heroid": 3,
+     "delta": 8.48
+    },
+    {
+     "heroid": 20,
+     "delta": 7.78
+    },
+    {
+     "heroid": 39,
+     "delta": 7.52
+    },
+    {
+     "heroid": 18,
+     "delta": 7.19
+    }
+   ]
+  },
+  {
+   "name": "Esmeralda",
+   "heroid": 81,
+   "pick": 0.92,
+   "win": 46.74,
+   "ban": 1.07,
+   "counters": [
+    {
+     "heroid": 98,
+     "delta": 9.33
+    },
+    {
+     "heroid": 20,
+     "delta": 7.85
+    },
+    {
+     "heroid": 44,
+     "delta": 7.45
+    },
+    {
+     "heroid": 102,
+     "delta": 6.55
+    },
+    {
+     "heroid": 94,
+     "delta": 6.22
+    }
+   ]
+  },
+  {
+   "name": "Alucard",
+   "heroid": 7,
+   "pick": 0.36,
+   "win": 46.71,
+   "ban": 0.07,
+   "counters": [
+    {
+     "heroid": 96,
+     "delta": 7.55
+    },
+    {
+     "heroid": 24,
+     "delta": 7.1
+    },
+    {
+     "heroid": 124,
+     "delta": 6.64
+    },
+    {
+     "heroid": 64,
+     "delta": 6.16
+    },
+    {
+     "heroid": 89,
+     "delta": 4.44
+    }
+   ]
+  },
+  {
+   "name": "Akai",
+   "heroid": 9,
+   "pick": 0.26,
+   "win": 46.6,
+   "ban": 0.36,
+   "counters": [
+    {
+     "heroid": 35,
+     "delta": 13.64
+    },
+    {
+     "heroid": 74,
+     "delta": 11.19
+    },
+    {
+     "heroid": 24,
+     "delta": 10
+    },
+    {
+     "heroid": 3,
+     "delta": 8.12
+    },
+    {
+     "heroid": 64,
+     "delta": 6.42
+    }
+   ]
+  },
+  {
+   "name": "Johnson",
+   "heroid": 32,
+   "pick": 0.27,
+   "win": 46.4,
+   "ban": 0.34,
+   "counters": [
+    {
+     "heroid": 20,
+     "delta": 19.94
+    },
+    {
+     "heroid": 101,
+     "delta": 17.22
+    },
+    {
+     "heroid": 124,
+     "delta": 14.88
+    },
+    {
+     "heroid": 98,
+     "delta": 8.64
+    },
+    {
+     "heroid": 113,
+     "delta": 8.49
+    }
+   ]
+  },
+  {
+   "name": "Angela",
+   "heroid": 55,
+   "pick": 2.02,
+   "win": 46.34,
+   "ban": 5.86,
+   "counters": [
+    {
+     "heroid": 76,
+     "delta": 4.44
+    },
+    {
+     "heroid": 83,
+     "delta": 4.14
+    },
+    {
+     "heroid": 108,
+     "delta": 3.74
+    },
+    {
+     "heroid": 115,
+     "delta": 3.66
+    },
+    {
+     "heroid": 132,
+     "delta": 3.65
+    }
+   ]
+  },
+  {
+   "name": "Julian",
+   "heroid": 116,
+   "pick": 0.43,
+   "win": 46.3,
+   "ban": 0.1,
+   "counters": [
+    {
+     "heroid": 16,
+     "delta": 6.53
+    },
+    {
+     "heroid": 123,
+     "delta": 6.26
+    },
+    {
+     "heroid": 64,
+     "delta": 5.46
+    },
+    {
+     "heroid": 83,
+     "delta": 5.22
+    },
+    {
+     "heroid": 59,
+     "delta": 5.22
+    }
+   ]
+  },
+  {
+   "name": "Sun",
+   "heroid": 27,
+   "pick": 1.08,
+   "win": 46.28,
+   "ban": 4.06,
+   "counters": [
+    {
+     "heroid": 54,
+     "delta": 7.26
+    },
+    {
+     "heroid": 106,
+     "delta": 6.58
+    },
+    {
+     "heroid": 42,
+     "delta": 4.54
+    },
+    {
+     "heroid": 32,
+     "delta": 3.43
+    },
+    {
+     "heroid": 123,
+     "delta": 3.31
+    }
+   ]
+  },
+  {
+   "name": "Khaleed",
+   "heroid": 98,
+   "pick": 0.14,
+   "win": 46.28,
+   "ban": 0.04,
+   "counters": [
+    {
+     "heroid": 89,
+     "delta": 15.65
+    },
+    {
+     "heroid": 113,
+     "delta": 14.72
+    },
+    {
+     "heroid": 44,
+     "delta": 11.89
+    },
+    {
+     "heroid": 47,
+     "delta": 10.59
+    },
+    {
+     "heroid": 2,
+     "delta": 9.59
+    }
+   ]
+  },
+  {
+   "name": "Lapu-Lapu",
+   "heroid": 37,
+   "pick": 0.43,
+   "win": 46.24,
+   "ban": 0.03,
+   "counters": [
+    {
+     "heroid": 50,
+     "delta": 7.91
+    },
+    {
+     "heroid": 41,
+     "delta": 6.31
+    },
+    {
+     "heroid": 24,
+     "delta": 6.1
+    },
+    {
+     "heroid": 90,
+     "delta": 5.5
+    },
+    {
+     "heroid": 94,
+     "delta": 4.96
+    }
+   ]
+  },
+  {
+   "name": "Grock",
+   "heroid": 44,
+   "pick": 0.26,
+   "win": 46.2,
+   "ban": 0.21,
+   "counters": [
+    {
+     "heroid": 20,
+     "delta": 28.64
+    },
+    {
+     "heroid": 23,
+     "delta": 5.57
+    },
+    {
+     "heroid": 39,
+     "delta": 5.53
+    },
+    {
+     "heroid": 89,
+     "delta": 5.46
+    },
+    {
+     "heroid": 67,
+     "delta": 5.45
+    }
+   ]
+  },
+  {
+   "name": "Luo Yi",
+   "heroid": 96,
+   "pick": 0.16,
+   "win": 46.13,
+   "ban": 0.02,
+   "counters": [
+    {
+     "heroid": 54,
+     "delta": 23.33
+    },
+    {
+     "heroid": 128,
+     "delta": 17.57
+    },
+    {
+     "heroid": 16,
+     "delta": 17.54
+    },
+    {
+     "heroid": 20,
+     "delta": 11.92
+    },
+    {
+     "heroid": 87,
+     "delta": 11.22
+    }
+   ]
+  },
+  {
+   "name": "Helcurt",
+   "heroid": 51,
+   "pick": 0.24,
+   "win": 45.93,
+   "ban": 0.9,
+   "counters": [
+    {
+     "heroid": 41,
+     "delta": 13.23
+    },
+    {
+     "heroid": 34,
+     "delta": 6.88
+    },
+    {
+     "heroid": 106,
+     "delta": 5.8
+    },
+    {
+     "heroid": 49,
+     "delta": 5.45
+    },
+    {
+     "heroid": 125,
+     "delta": 4.49
+    }
+   ]
+  },
+  {
+   "name": "Silvanna",
+   "heroid": 90,
+   "pick": 0.23,
+   "win": 45.83,
+   "ban": 0.13,
+   "counters": [
+    {
+     "heroid": 20,
+     "delta": 15.52
+    },
+    {
+     "heroid": 11,
+     "delta": 9.08
+    },
+    {
+     "heroid": 124,
+     "delta": 8.3
+    },
+    {
+     "heroid": 123,
+     "delta": 7.51
+    },
+    {
+     "heroid": 132,
+     "delta": 5.11
+    }
+   ]
+  },
+  {
+   "name": "Hayabusa",
+   "heroid": 21,
+   "pick": 0.94,
+   "win": 45.81,
+   "ban": 0.34,
+   "counters": [
+    {
+     "heroid": 124,
+     "delta": 5.91
+    },
+    {
+     "heroid": 87,
+     "delta": 5.54
+    },
+    {
+     "heroid": 83,
+     "delta": 4.83
+    },
+    {
+     "heroid": 42,
+     "delta": 4.81
+    },
+    {
+     "heroid": 24,
+     "delta": 4.22
+    }
+   ]
+  },
+  {
+   "name": "Martis",
+   "heroid": 58,
+   "pick": 0.29,
+   "win": 45.77,
+   "ban": 0.07,
+   "counters": [
+    {
+     "heroid": 20,
+     "delta": 10.27
+    },
+    {
+     "heroid": 54,
+     "delta": 8.91
+    },
+    {
+     "heroid": 111,
+     "delta": 8.47
+    },
+    {
+     "heroid": 94,
+     "delta": 7.22
+    },
+    {
+     "heroid": 85,
+     "delta": 6.72
+    }
+   ]
+  },
+  {
+   "name": "Kalea",
+   "heroid": 128,
+   "pick": 0.19,
+   "win": 45.29,
+   "ban": 0.26,
+   "counters": [
+    {
+     "heroid": 16,
+     "delta": 16.28
+    },
+    {
+     "heroid": 106,
+     "delta": 13.19
+    },
+    {
+     "heroid": 124,
+     "delta": 10.91
+    },
+    {
+     "heroid": 123,
+     "delta": 8.3
+    },
+    {
+     "heroid": 113,
+     "delta": 7.1
+    }
+   ]
+  },
+  {
+   "name": "Gatotkaca",
+   "heroid": 41,
+   "pick": 0.21,
+   "win": 45.21,
+   "ban": 0.04,
+   "counters": [
+    {
+     "heroid": 87,
+     "delta": 15
+    },
+    {
+     "heroid": 20,
+     "delta": 13.6
+    },
+    {
+     "heroid": 111,
+     "delta": 9.01
+    },
+    {
+     "heroid": 60,
+     "delta": 9
+    },
+    {
+     "heroid": 44,
+     "delta": 8.54
+    }
+   ]
+  },
+  {
+   "name": "X.Borg",
+   "heroid": 83,
+   "pick": 0.35,
+   "win": 44.94,
+   "ban": 0.22,
+   "counters": [
+    {
+     "heroid": 20,
+     "delta": 13.54
+    },
+    {
+     "heroid": 106,
+     "delta": 10.78
+    },
+    {
+     "heroid": 2,
+     "delta": 9.65
+    },
+    {
+     "heroid": 60,
+     "delta": 9.21
+    },
+    {
+     "heroid": 32,
+     "delta": 8.24
+    }
+   ]
+  },
+  {
+   "name": "Fanny",
+   "heroid": 17,
+   "pick": 0.78,
+   "win": 44.73,
+   "ban": 1.7,
+   "counters": [
+    {
+     "heroid": 50,
+     "delta": 8.83
+    },
+    {
+     "heroid": 2,
+     "delta": 7.61
+    },
+    {
+     "heroid": 8,
+     "delta": 4.1
+    },
+    {
+     "heroid": 16,
+     "delta": 3.78
+    },
+    {
+     "heroid": 58,
+     "delta": 3.71
+    }
+   ]
+  },
+  {
+   "name": "Karina",
+   "heroid": 8,
+   "pick": 0.44,
+   "win": 44.73,
+   "ban": 0.67,
+   "counters": [
+    {
+     "heroid": 87,
+     "delta": 9.25
+    },
+    {
+     "heroid": 107,
+     "delta": 6.53
+    },
+    {
+     "heroid": 90,
+     "delta": 6.5
+    },
+    {
+     "heroid": 60,
+     "delta": 6.47
+    },
+    {
+     "heroid": 24,
+     "delta": 5.64
+    }
+   ]
+  },
+  {
+   "name": "Karrie",
+   "heroid": 40,
+   "pick": 0.54,
+   "win": 44.48,
+   "ban": 0.58,
+   "counters": [
+    {
+     "heroid": 87,
+     "delta": 7.65
+    },
+    {
+     "heroid": 49,
+     "delta": 7.02
+    },
+    {
+     "heroid": 90,
+     "delta": 6.69
+    },
+    {
+     "heroid": 16,
+     "delta": 6.58
+    },
+    {
+     "heroid": 61,
+     "delta": 6.36
+    }
+   ]
+  },
+  {
+   "name": "Jawhead",
+   "heroid": 54,
+   "pick": 0.11,
+   "win": 44.48,
+   "ban": 0.05,
+   "counters": [
+    {
+     "heroid": 16,
+     "delta": 18.16
+    },
+    {
+     "heroid": 101,
+     "delta": 14.65
+    },
+    {
+     "heroid": 111,
+     "delta": 13.59
+    },
+    {
+     "heroid": 32,
+     "delta": 12.91
+    },
+    {
+     "heroid": 24,
+     "delta": 12.31
+    }
+   ]
+  },
+  {
+   "name": "Alpha",
+   "heroid": 28,
+   "pick": 0.38,
+   "win": 44.32,
+   "ban": 0.07,
+   "counters": [
+    {
+     "heroid": 49,
+     "delta": 11.28
+    },
+    {
+     "heroid": 3,
+     "delta": 8.41
+    },
+    {
+     "heroid": 106,
+     "delta": 8.27
+    },
+    {
+     "heroid": 41,
+     "delta": 6.82
+    },
+    {
+     "heroid": 51,
+     "delta": 5.62
+    }
+   ]
+  },
+  {
+   "name": "Layla",
+   "heroid": 18,
+   "pick": 0.26,
+   "win": 43.97,
+   "ban": 0.23,
+   "counters": [
+    {
+     "heroid": 33,
+     "delta": 6.43
+    },
+    {
+     "heroid": 120,
+     "delta": 5.92
+    },
+    {
+     "heroid": 64,
+     "delta": 5.83
+    },
+    {
+     "heroid": 36,
+     "delta": 5.62
+    },
+    {
+     "heroid": 48,
+     "delta": 5.14
+    }
+   ]
+  },
+  {
+   "name": "Hilda",
+   "heroid": 35,
+   "pick": 0.16,
+   "win": 43.95,
+   "ban": 0.26,
+   "counters": [
+    {
+     "heroid": 90,
+     "delta": 10.93
+    },
+    {
+     "heroid": 59,
+     "delta": 9.12
+    },
+    {
+     "heroid": 120,
+     "delta": 9.02
+    },
+    {
+     "heroid": 7,
+     "delta": 8.94
+    },
+    {
+     "heroid": 124,
+     "delta": 8.61
+    }
+   ]
+  },
+  {
+   "name": "Hylos",
+   "heroid": 49,
+   "pick": 0.23,
+   "win": 43.85,
+   "ban": 0.05,
+   "counters": [
+    {
+     "heroid": 20,
+     "delta": 23.29
+    },
+    {
+     "heroid": 90,
+     "delta": 17.21
+    },
+    {
+     "heroid": 113,
+     "delta": 12.09
+    },
+    {
+     "heroid": 54,
+     "delta": 8.7
+    },
+    {
+     "heroid": 120,
+     "delta": 7.88
+    }
+   ]
+  },
+  {
+   "name": "Hanzo",
+   "heroid": 69,
+   "pick": 0.4,
+   "win": 43.47,
+   "ban": 5.76,
+   "counters": [
+    {
+     "heroid": 94,
+     "delta": 8.47
+    },
+    {
+     "heroid": 18,
+     "delta": 6.87
+    },
+    {
+     "heroid": 101,
+     "delta": 6.4
+    },
+    {
+     "heroid": 11,
+     "delta": 5.88
+    },
+    {
+     "heroid": 38,
+     "delta": 4.73
+    }
+   ]
+  },
+  {
+   "name": "Chou",
+   "heroid": 26,
+   "pick": 0.81,
+   "win": 43.29,
+   "ban": 0.93,
+   "counters": [
+    {
+     "heroid": 83,
+     "delta": 5.08
+    },
+    {
+     "heroid": 101,
+     "delta": 4.75
+    },
+    {
+     "heroid": 17,
+     "delta": 4.64
+    },
+    {
+     "heroid": 113,
+     "delta": 4.09
+    },
+    {
+     "heroid": 125,
+     "delta": 3.97
+    }
+   ]
+  },
+  {
+   "name": "Chang'e",
+   "heroid": 61,
+   "pick": 0.3,
+   "win": 42.95,
+   "ban": 0.04,
+   "counters": [
+    {
+     "heroid": 124,
+     "delta": 14.22
+    },
+    {
+     "heroid": 76,
+     "delta": 14.17
+    },
+    {
+     "heroid": 51,
+     "delta": 7.47
+    },
+    {
+     "heroid": 89,
+     "delta": 7.2
+    },
+    {
+     "heroid": 109,
+     "delta": 6.67
+    }
+   ]
+  },
+  {
+   "name": "Nana",
+   "heroid": 5,
+   "pick": 0.6,
+   "win": 42.48,
+   "ban": 0.3,
+   "counters": [
+    {
+     "heroid": 34,
+     "delta": 5.88
+    },
+    {
+     "heroid": 89,
+     "delta": 5.34
+    },
+    {
+     "heroid": 47,
+     "delta": 4.88
+    },
+    {
+     "heroid": 109,
+     "delta": 4.79
+    },
+    {
+     "heroid": 39,
+     "delta": 4.03
+    }
+   ]
+  },
+  {
+   "name": "Balmond",
+   "heroid": 2,
+   "pick": 0.19,
+   "win": 42.38,
+   "ban": 0.09,
+   "counters": [
+    {
+     "heroid": 24,
+     "delta": 14.79
+    },
+    {
+     "heroid": 6,
+     "delta": 7.9
+    },
+    {
+     "heroid": 50,
+     "delta": 7.07
+    },
+    {
+     "heroid": 106,
+     "delta": 6.79
+    },
+    {
+     "heroid": 32,
+     "delta": 6.65
+    }
+   ]
+  },
+  {
+   "name": "Tigreal",
+   "heroid": 6,
+   "pick": 0.72,
+   "win": 41.69,
+   "ban": 1.11,
+   "counters": [
+    {
+     "heroid": 24,
+     "delta": 7.43
+    },
+    {
+     "heroid": 98,
+     "delta": 6.72
+    },
+    {
+     "heroid": 32,
+     "delta": 5.8
+    },
+    {
+     "heroid": 51,
+     "delta": 4.71
+    },
+    {
+     "heroid": 10,
+     "delta": 4.59
+    }
+   ]
+  },
+  {
+   "name": "Roger",
+   "heroid": 39,
+   "pick": 0.17,
+   "win": 41.12,
+   "ban": 0.03,
+   "counters": [
+    {
+     "heroid": 24,
+     "delta": 11.85
+    },
+    {
+     "heroid": 124,
+     "delta": 11.36
+    },
+    {
+     "heroid": 74,
+     "delta": 10.75
+    },
+    {
+     "heroid": 54,
+     "delta": 10.57
+    },
+    {
+     "heroid": 2,
+     "delta": 9.74
+    }
+   ]
+  },
+  {
+   "name": "Lancelot",
+   "heroid": 47,
+   "pick": 0.34,
+   "win": 40.84,
+   "ban": 0.06,
+   "counters": [
+    {
+     "heroid": 124,
+     "delta": 11.29
+    },
+    {
+     "heroid": 54,
+     "delta": 8.18
+    },
+    {
+     "heroid": 82,
+     "delta": 7.67
+    },
+    {
+     "heroid": 96,
+     "delta": 7.63
+    },
+    {
+     "heroid": 49,
+     "delta": 6.77
+    }
+   ]
+  },
+  {
+   "name": "Zilong",
+   "heroid": 16,
+   "pick": 0.11,
+   "win": 40.23,
+   "ban": 0.11,
+   "counters": [
+    {
+     "heroid": 123,
+     "delta": 17.39
+    },
+    {
+     "heroid": 61,
+     "delta": 11.89
+    },
+    {
+     "heroid": 11,
+     "delta": 11.48
+    },
+    {
+     "heroid": 24,
+     "delta": 10.91
+    },
+    {
+     "heroid": 74,
+     "delta": 10.74
+    }
+   ]
+  },
+  {
+   "name": "Franco",
+   "heroid": 10,
+   "pick": 0.34,
+   "win": 35.62,
+   "ban": 0.85,
+   "counters": [
+    {
+     "heroid": 9,
+     "delta": 10.63
+    },
+    {
+     "heroid": 47,
+     "delta": 8.04
+    },
+    {
+     "heroid": 72,
+     "delta": 7.03
+    },
+    {
+     "heroid": 124,
+     "delta": 6.9
+    },
+    {
+     "heroid": 110,
+     "delta": 6.18
+    }
+   ]
+  }
+ ],
+ "mt1": [
+  {
+   "name": "Aulus",
+   "heroid": 108,
+   "pick": 1.67,
+   "win": 61.38,
+   "ban": 69.4,
+   "counters": [
+    {
+     "heroid": 90,
+     "delta": 5.53
+    },
+    {
+     "heroid": 123,
+     "delta": 4.59
+    },
+    {
+     "heroid": 61,
+     "delta": 4.25
+    },
+    {
+     "heroid": 58,
+     "delta": 4.22
+    },
+    {
+     "heroid": 82,
+     "delta": 3.97
+    }
+   ]
+  },
+  {
+   "name": "Masha",
+   "heroid": 88,
+   "pick": 1.1,
+   "win": 60.17,
+   "ban": 71.32,
+   "counters": [
+    {
+     "heroid": 16,
+     "delta": 7.78
+    },
+    {
+     "heroid": 51,
+     "delta": 4.68
+    },
+    {
+     "heroid": 24,
+     "delta": 3.9
+    },
+    {
+     "heroid": 59,
+     "delta": 3.56
+    },
+    {
+     "heroid": 87,
+     "delta": 3.41
+    }
+   ]
+  },
+  {
+   "name": "Rafaela",
+   "heroid": 14,
+   "pick": 1.98,
+   "win": 58.04,
+   "ban": 31.85,
+   "counters": [
+    {
+     "heroid": 6,
+     "delta": 9.06
+    },
+    {
+     "heroid": 62,
+     "delta": 8.4
+    },
+    {
+     "heroid": 128,
+     "delta": 6.58
+    },
+    {
+     "heroid": 93,
+     "delta": 6.54
+    },
+    {
+     "heroid": 20,
+     "delta": 6.49
+    }
+   ]
+  },
+  {
+   "name": "Diggie",
+   "heroid": 48,
+   "pick": 0.45,
+   "win": 56.72,
+   "ban": 12.03,
+   "counters": [
+    {
+     "heroid": 124,
+     "delta": 7.64
+    },
+    {
+     "heroid": 24,
+     "delta": 7.21
+    },
+    {
+     "heroid": 44,
+     "delta": 7.06
+    },
+    {
+     "heroid": 35,
+     "delta": 6.46
+    },
+    {
+     "heroid": 58,
+     "delta": 5.65
+    }
+   ]
+  },
+  {
+   "name": "Marcel",
+   "heroid": 132,
+   "pick": 0.47,
+   "win": 56.21,
+   "ban": 80.37,
+   "counters": [
+    {
+     "heroid": 34,
+     "delta": 25.57
+    },
+    {
+     "heroid": 16,
+     "delta": 11.41
+    },
+    {
+     "heroid": 20,
+     "delta": 9.98
+    },
+    {
+     "heroid": 93,
+     "delta": 8.02
+    },
+    {
+     "heroid": 78,
+     "delta": 7.66
+    }
+   ]
+  },
+  {
+   "name": "Baxia",
+   "heroid": 87,
+   "pick": 0.12,
+   "win": 56.17,
+   "ban": 0.09,
+   "counters": [
+    {
+     "heroid": 128,
+     "delta": 16.52
+    },
+    {
+     "heroid": 16,
+     "delta": 11.58
+    },
+    {
+     "heroid": 64,
+     "delta": 11.27
+    },
+    {
+     "heroid": 69,
+     "delta": 10.36
+    },
+    {
+     "heroid": 35,
+     "delta": 9.87
+    }
+   ]
+  },
+  {
+   "name": "Odette",
+   "heroid": 46,
+   "pick": 0.62,
+   "win": 54.34,
+   "ban": 0.17,
+   "counters": [
+    {
+     "heroid": 52,
+     "delta": 12.06
+    },
+    {
+     "heroid": 23,
+     "delta": 11.92
+    },
+    {
+     "heroid": 66,
+     "delta": 11.4
+    },
+    {
+     "heroid": 68,
+     "delta": 11.22
+    },
+    {
+     "heroid": 101,
+     "delta": 8.43
+    }
+   ]
+  },
+  {
+   "name": "Chip",
+   "heroid": 124,
+   "pick": 0.09,
+   "win": 54.18,
+   "ban": 0.43,
+   "counters": [
+    {
+     "heroid": 49,
+     "delta": 26.98
+    },
+    {
+     "heroid": 112,
+     "delta": 22.43
+    },
+    {
+     "heroid": 120,
+     "delta": 13.56
+    },
+    {
+     "heroid": 53,
+     "delta": 11.82
+    },
+    {
+     "heroid": 68,
+     "delta": 11.58
+    }
+   ]
+  },
+  {
+   "name": "Minotaur",
+   "heroid": 19,
+   "pick": 2.12,
+   "win": 54.07,
+   "ban": 21.37,
+   "counters": [
+    {
+     "heroid": 10,
+     "delta": 8.86
+    },
+    {
+     "heroid": 16,
+     "delta": 5.79
+    },
+    {
+     "heroid": 62,
+     "delta": 5.64
+    },
+    {
+     "heroid": 93,
+     "delta": 4.84
+    },
+    {
+     "heroid": 6,
+     "delta": 4.81
+    }
+   ]
+  },
+  {
+   "name": "Yve",
+   "heroid": 101,
+   "pick": 0.15,
+   "win": 53.95,
+   "ban": 0.02,
+   "counters": [
+    {
+     "heroid": 61,
+     "delta": 53.13
+    },
+    {
+     "heroid": 57,
+     "delta": 29.92
+    },
+    {
+     "heroid": 5,
+     "delta": 28.61
+    },
+    {
+     "heroid": 76,
+     "delta": 23.96
+    },
+    {
+     "heroid": 16,
+     "delta": 20.61
+    }
+   ]
+  },
+  {
+   "name": "Khufra",
+   "heroid": 78,
+   "pick": 0.81,
+   "win": 53.73,
+   "ban": 8.02,
+   "counters": [
+    {
+     "heroid": 35,
+     "delta": 17.05
+    },
+    {
+     "heroid": 20,
+     "delta": 12.46
+    },
+    {
+     "heroid": 51,
+     "delta": 11.34
+    },
+    {
+     "heroid": 128,
+     "delta": 10.99
+    },
+    {
+     "heroid": 44,
+     "delta": 8.7
+    }
+   ]
+  },
+  {
+   "name": "Argus",
+   "heroid": 45,
+   "pick": 0.56,
+   "win": 53.63,
+   "ban": 0.47,
+   "counters": [
+    {
+     "heroid": 82,
+     "delta": 23.17
+    },
+    {
+     "heroid": 64,
+     "delta": 11.65
+    },
+    {
+     "heroid": 106,
+     "delta": 11.35
+    },
+    {
+     "heroid": 98,
+     "delta": 6.68
+    },
+    {
+     "heroid": 32,
+     "delta": 6.2
+    }
+   ]
+  },
+  {
+   "name": "Carmilla",
+   "heroid": 92,
+   "pick": 1.9,
+   "win": 53.62,
+   "ban": 45.36,
+   "counters": [
+    {
+     "heroid": 9,
+     "delta": 8.4
+    },
+    {
+     "heroid": 10,
+     "delta": 8.33
+    },
+    {
+     "heroid": 102,
+     "delta": 8.28
+    },
+    {
+     "heroid": 49,
+     "delta": 7.49
+    },
+    {
+     "heroid": 124,
+     "delta": 6.87
+    }
+   ]
+  },
+  {
+   "name": "Floryn",
+   "heroid": 112,
+   "pick": 1.99,
+   "win": 53.43,
+   "ban": 16.31,
+   "counters": [
+    {
+     "heroid": 124,
+     "delta": 22.43
+    },
+    {
+     "heroid": 32,
+     "delta": 20.91
+    },
+    {
+     "heroid": 20,
+     "delta": 12.76
+    },
+    {
+     "heroid": 6,
+     "delta": 10.08
+    },
+    {
+     "heroid": 24,
+     "delta": 9.4
+    }
+   ]
+  },
+  {
+   "name": "Freya",
+   "heroid": 22,
+   "pick": 0.7,
+   "win": 53.42,
+   "ban": 1.27,
+   "counters": [
+    {
+     "heroid": 54,
+     "delta": 8.99
+    },
+    {
+     "heroid": 32,
+     "delta": 8.91
+    },
+    {
+     "heroid": 64,
+     "delta": 7.81
+    },
+    {
+     "heroid": 61,
+     "delta": 7.54
+    },
+    {
+     "heroid": 24,
+     "delta": 7.01
+    }
+   ]
+  },
+  {
+   "name": "Zhuxin",
+   "heroid": 125,
+   "pick": 0.65,
+   "win": 53.36,
+   "ban": 0.46,
+   "counters": [
+    {
+     "heroid": 5,
+     "delta": 31.75
+    },
+    {
+     "heroid": 36,
+     "delta": 20.23
+    },
+    {
+     "heroid": 96,
+     "delta": 17.17
+    },
+    {
+     "heroid": 115,
+     "delta": 16.02
+    },
+    {
+     "heroid": 101,
+     "delta": 14.15
+    }
+   ]
+  },
+  {
+   "name": "Kadita",
+   "heroid": 75,
+   "pick": 1.31,
+   "win": 53.18,
+   "ban": 2.9,
+   "counters": [
+    {
+     "heroid": 2,
+     "delta": 7.08
+    },
+    {
+     "heroid": 52,
+     "delta": 5.94
+    },
+    {
+     "heroid": 98,
+     "delta": 4.48
+    },
+    {
+     "heroid": 64,
+     "delta": 4.31
+    },
+    {
+     "heroid": 96,
+     "delta": 4.18
+    }
+   ]
+  },
+  {
+   "name": "Saber",
+   "heroid": 3,
+   "pick": 0.43,
+   "win": 53.13,
+   "ban": 2.34,
+   "counters": [
+    {
+     "heroid": 34,
+     "delta": 8.3
+    },
+    {
+     "heroid": 124,
+     "delta": 8.16
+    },
+    {
+     "heroid": 121,
+     "delta": 6.98
+    },
+    {
+     "heroid": 71,
+     "delta": 6.01
+    },
+    {
+     "heroid": 58,
+     "delta": 5.44
+    }
+   ]
+  },
+  {
+   "name": "Hirara",
+   "heroid": 133,
+   "pick": 0.76,
+   "win": 53,
+   "ban": 91.01,
+   "counters": [
+    {
+     "heroid": 122,
+     "delta": 6.73
+    },
+    {
+     "heroid": 16,
+     "delta": 6.2
+    },
+    {
+     "heroid": 33,
+     "delta": 6.07
+    },
+    {
+     "heroid": 49,
+     "delta": 5.27
+    },
+    {
+     "heroid": 128,
+     "delta": 5.18
+    }
+   ]
+  },
+  {
+   "name": "Beatrix",
+   "heroid": 105,
+   "pick": 1.34,
+   "win": 52.69,
+   "ban": 1.52,
+   "counters": [
+    {
+     "heroid": 65,
+     "delta": 19.3
+    },
+    {
+     "heroid": 53,
+     "delta": 14.07
+    },
+    {
+     "heroid": 73,
+     "delta": 8.76
+    },
+    {
+     "heroid": 89,
+     "delta": 8.53
+    },
+    {
+     "heroid": 6,
+     "delta": 6.85
+    }
+   ]
+  },
+  {
+   "name": "Bruno",
+   "heroid": 12,
+   "pick": 0.88,
+   "win": 52.5,
+   "ban": 0.26,
+   "counters": [
+    {
+     "heroid": 89,
+     "delta": 25.39
+    },
+    {
+     "heroid": 121,
+     "delta": 8.13
+    },
+    {
+     "heroid": 31,
+     "delta": 7.09
+    },
+    {
+     "heroid": 94,
+     "delta": 5.96
+    },
+    {
+     "heroid": 100,
+     "delta": 5.64
+    }
+   ]
+  },
+  {
+   "name": "Obsidia",
+   "heroid": 130,
+   "pick": 3.53,
+   "win": 52.33,
+   "ban": 21.67,
+   "counters": [
+    {
+     "heroid": 89,
+     "delta": 28.34
+    },
+    {
+     "heroid": 40,
+     "delta": 13.21
+    },
+    {
+     "heroid": 121,
+     "delta": 11.32
+    },
+    {
+     "heroid": 105,
+     "delta": 6.76
+    },
+    {
+     "heroid": 73,
+     "delta": 6.62
+    }
+   ]
+  },
+  {
+   "name": "Fredrinn",
+   "heroid": 117,
+   "pick": 0.97,
+   "win": 52.25,
+   "ban": 2.16,
+   "counters": [
+    {
+     "heroid": 2,
+     "delta": 13.85
+    },
+    {
+     "heroid": 8,
+     "delta": 11.08
+    },
+    {
+     "heroid": 54,
+     "delta": 7.98
+    },
+    {
+     "heroid": 90,
+     "delta": 5.54
+    },
+    {
+     "heroid": 32,
+     "delta": 5.21
+    }
+   ]
+  },
+  {
+   "name": "Faramis",
+   "heroid": 76,
+   "pick": 0.19,
+   "win": 52.1,
+   "ban": 0.23,
+   "counters": [
+    {
+     "heroid": 101,
+     "delta": 23.96
+    },
+    {
+     "heroid": 10,
+     "delta": 13.09
+    },
+    {
+     "heroid": 35,
+     "delta": 12.53
+    },
+    {
+     "heroid": 90,
+     "delta": 10.65
+    },
+    {
+     "heroid": 42,
+     "delta": 7.44
+    }
+   ]
+  },
+  {
+   "name": "Popol and Kupa",
+   "heroid": 94,
+   "pick": 0.25,
+   "win": 51.99,
+   "ban": 0.07,
+   "counters": [
+    {
+     "heroid": 24,
+     "delta": 9.39
+    },
+    {
+     "heroid": 39,
+     "delta": 9.18
+    },
+    {
+     "heroid": 74,
+     "delta": 8.47
+    },
+    {
+     "heroid": 101,
+     "delta": 8.08
+    },
+    {
+     "heroid": 89,
+     "delta": 7.66
+    }
+   ]
+  },
+  {
+   "name": "Ixia",
+   "heroid": 121,
+   "pick": 0.67,
+   "win": 51.88,
+   "ban": 0.82,
+   "counters": [
+    {
+     "heroid": 114,
+     "delta": 27.6
+    },
+    {
+     "heroid": 53,
+     "delta": 24.07
+    },
+    {
+     "heroid": 100,
+     "delta": 16.2
+    },
+    {
+     "heroid": 40,
+     "delta": 13.66
+    },
+    {
+     "heroid": 130,
+     "delta": 11.32
+    }
+   ]
+  },
+  {
+   "name": "Cecilion",
+   "heroid": 91,
+   "pick": 0.91,
+   "win": 51.85,
+   "ban": 0.08,
+   "counters": [
+    {
+     "heroid": 52,
+     "delta": 9.31
+    },
+    {
+     "heroid": 39,
+     "delta": 6.35
+    },
+    {
+     "heroid": 11,
+     "delta": 5.9
+    },
+    {
+     "heroid": 20,
+     "delta": 5.88
+    },
+    {
+     "heroid": 49,
+     "delta": 5.2
+    }
+   ]
+  },
+  {
+   "name": "Gord",
+   "heroid": 23,
+   "pick": 0.51,
+   "win": 51.61,
+   "ban": 0.08,
+   "counters": [
+    {
+     "heroid": 96,
+     "delta": 35.6
+    },
+    {
+     "heroid": 36,
+     "delta": 29.77
+    },
+    {
+     "heroid": 50,
+     "delta": 17.58
+    },
+    {
+     "heroid": 15,
+     "delta": 13.26
+    },
+    {
+     "heroid": 46,
+     "delta": 11.92
+    }
+   ]
+  },
+  {
+   "name": "Estes",
+   "heroid": 34,
+   "pick": 0.61,
+   "win": 51.59,
+   "ban": 14.65,
+   "counters": [
+    {
+     "heroid": 132,
+     "delta": 25.57
+    },
+    {
+     "heroid": 6,
+     "delta": 12.76
+    },
+    {
+     "heroid": 10,
+     "delta": 9.58
+    },
+    {
+     "heroid": 3,
+     "delta": 8.3
+    },
+    {
+     "heroid": 93,
+     "delta": 7.97
+    }
+   ]
+  },
+  {
+   "name": "Guinevere",
+   "heroid": 80,
+   "pick": 1.18,
+   "win": 51.53,
+   "ban": 1.52,
+   "counters": [
+    {
+     "heroid": 106,
+     "delta": 6.79
+    },
+    {
+     "heroid": 98,
+     "delta": 6.14
+    },
+    {
+     "heroid": 35,
+     "delta": 5.1
+    },
+    {
+     "heroid": 44,
+     "delta": 4.73
+    },
+    {
+     "heroid": 48,
+     "delta": 4.12
+    }
+   ]
+  },
+  {
+   "name": "Lukas",
+   "heroid": 127,
+   "pick": 1.49,
+   "win": 51.44,
+   "ban": 67.28,
+   "counters": [
+    {
+     "heroid": 124,
+     "delta": 4.78
+    },
+    {
+     "heroid": 54,
+     "delta": 4.28
+    },
+    {
+     "heroid": 83,
+     "delta": 4.1
+    },
+    {
+     "heroid": 89,
+     "delta": 4.02
+    },
+    {
+     "heroid": 111,
+     "delta": 3.07
+    }
+   ]
+  },
+  {
+   "name": "Aamon",
+   "heroid": 109,
+   "pick": 0.49,
+   "win": 51.4,
+   "ban": 0.47,
+   "counters": [
+    {
+     "heroid": 67,
+     "delta": 11.6
+    },
+    {
+     "heroid": 122,
+     "delta": 10.04
+    },
+    {
+     "heroid": 17,
+     "delta": 8.43
+    },
+    {
+     "heroid": 64,
+     "delta": 8.22
+    },
+    {
+     "heroid": 113,
+     "delta": 7.33
+    }
+   ]
+  },
+  {
+   "name": "Atlas",
+   "heroid": 93,
+   "pick": 1.44,
+   "win": 51.33,
+   "ban": 19.92,
+   "counters": [
+    {
+     "heroid": 132,
+     "delta": 8.02
+    },
+    {
+     "heroid": 34,
+     "delta": 7.97
+    },
+    {
+     "heroid": 112,
+     "delta": 7.85
+    },
+    {
+     "heroid": 10,
+     "delta": 7.52
+    },
+    {
+     "heroid": 128,
+     "delta": 7.52
+    }
+   ]
+  },
+  {
+   "name": "Yin",
+   "heroid": 113,
+   "pick": 0.25,
+   "win": 51.27,
+   "ban": 0.16,
+   "counters": [
+    {
+     "heroid": 2,
+     "delta": 10
+    },
+    {
+     "heroid": 35,
+     "delta": 9.08
+    },
+    {
+     "heroid": 67,
+     "delta": 8.69
+    },
+    {
+     "heroid": 109,
+     "delta": 7.33
+    },
+    {
+     "heroid": 44,
+     "delta": 7.09
+    }
+   ]
+  },
+  {
+   "name": "Kagura",
+   "heroid": 25,
+   "pick": 1.34,
+   "win": 51.24,
+   "ban": 1.13,
+   "counters": [
+    {
+     "heroid": 125,
+     "delta": 10.92
+    },
+    {
+     "heroid": 46,
+     "delta": 7.15
+    },
+    {
+     "heroid": 129,
+     "delta": 7.01
+    },
+    {
+     "heroid": 52,
+     "delta": 6.45
+    },
+    {
+     "heroid": 38,
+     "delta": 6.05
+    }
+   ]
+  },
+  {
+   "name": "Eudora",
+   "heroid": 15,
+   "pick": 2.24,
+   "win": 50.99,
+   "ban": 53.49,
+   "counters": [
+    {
+     "heroid": 66,
+     "delta": 16.97
+    },
+    {
+     "heroid": 23,
+     "delta": 13.26
+    },
+    {
+     "heroid": 125,
+     "delta": 8.5
+    },
+    {
+     "heroid": 132,
+     "delta": 4.48
+    },
+    {
+     "heroid": 114,
+     "delta": 3.44
+    }
+   ]
+  },
+  {
+   "name": "Nolan",
+   "heroid": 122,
+   "pick": 1.56,
+   "win": 50.88,
+   "ban": 2.47,
+   "counters": [
+    {
+     "heroid": 109,
+     "delta": 10.04
+    },
+    {
+     "heroid": 21,
+     "delta": 7.49
+    },
+    {
+     "heroid": 133,
+     "delta": 6.73
+    },
+    {
+     "heroid": 118,
+     "delta": 5.28
+    },
+    {
+     "heroid": 28,
+     "delta": 4.93
+    }
+   ]
+  },
+  {
+   "name": "Alice",
+   "heroid": 4,
+   "pick": 1.24,
+   "win": 50.86,
+   "ban": 2.85,
+   "counters": [
+    {
+     "heroid": 16,
+     "delta": 7.67
+    },
+    {
+     "heroid": 20,
+     "delta": 5.89
+    },
+    {
+     "heroid": 64,
+     "delta": 4.32
+    },
+    {
+     "heroid": 10,
+     "delta": 4.3
+    },
+    {
+     "heroid": 74,
+     "delta": 4.25
+    }
+   ]
+  },
+  {
+   "name": "Clint",
+   "heroid": 13,
+   "pick": 1.08,
+   "win": 50.81,
+   "ban": 0.43,
+   "counters": [
+    {
+     "heroid": 114,
+     "delta": 23.66
+    },
+    {
+     "heroid": 100,
+     "delta": 8.92
+    },
+    {
+     "heroid": 31,
+     "delta": 7.11
+    },
+    {
+     "heroid": 54,
+     "delta": 5.36
+    },
+    {
+     "heroid": 16,
+     "delta": 4.44
+    }
+   ]
+  },
+  {
+   "name": "Barats",
+   "heroid": 99,
+   "pick": 1.3,
+   "win": 50.76,
+   "ban": 7.67,
+   "counters": [
+    {
+     "heroid": 45,
+     "delta": 4.53
+    },
+    {
+     "heroid": 7,
+     "delta": 3.35
+    },
+    {
+     "heroid": 47,
+     "delta": 3.26
+    },
+    {
+     "heroid": 116,
+     "delta": 3.19
+    },
+    {
+     "heroid": 50,
+     "delta": 3.08
+    }
+   ]
+  },
+  {
+   "name": "Valir",
+   "heroid": 57,
+   "pick": 0.72,
+   "win": 50.75,
+   "ban": 0.68,
+   "counters": [
+    {
+     "heroid": 101,
+     "delta": 29.92
+    },
+    {
+     "heroid": 61,
+     "delta": 14.84
+    },
+    {
+     "heroid": 52,
+     "delta": 6.35
+    },
+    {
+     "heroid": 87,
+     "delta": 6.14
+    },
+    {
+     "heroid": 129,
+     "delta": 5.47
+    }
+   ]
+  },
+  {
+   "name": "Benedetta",
+   "heroid": 97,
+   "pick": 0.52,
+   "win": 50.65,
+   "ban": 0.15,
+   "counters": [
+    {
+     "heroid": 44,
+     "delta": 6.84
+    },
+    {
+     "heroid": 51,
+     "delta": 6.37
+    },
+    {
+     "heroid": 54,
+     "delta": 6.31
+    },
+    {
+     "heroid": 82,
+     "delta": 6.21
+    },
+    {
+     "heroid": 28,
+     "delta": 6.12
+    }
+   ]
+  },
+  {
+   "name": "Melissa",
+   "heroid": 114,
+   "pick": 0.33,
+   "win": 50.53,
+   "ban": 0.81,
+   "counters": [
+    {
+     "heroid": 121,
+     "delta": 27.6
+    },
+    {
+     "heroid": 53,
+     "delta": 27.34
+    },
+    {
+     "heroid": 13,
+     "delta": 23.66
+    },
+    {
+     "heroid": 107,
+     "delta": 15.86
+    },
+    {
+     "heroid": 73,
+     "delta": 13.55
+    }
+   ]
+  },
+  {
+   "name": "Lolita",
+   "heroid": 20,
+   "pick": 0.07,
+   "win": 50.49,
+   "ban": 0.15,
+   "counters": [
+    {
+     "heroid": 6,
+     "delta": 57.84
+    },
+    {
+     "heroid": 36,
+     "delta": 23.12
+    },
+    {
+     "heroid": 50,
+     "delta": 16.82
+    },
+    {
+     "heroid": 89,
+     "delta": 16.29
+    },
+    {
+     "heroid": 41,
+     "delta": 15.85
+    }
+   ]
+  },
+  {
+   "name": "Gloo",
+   "heroid": 104,
+   "pick": 1.13,
+   "win": 50.41,
+   "ban": 22.84,
+   "counters": [
+    {
+     "heroid": 128,
+     "delta": 6.58
+    },
+    {
+     "heroid": 98,
+     "delta": 4.5
+    },
+    {
+     "heroid": 24,
+     "delta": 4.39
+    },
+    {
+     "heroid": 50,
+     "delta": 4.18
+    },
+    {
+     "heroid": 124,
+     "delta": 3.47
+    }
+   ]
+  },
+  {
+   "name": "Moskov",
+   "heroid": 31,
+   "pick": 1.24,
+   "win": 50.41,
+   "ban": 0.11,
+   "counters": [
+    {
+     "heroid": 43,
+     "delta": 32.78
+    },
+    {
+     "heroid": 114,
+     "delta": 9.06
+    },
+    {
+     "heroid": 121,
+     "delta": 7.71
+    },
+    {
+     "heroid": 13,
+     "delta": 7.11
+    },
+    {
+     "heroid": 12,
+     "delta": 7.09
+    }
+   ]
+  },
+  {
+   "name": "Ling",
+   "heroid": 84,
+   "pick": 1.17,
+   "win": 50.4,
+   "ban": 0.88,
+   "counters": [
+    {
+     "heroid": 47,
+     "delta": 30.21
+    },
+    {
+     "heroid": 9,
+     "delta": 5.5
+    },
+    {
+     "heroid": 101,
+     "delta": 5.08
+    },
+    {
+     "heroid": 98,
+     "delta": 4.94
+    },
+    {
+     "heroid": 20,
+     "delta": 4.52
+    }
+   ]
+  },
+  {
+   "name": "Joy",
+   "heroid": 118,
+   "pick": 0.31,
+   "win": 50.36,
+   "ban": 0.1,
+   "counters": [
+    {
+     "heroid": 54,
+     "delta": 18.02
+    },
+    {
+     "heroid": 21,
+     "delta": 11.05
+    },
+    {
+     "heroid": 20,
+     "delta": 10.52
+    },
+    {
+     "heroid": 8,
+     "delta": 9.99
+    },
+    {
+     "heroid": 94,
+     "delta": 6.86
+    }
+   ]
+  },
+  {
+   "name": "Sora",
+   "heroid": 131,
+   "pick": 0.86,
+   "win": 50.36,
+   "ban": 0.88,
+   "counters": [
+    {
+     "heroid": 82,
+     "delta": 27.45
+    },
+    {
+     "heroid": 3,
+     "delta": 5.11
+    },
+    {
+     "heroid": 96,
+     "delta": 3.81
+    },
+    {
+     "heroid": 49,
+     "delta": 3.58
+    },
+    {
+     "heroid": 39,
+     "delta": 3.41
+    }
+   ]
+  },
+  {
+   "name": "Edith",
+   "heroid": 111,
+   "pick": 0.31,
+   "win": 50.33,
+   "ban": 0.12,
+   "counters": [
+    {
+     "heroid": 16,
+     "delta": 17.78
+    },
+    {
+     "heroid": 98,
+     "delta": 13.69
+    },
+    {
+     "heroid": 67,
+     "delta": 8.32
+    },
+    {
+     "heroid": 82,
+     "delta": 7.47
+    },
+    {
+     "heroid": 49,
+     "delta": 6.25
+    }
+   ]
+  },
+  {
+   "name": "Natan",
+   "heroid": 107,
+   "pick": 0.48,
+   "win": 50.28,
+   "ban": 0.08,
+   "counters": [
+    {
+     "heroid": 114,
+     "delta": 15.86
+    },
+    {
+     "heroid": 43,
+     "delta": 10.69
+    },
+    {
+     "heroid": 65,
+     "delta": 9.62
+    },
+    {
+     "heroid": 53,
+     "delta": 7.81
+    },
+    {
+     "heroid": 40,
+     "delta": 7.41
+    }
+   ]
+  },
+  {
+   "name": "Irithel",
+   "heroid": 43,
+   "pick": 0.43,
+   "win": 50.14,
+   "ban": 0.04,
+   "counters": [
+    {
+     "heroid": 89,
+     "delta": 52.75
+    },
+    {
+     "heroid": 31,
+     "delta": 32.78
+    },
+    {
+     "heroid": 40,
+     "delta": 22.04
+    },
+    {
+     "heroid": 100,
+     "delta": 13
+    },
+    {
+     "heroid": 53,
+     "delta": 12.73
+    }
+   ]
+  },
+  {
+   "name": "Zhask",
+   "heroid": 50,
+   "pick": 0.2,
+   "win": 50.04,
+   "ban": 0.03,
+   "counters": [
+    {
+     "heroid": 23,
+     "delta": 17.58
+    },
+    {
+     "heroid": 20,
+     "delta": 16.82
+    },
+    {
+     "heroid": 128,
+     "delta": 14.9
+    },
+    {
+     "heroid": 36,
+     "delta": 13.84
+    },
+    {
+     "heroid": 16,
+     "delta": 10.64
+    }
+   ]
+  },
+  {
+   "name": "Natalia",
+   "heroid": 24,
+   "pick": 0.14,
+   "win": 50.03,
+   "ban": 0.3,
+   "counters": [
+    {
+     "heroid": 11,
+     "delta": 14.77
+    },
+    {
+     "heroid": 44,
+     "delta": 13.03
+    },
+    {
+     "heroid": 82,
+     "delta": 12.47
+    },
+    {
+     "heroid": 10,
+     "delta": 11.67
+    },
+    {
+     "heroid": 112,
+     "delta": 9.4
+    }
+   ]
+  },
+  {
+   "name": "Arlott",
+   "heroid": 120,
+   "pick": 0.56,
+   "win": 49.89,
+   "ban": 0.14,
+   "counters": [
+    {
+     "heroid": 124,
+     "delta": 13.56
+    },
+    {
+     "heroid": 82,
+     "delta": 12.91
+    },
+    {
+     "heroid": 64,
+     "delta": 11.61
+    },
+    {
+     "heroid": 39,
+     "delta": 5.96
+    },
+    {
+     "heroid": 116,
+     "delta": 5.14
+    }
+   ]
+  },
+  {
+   "name": "Selena",
+   "heroid": 63,
+   "pick": 1.84,
+   "win": 49.83,
+   "ban": 2.83,
+   "counters": [
+    {
+     "heroid": 16,
+     "delta": 3.92
+    },
+    {
+     "heroid": 87,
+     "delta": 3.13
+    },
+    {
+     "heroid": 83,
+     "delta": 2.58
+    },
+    {
+     "heroid": 34,
+     "delta": 2.53
+    },
+    {
+     "heroid": 52,
+     "delta": 2.47
+    }
+   ]
+  },
+  {
+   "name": "Harith",
+   "heroid": 73,
+   "pick": 0.26,
+   "win": 49.81,
+   "ban": 0.03,
+   "counters": [
+    {
+     "heroid": 65,
+     "delta": 16.17
+    },
+    {
+     "heroid": 114,
+     "delta": 13.55
+    },
+    {
+     "heroid": 89,
+     "delta": 10.22
+    },
+    {
+     "heroid": 11,
+     "delta": 9.82
+    },
+    {
+     "heroid": 105,
+     "delta": 8.76
+    }
+   ]
+  },
+  {
+   "name": "Aldous",
+   "heroid": 64,
+   "pick": 0.21,
+   "win": 49.79,
+   "ban": 0.1,
+   "counters": [
+    {
+     "heroid": 16,
+     "delta": 28.38
+    },
+    {
+     "heroid": 45,
+     "delta": 11.65
+    },
+    {
+     "heroid": 120,
+     "delta": 11.61
+    },
+    {
+     "heroid": 20,
+     "delta": 11.48
+    },
+    {
+     "heroid": 87,
+     "delta": 11.27
+    }
+   ]
+  },
+  {
+   "name": "Kimmy",
+   "heroid": 71,
+   "pick": 0.69,
+   "win": 49.65,
+   "ban": 0.13,
+   "counters": [
+    {
+     "heroid": 3,
+     "delta": 6.01
+    },
+    {
+     "heroid": 76,
+     "delta": 5.92
+    },
+    {
+     "heroid": 52,
+     "delta": 4.91
+    },
+    {
+     "heroid": 96,
+     "delta": 4.58
+    },
+    {
+     "heroid": 34,
+     "delta": 4.07
+    }
+   ]
+  },
+  {
+   "name": "Yi Sun-shin",
+   "heroid": 30,
+   "pick": 2.32,
+   "win": 49.53,
+   "ban": 10.94,
+   "counters": [
+    {
+     "heroid": 47,
+     "delta": 10.73
+    },
+    {
+     "heroid": 16,
+     "delta": 5.26
+    },
+    {
+     "heroid": 118,
+     "delta": 4.52
+    },
+    {
+     "heroid": 39,
+     "delta": 3.64
+    },
+    {
+     "heroid": 58,
+     "delta": 3.39
+    }
+   ]
+  },
+  {
+   "name": "Dyrroth",
+   "heroid": 85,
+   "pick": 0.67,
+   "win": 49.51,
+   "ban": 0.31,
+   "counters": [
+    {
+     "heroid": 37,
+     "delta": 11.72
+    },
+    {
+     "heroid": 123,
+     "delta": 4.6
+    },
+    {
+     "heroid": 101,
+     "delta": 4.43
+    },
+    {
+     "heroid": 27,
+     "delta": 3.22
+    },
+    {
+     "heroid": 19,
+     "delta": 2.81
+    }
+   ]
+  },
+  {
+   "name": "Granger",
+   "heroid": 79,
+   "pick": 1.83,
+   "win": 49.47,
+   "ban": 1.56,
+   "counters": [
+    {
+     "heroid": 89,
+     "delta": 28.42
+    },
+    {
+     "heroid": 65,
+     "delta": 15.3
+    },
+    {
+     "heroid": 87,
+     "delta": 6.06
+    },
+    {
+     "heroid": 94,
+     "delta": 5.77
+    },
+    {
+     "heroid": 2,
+     "delta": 5.1
+    }
+   ]
+  },
+  {
+   "name": "Brody",
+   "heroid": 100,
+   "pick": 1.38,
+   "win": 49.36,
+   "ban": 1.34,
+   "counters": [
+    {
+     "heroid": 121,
+     "delta": 16.2
+    },
+    {
+     "heroid": 40,
+     "delta": 16.15
+    },
+    {
+     "heroid": 43,
+     "delta": 13
+    },
+    {
+     "heroid": 60,
+     "delta": 10.74
+    },
+    {
+     "heroid": 114,
+     "delta": 10.11
+    }
+   ]
+  },
+  {
+   "name": "Uranus",
+   "heroid": 59,
+   "pick": 0.4,
+   "win": 49.27,
+   "ban": 0.11,
+   "counters": [
+    {
+     "heroid": 37,
+     "delta": 11.62
+    },
+    {
+     "heroid": 41,
+     "delta": 8.98
+    },
+    {
+     "heroid": 45,
+     "delta": 5.12
+    },
+    {
+     "heroid": 86,
+     "delta": 5.12
+    },
+    {
+     "heroid": 132,
+     "delta": 4.83
+    }
+   ]
+  },
+  {
+   "name": "Miya",
+   "heroid": 1,
+   "pick": 1.34,
+   "win": 49.16,
+   "ban": 2.47,
+   "counters": [
+    {
+     "heroid": 89,
+     "delta": 13.73
+    },
+    {
+     "heroid": 20,
+     "delta": 4.83
+    },
+    {
+     "heroid": 10,
+     "delta": 3.76
+    },
+    {
+     "heroid": 41,
+     "delta": 3.39
+    },
+    {
+     "heroid": 54,
+     "delta": 2.85
+    }
+   ]
+  },
+  {
+   "name": "Leomord",
+   "heroid": 67,
+   "pick": 0.48,
+   "win": 49.16,
+   "ban": 0.1,
+   "counters": [
+    {
+     "heroid": 47,
+     "delta": 12.92
+    },
+    {
+     "heroid": 109,
+     "delta": 11.6
+    },
+    {
+     "heroid": 49,
+     "delta": 9.48
+    },
+    {
+     "heroid": 8,
+     "delta": 9.23
+    },
+    {
+     "heroid": 113,
+     "delta": 8.69
+    }
+   ]
+  },
+  {
+   "name": "Harley",
+   "heroid": 42,
+   "pick": 0.4,
+   "win": 49.05,
+   "ban": 0.22,
+   "counters": [
+    {
+     "heroid": 76,
+     "delta": 7.44
+    },
+    {
+     "heroid": 44,
+     "delta": 7.38
+    },
+    {
+     "heroid": 125,
+     "delta": 6.63
+    },
+    {
+     "heroid": 106,
+     "delta": 6.32
+    },
+    {
+     "heroid": 110,
+     "delta": 6.05
+    }
+   ]
+  },
+  {
+   "name": "Ruby",
+   "heroid": 29,
+   "pick": 0.46,
+   "win": 49.02,
+   "ban": 0.05,
+   "counters": [
+    {
+     "heroid": 16,
+     "delta": 19.04
+    },
+    {
+     "heroid": 20,
+     "delta": 4.66
+    },
+    {
+     "heroid": 113,
+     "delta": 3.81
+    },
+    {
+     "heroid": 35,
+     "delta": 3.78
+    },
+    {
+     "heroid": 37,
+     "delta": 3.67
+    }
+   ]
+  },
+  {
+   "name": "Novaria",
+   "heroid": 119,
+   "pick": 1.52,
+   "win": 48.98,
+   "ban": 1.09,
+   "counters": [
+    {
+     "heroid": 125,
+     "delta": 5.93
+    },
+    {
+     "heroid": 89,
+     "delta": 4.15
+    },
+    {
+     "heroid": 35,
+     "delta": 3.72
+    },
+    {
+     "heroid": 124,
+     "delta": 2.93
+    },
+    {
+     "heroid": 42,
+     "delta": 2.76
+    }
+   ]
+  },
+  {
+   "name": "Lylia",
+   "heroid": 86,
+   "pick": 0.51,
+   "win": 48.89,
+   "ban": 0.07,
+   "counters": [
+    {
+     "heroid": 66,
+     "delta": 54.35
+    },
+    {
+     "heroid": 52,
+     "delta": 24.08
+    },
+    {
+     "heroid": 115,
+     "delta": 20.56
+    },
+    {
+     "heroid": 38,
+     "delta": 15.33
+    },
+    {
+     "heroid": 125,
+     "delta": 8.38
+    }
+   ]
+  },
+  {
+   "name": "Lunox",
+   "heroid": 68,
+   "pick": 0.43,
+   "win": 48.84,
+   "ban": 0.04,
+   "counters": [
+    {
+     "heroid": 96,
+     "delta": 18.66
+    },
+    {
+     "heroid": 124,
+     "delta": 11.58
+    },
+    {
+     "heroid": 46,
+     "delta": 11.22
+    },
+    {
+     "heroid": 32,
+     "delta": 8.7
+    },
+    {
+     "heroid": 38,
+     "delta": 8.12
+    }
+   ]
+  },
+  {
+   "name": "Aurora",
+   "heroid": 36,
+   "pick": 0.35,
+   "win": 48.62,
+   "ban": 0.05,
+   "counters": [
+    {
+     "heroid": 66,
+     "delta": 54.62
+    },
+    {
+     "heroid": 23,
+     "delta": 29.77
+    },
+    {
+     "heroid": 20,
+     "delta": 23.12
+    },
+    {
+     "heroid": 125,
+     "delta": 20.23
+    },
+    {
+     "heroid": 50,
+     "delta": 13.84
+    }
+   ]
+  },
+  {
+   "name": "Belerick",
+   "heroid": 70,
+   "pick": 2.02,
+   "win": 48.57,
+   "ban": 54.31,
+   "counters": [
+    {
+     "heroid": 20,
+     "delta": 8.63
+    },
+    {
+     "heroid": 51,
+     "delta": 6.47
+    },
+    {
+     "heroid": 98,
+     "delta": 5.44
+    },
+    {
+     "heroid": 64,
+     "delta": 4.37
+    },
+    {
+     "heroid": 44,
+     "delta": 3.33
+    }
+   ]
+  },
+  {
+   "name": "Yu Zhong",
+   "heroid": 95,
+   "pick": 0.67,
+   "win": 48.55,
+   "ban": 0.11,
+   "counters": [
+    {
+     "heroid": 106,
+     "delta": 53.93
+    },
+    {
+     "heroid": 41,
+     "delta": 10.17
+    },
+    {
+     "heroid": 89,
+     "delta": 7.76
+    },
+    {
+     "heroid": 28,
+     "delta": 5.73
+    },
+    {
+     "heroid": 18,
+     "delta": 4.61
+    }
+   ]
+  },
+  {
+   "name": "Pharsa",
+   "heroid": 52,
+   "pick": 0.25,
+   "win": 48.45,
+   "ban": 0.02,
+   "counters": [
+    {
+     "heroid": 66,
+     "delta": 54.78
+    },
+    {
+     "heroid": 61,
+     "delta": 31.28
+    },
+    {
+     "heroid": 86,
+     "delta": 24.08
+    },
+    {
+     "heroid": 5,
+     "delta": 14.58
+    },
+    {
+     "heroid": 110,
+     "delta": 13.73
+    }
+   ]
+  },
+  {
+   "name": "Suyou",
+   "heroid": 126,
+   "pick": 1.16,
+   "win": 48.21,
+   "ban": 0.38,
+   "counters": [
+    {
+     "heroid": 47,
+     "delta": 12.16
+    },
+    {
+     "heroid": 33,
+     "delta": 4.53
+    },
+    {
+     "heroid": 58,
+     "delta": 4.23
+    },
+    {
+     "heroid": 106,
+     "delta": 4.1
+    },
+    {
+     "heroid": 113,
+     "delta": 3.69
+    }
+   ]
+  },
+  {
+   "name": "Cyclops",
+   "heroid": 33,
+   "pick": 0.39,
+   "win": 48.17,
+   "ban": 0.06,
+   "counters": [
+    {
+     "heroid": 38,
+     "delta": 19.8
+    },
+    {
+     "heroid": 101,
+     "delta": 14.53
+    },
+    {
+     "heroid": 36,
+     "delta": 9.8
+    },
+    {
+     "heroid": 50,
+     "delta": 9.19
+    },
+    {
+     "heroid": 89,
+     "delta": 6.09
+    }
+   ]
+  },
+  {
+   "name": "Bane",
+   "heroid": 11,
+   "pick": 0.19,
+   "win": 48.17,
+   "ban": 0.06,
+   "counters": [
+    {
+     "heroid": 24,
+     "delta": 14.77
+    },
+    {
+     "heroid": 16,
+     "delta": 12.95
+    },
+    {
+     "heroid": 73,
+     "delta": 9.82
+    },
+    {
+     "heroid": 64,
+     "delta": 7.92
+    },
+    {
+     "heroid": 2,
+     "delta": 7.23
+    }
+   ]
+  },
+  {
+   "name": "Xavier",
+   "heroid": 115,
+   "pick": 0.62,
+   "win": 48.11,
+   "ban": 0.04,
+   "counters": [
+    {
+     "heroid": 86,
+     "delta": 20.56
+    },
+    {
+     "heroid": 125,
+     "delta": 16.02
+    },
+    {
+     "heroid": 5,
+     "delta": 11.36
+    },
+    {
+     "heroid": 61,
+     "delta": 10.61
+    },
+    {
+     "heroid": 124,
+     "delta": 6.59
+    }
+   ]
+  },
+  {
+   "name": "Kaja",
+   "heroid": 62,
+   "pick": 0.99,
+   "win": 48.1,
+   "ban": 35.91,
+   "counters": [
+    {
+     "heroid": 14,
+     "delta": 8.4
+    },
+    {
+     "heroid": 124,
+     "delta": 7.71
+    },
+    {
+     "heroid": 24,
+     "delta": 7.08
+    },
+    {
+     "heroid": 44,
+     "delta": 6.85
+    },
+    {
+     "heroid": 55,
+     "delta": 6.64
+    }
+   ]
+  },
+  {
+   "name": "Valentina",
+   "heroid": 110,
+   "pick": 0.56,
+   "win": 48.07,
+   "ban": 0.33,
+   "counters": [
+    {
+     "heroid": 52,
+     "delta": 13.73
+    },
+    {
+     "heroid": 125,
+     "delta": 8.23
+    },
+    {
+     "heroid": 23,
+     "delta": 7.3
+    },
+    {
+     "heroid": 61,
+     "delta": 6.62
+    },
+    {
+     "heroid": 42,
+     "delta": 6.05
+    }
+   ]
+  },
+  {
+   "name": "Cici",
+   "heroid": 123,
+   "pick": 0.45,
+   "win": 47.97,
+   "ban": 0.19,
+   "counters": [
+    {
+     "heroid": 82,
+     "delta": 11.97
+    },
+    {
+     "heroid": 54,
+     "delta": 9.52
+    },
+    {
+     "heroid": 24,
+     "delta": 7.56
+    },
+    {
+     "heroid": 64,
+     "delta": 6.08
+    },
+    {
+     "heroid": 109,
+     "delta": 5.06
+    }
+   ]
+  },
+  {
+   "name": "Paquito",
+   "heroid": 103,
+   "pick": 2.47,
+   "win": 47.96,
+   "ban": 32.59,
+   "counters": [
+    {
+     "heroid": 2,
+     "delta": 4.53
+    },
+    {
+     "heroid": 20,
+     "delta": 3.43
+    },
+    {
+     "heroid": 37,
+     "delta": 2.7
+    },
+    {
+     "heroid": 16,
+     "delta": 2.68
+    },
+    {
+     "heroid": 4,
+     "delta": 2.41
+    }
+   ]
+  },
+  {
+   "name": "Minsitthar",
+   "heroid": 74,
+   "pick": 0.41,
+   "win": 47.84,
+   "ban": 2.14,
+   "counters": [
+    {
+     "heroid": 94,
+     "delta": 8.47
+    },
+    {
+     "heroid": 39,
+     "delta": 8.01
+    },
+    {
+     "heroid": 124,
+     "delta": 7.23
+    },
+    {
+     "heroid": 50,
+     "delta": 5.67
+    },
+    {
+     "heroid": 67,
+     "delta": 5.48
+    }
+   ]
+  },
+  {
+   "name": "Gusion",
+   "heroid": 56,
+   "pick": 1.03,
+   "win": 47.69,
+   "ban": 1.61,
+   "counters": [
+    {
+     "heroid": 32,
+     "delta": 7.82
+    },
+    {
+     "heroid": 54,
+     "delta": 5.89
+    },
+    {
+     "heroid": 109,
+     "delta": 5.8
+    },
+    {
+     "heroid": 118,
+     "delta": 5.48
+    },
+    {
+     "heroid": 89,
+     "delta": 5.32
+    }
+   ]
+  },
+  {
+   "name": "Thamuz",
+   "heroid": 72,
+   "pick": 0.33,
+   "win": 47.68,
+   "ban": 0.19,
+   "counters": [
+    {
+     "heroid": 64,
+     "delta": 10.05
+    },
+    {
+     "heroid": 98,
+     "delta": 9.95
+    },
+    {
+     "heroid": 20,
+     "delta": 7.71
+    },
+    {
+     "heroid": 76,
+     "delta": 6.13
+    },
+    {
+     "heroid": 102,
+     "delta": 5.98
+    }
+   ]
+  },
+  {
+   "name": "Hanabi",
+   "heroid": 60,
+   "pick": 0.81,
+   "win": 47.59,
+   "ban": 0.98,
+   "counters": [
+    {
+     "heroid": 40,
+     "delta": 24.56
+    },
+    {
+     "heroid": 53,
+     "delta": 12.41
+    },
+    {
+     "heroid": 100,
+     "delta": 10.74
+    },
+    {
+     "heroid": 76,
+     "delta": 6.19
+    },
+    {
+     "heroid": 11,
+     "delta": 5.69
+    }
+   ]
+  },
+  {
+   "name": "Phoveus",
+   "heroid": 106,
+   "pick": 0.23,
+   "win": 47.51,
+   "ban": 0.09,
+   "counters": [
+    {
+     "heroid": 95,
+     "delta": 53.93
+    },
+    {
+     "heroid": 39,
+     "delta": 12.58
+    },
+    {
+     "heroid": 45,
+     "delta": 11.35
+    },
+    {
+     "heroid": 124,
+     "delta": 7.56
+    },
+    {
+     "heroid": 80,
+     "delta": 6.79
+    }
+   ]
+  },
+  {
+   "name": "Terizla",
+   "heroid": 82,
+   "pick": 0.21,
+   "win": 47.2,
+   "ban": 0.02,
+   "counters": [
+    {
+     "heroid": 131,
+     "delta": 27.45
+    },
+    {
+     "heroid": 45,
+     "delta": 23.17
+    },
+    {
+     "heroid": 16,
+     "delta": 16.98
+    },
+    {
+     "heroid": 120,
+     "delta": 12.91
+    },
+    {
+     "heroid": 24,
+     "delta": 12.47
+    }
+   ]
+  },
+  {
+   "name": "Badang",
+   "heroid": 77,
+   "pick": 1.49,
+   "win": 47.15,
+   "ban": 6.65,
+   "counters": [
+    {
+     "heroid": 16,
+     "delta": 5.01
+    },
+    {
+     "heroid": 24,
+     "delta": 4.07
+    },
+    {
+     "heroid": 7,
+     "delta": 4.01
+    },
+    {
+     "heroid": 51,
+     "delta": 3.79
+    },
+    {
+     "heroid": 124,
+     "delta": 3.71
+    }
+   ]
+  },
+  {
+   "name": "Lesley",
+   "heroid": 53,
+   "pick": 1.22,
+   "win": 47.13,
+   "ban": 1.63,
+   "counters": [
+    {
+     "heroid": 114,
+     "delta": 27.34
+    },
+    {
+     "heroid": 121,
+     "delta": 24.07
+    },
+    {
+     "heroid": 105,
+     "delta": 14.07
+    },
+    {
+     "heroid": 43,
+     "delta": 12.73
+    },
+    {
+     "heroid": 60,
+     "delta": 12.41
+    }
+   ]
+  },
+  {
+   "name": "Zetian",
+   "heroid": 129,
+   "pick": 1.58,
+   "win": 47.11,
+   "ban": 0.86,
+   "counters": [
+    {
+     "heroid": 125,
+     "delta": 9.22
+    },
+    {
+     "heroid": 52,
+     "delta": 8.97
+    },
+    {
+     "heroid": 25,
+     "delta": 7.01
+    },
+    {
+     "heroid": 54,
+     "delta": 6.39
+    },
+    {
+     "heroid": 57,
+     "delta": 5.47
+    }
+   ]
+  },
+  {
+   "name": "Wanwan",
+   "heroid": 89,
+   "pick": 0.13,
+   "win": 47.11,
+   "ban": 0.03,
+   "counters": [
+    {
+     "heroid": 43,
+     "delta": 52.75
+    },
+    {
+     "heroid": 79,
+     "delta": 28.42
+    },
+    {
+     "heroid": 130,
+     "delta": 28.34
+    },
+    {
+     "heroid": 12,
+     "delta": 25.39
+    },
+    {
+     "heroid": 128,
+     "delta": 17.56
+    }
+   ]
+  },
+  {
+   "name": "Vexana",
+   "heroid": 38,
+   "pick": 0.7,
+   "win": 46.88,
+   "ban": 0.13,
+   "counters": [
+    {
+     "heroid": 66,
+     "delta": 56.34
+    },
+    {
+     "heroid": 33,
+     "delta": 19.8
+    },
+    {
+     "heroid": 86,
+     "delta": 15.33
+    },
+    {
+     "heroid": 125,
+     "delta": 12.25
+    },
+    {
+     "heroid": 68,
+     "delta": 8.12
+    }
+   ]
+  },
+  {
+   "name": "Claude",
+   "heroid": 65,
+   "pick": 0.99,
+   "win": 46.76,
+   "ban": 0.07,
+   "counters": [
+    {
+     "heroid": 105,
+     "delta": 19.3
+    },
+    {
+     "heroid": 40,
+     "delta": 18.69
+    },
+    {
+     "heroid": 73,
+     "delta": 16.17
+    },
+    {
+     "heroid": 79,
+     "delta": 15.3
+    },
+    {
+     "heroid": 107,
+     "delta": 9.62
+    }
+   ]
+  },
+  {
+   "name": "Mathilda",
+   "heroid": 102,
+   "pick": 0.33,
+   "win": 46.76,
+   "ban": 0.41,
+   "counters": [
+    {
+     "heroid": 51,
+     "delta": 11.3
+    },
+    {
+     "heroid": 16,
+     "delta": 10.52
+    },
+    {
+     "heroid": 92,
+     "delta": 8.28
+    },
+    {
+     "heroid": 50,
+     "delta": 7.3
+    },
+    {
+     "heroid": 90,
+     "delta": 7.02
+    }
+   ]
+  },
+  {
+   "name": "Vale",
+   "heroid": 66,
+   "pick": 0.19,
+   "win": 46.75,
+   "ban": 0.02,
+   "counters": [
+    {
+     "heroid": 38,
+     "delta": 56.34
+    },
+    {
+     "heroid": 52,
+     "delta": 54.78
+    },
+    {
+     "heroid": 36,
+     "delta": 54.62
+    },
+    {
+     "heroid": 86,
+     "delta": 54.35
+    },
+    {
+     "heroid": 5,
+     "delta": 20.66
+    }
+   ]
+  },
+  {
+   "name": "Esmeralda",
+   "heroid": 81,
+   "pick": 0.92,
+   "win": 46.74,
+   "ban": 1.07,
+   "counters": [
+    {
+     "heroid": 20,
+     "delta": 4.04
+    },
+    {
+     "heroid": 98,
+     "delta": 3.95
+    },
+    {
+     "heroid": 66,
+     "delta": 3.25
+    },
+    {
+     "heroid": 42,
+     "delta": 3.23
+    },
+    {
+     "heroid": 67,
+     "delta": 2.9
+    }
+   ]
+  },
+  {
+   "name": "Alucard",
+   "heroid": 7,
+   "pick": 0.36,
+   "win": 46.71,
+   "ban": 0.07,
+   "counters": [
+    {
+     "heroid": 16,
+     "delta": 8.09
+    },
+    {
+     "heroid": 18,
+     "delta": 6.51
+    },
+    {
+     "heroid": 41,
+     "delta": 4.63
+    },
+    {
+     "heroid": 113,
+     "delta": 4.29
+    },
+    {
+     "heroid": 90,
+     "delta": 4.09
+    }
+   ]
+  },
+  {
+   "name": "Akai",
+   "heroid": 9,
+   "pick": 0.26,
+   "win": 46.6,
+   "ban": 0.36,
+   "counters": [
+    {
+     "heroid": 54,
+     "delta": 9.7
+    },
+    {
+     "heroid": 20,
+     "delta": 9.44
+    },
+    {
+     "heroid": 92,
+     "delta": 8.4
+    },
+    {
+     "heroid": 39,
+     "delta": 8.21
+    },
+    {
+     "heroid": 68,
+     "delta": 7.64
+    }
+   ]
+  },
+  {
+   "name": "Johnson",
+   "heroid": 32,
+   "pick": 0.27,
+   "win": 46.4,
+   "ban": 0.34,
+   "counters": [
+    {
+     "heroid": 112,
+     "delta": 20.91
+    },
+    {
+     "heroid": 98,
+     "delta": 14.43
+    },
+    {
+     "heroid": 55,
+     "delta": 8.95
+    },
+    {
+     "heroid": 22,
+     "delta": 8.91
+    },
+    {
+     "heroid": 49,
+     "delta": 8.72
+    }
+   ]
+  },
+  {
+   "name": "Angela",
+   "heroid": 55,
+   "pick": 2.02,
+   "win": 46.34,
+   "ban": 5.86,
+   "counters": [
+    {
+     "heroid": 6,
+     "delta": 11.22
+    },
+    {
+     "heroid": 44,
+     "delta": 10.18
+    },
+    {
+     "heroid": 32,
+     "delta": 8.95
+    },
+    {
+     "heroid": 128,
+     "delta": 8.31
+    },
+    {
+     "heroid": 9,
+     "delta": 7.02
+    }
+   ]
+  },
+  {
+   "name": "Julian",
+   "heroid": 116,
+   "pick": 0.43,
+   "win": 46.3,
+   "ban": 0.1,
+   "counters": [
+    {
+     "heroid": 58,
+     "delta": 6.64
+    },
+    {
+     "heroid": 37,
+     "delta": 6.34
+    },
+    {
+     "heroid": 128,
+     "delta": 6.11
+    },
+    {
+     "heroid": 82,
+     "delta": 5.81
+    },
+    {
+     "heroid": 120,
+     "delta": 5.14
+    }
+   ]
+  },
+  {
+   "name": "Sun",
+   "heroid": 27,
+   "pick": 1.08,
+   "win": 46.28,
+   "ban": 4.06,
+   "counters": [
+    {
+     "heroid": 37,
+     "delta": 12.67
+    },
+    {
+     "heroid": 2,
+     "delta": 9.08
+    },
+    {
+     "heroid": 82,
+     "delta": 5.36
+    },
+    {
+     "heroid": 97,
+     "delta": 4.39
+    },
+    {
+     "heroid": 116,
+     "delta": 4.3
+    }
+   ]
+  },
+  {
+   "name": "Khaleed",
+   "heroid": 98,
+   "pick": 0.14,
+   "win": 46.28,
+   "ban": 0.04,
+   "counters": [
+    {
+     "heroid": 32,
+     "delta": 14.43
+    },
+    {
+     "heroid": 111,
+     "delta": 13.69
+    },
+    {
+     "heroid": 10,
+     "delta": 12.89
+    },
+    {
+     "heroid": 16,
+     "delta": 10.17
+    },
+    {
+     "heroid": 72,
+     "delta": 9.95
+    }
+   ]
+  },
+  {
+   "name": "Lapu-Lapu",
+   "heroid": 37,
+   "pick": 0.43,
+   "win": 46.24,
+   "ban": 0.03,
+   "counters": [
+    {
+     "heroid": 27,
+     "delta": 12.67
+    },
+    {
+     "heroid": 85,
+     "delta": 11.72
+    },
+    {
+     "heroid": 59,
+     "delta": 11.62
+    },
+    {
+     "heroid": 82,
+     "delta": 6.53
+    },
+    {
+     "heroid": 116,
+     "delta": 6.34
+    }
+   ]
+  },
+  {
+   "name": "Grock",
+   "heroid": 44,
+   "pick": 0.26,
+   "win": 46.2,
+   "ban": 0.21,
+   "counters": [
+    {
+     "heroid": 24,
+     "delta": 13.03
+    },
+    {
+     "heroid": 39,
+     "delta": 12.93
+    },
+    {
+     "heroid": 55,
+     "delta": 10.18
+    },
+    {
+     "heroid": 78,
+     "delta": 8.7
+    },
+    {
+     "heroid": 42,
+     "delta": 7.38
+    }
+   ]
+  },
+  {
+   "name": "Luo Yi",
+   "heroid": 96,
+   "pick": 0.16,
+   "win": 46.13,
+   "ban": 0.02,
+   "counters": [
+    {
+     "heroid": 23,
+     "delta": 35.6
+    },
+    {
+     "heroid": 68,
+     "delta": 18.66
+    },
+    {
+     "heroid": 125,
+     "delta": 17.17
+    },
+    {
+     "heroid": 41,
+     "delta": 13.89
+    },
+    {
+     "heroid": 35,
+     "delta": 13.31
+    }
+   ]
+  },
+  {
+   "name": "Helcurt",
+   "heroid": 51,
+   "pick": 0.24,
+   "win": 45.93,
+   "ban": 0.9,
+   "counters": [
+    {
+     "heroid": 78,
+     "delta": 11.34
+    },
+    {
+     "heroid": 102,
+     "delta": 11.3
+    },
+    {
+     "heroid": 36,
+     "delta": 9.05
+    },
+    {
+     "heroid": 49,
+     "delta": 8.86
+    },
+    {
+     "heroid": 125,
+     "delta": 7.08
+    }
+   ]
+  },
+  {
+   "name": "Silvanna",
+   "heroid": 90,
+   "pick": 0.23,
+   "win": 45.83,
+   "ban": 0.13,
+   "counters": [
+    {
+     "heroid": 76,
+     "delta": 10.65
+    },
+    {
+     "heroid": 82,
+     "delta": 8.86
+    },
+    {
+     "heroid": 124,
+     "delta": 8.13
+    },
+    {
+     "heroid": 102,
+     "delta": 7.02
+    },
+    {
+     "heroid": 87,
+     "delta": 6.96
+    }
+   ]
+  },
+  {
+   "name": "Hayabusa",
+   "heroid": 21,
+   "pick": 0.94,
+   "win": 45.81,
+   "ban": 0.34,
+   "counters": [
+    {
+     "heroid": 47,
+     "delta": 25.65
+    },
+    {
+     "heroid": 8,
+     "delta": 11.1
+    },
+    {
+     "heroid": 118,
+     "delta": 11.05
+    },
+    {
+     "heroid": 122,
+     "delta": 7.49
+    },
+    {
+     "heroid": 109,
+     "delta": 5.43
+    }
+   ]
+  },
+  {
+   "name": "Martis",
+   "heroid": 58,
+   "pick": 0.29,
+   "win": 45.77,
+   "ban": 0.07,
+   "counters": [
+    {
+     "heroid": 116,
+     "delta": 6.64
+    },
+    {
+     "heroid": 67,
+     "delta": 6.29
+    },
+    {
+     "heroid": 69,
+     "delta": 5.68
+    },
+    {
+     "heroid": 48,
+     "delta": 5.65
+    },
+    {
+     "heroid": 8,
+     "delta": 5.45
+    }
+   ]
+  },
+  {
+   "name": "Kalea",
+   "heroid": 128,
+   "pick": 0.19,
+   "win": 45.29,
+   "ban": 0.26,
+   "counters": [
+    {
+     "heroid": 89,
+     "delta": 17.56
+    },
+    {
+     "heroid": 87,
+     "delta": 16.52
+    },
+    {
+     "heroid": 20,
+     "delta": 15.77
+    },
+    {
+     "heroid": 50,
+     "delta": 14.9
+    },
+    {
+     "heroid": 78,
+     "delta": 10.99
+    }
+   ]
+  },
+  {
+   "name": "Gatotkaca",
+   "heroid": 41,
+   "pick": 0.21,
+   "win": 45.21,
+   "ban": 0.04,
+   "counters": [
+    {
+     "heroid": 20,
+     "delta": 15.85
+    },
+    {
+     "heroid": 96,
+     "delta": 13.89
+    },
+    {
+     "heroid": 49,
+     "delta": 12.12
+    },
+    {
+     "heroid": 95,
+     "delta": 10.17
+    },
+    {
+     "heroid": 59,
+     "delta": 8.98
+    }
+   ]
+  },
+  {
+   "name": "X.Borg",
+   "heroid": 83,
+   "pick": 0.35,
+   "win": 44.94,
+   "ban": 0.22,
+   "counters": [
+    {
+     "heroid": 98,
+     "delta": 7.95
+    },
+    {
+     "heroid": 64,
+     "delta": 7.12
+    },
+    {
+     "heroid": 73,
+     "delta": 4.95
+    },
+    {
+     "heroid": 40,
+     "delta": 4.72
+    },
+    {
+     "heroid": 51,
+     "delta": 4.41
+    }
+   ]
+  },
+  {
+   "name": "Fanny",
+   "heroid": 17,
+   "pick": 0.78,
+   "win": 44.73,
+   "ban": 1.7,
+   "counters": [
+    {
+     "heroid": 47,
+     "delta": 10.67
+    },
+    {
+     "heroid": 109,
+     "delta": 8.43
+    },
+    {
+     "heroid": 72,
+     "delta": 5.08
+    },
+    {
+     "heroid": 41,
+     "delta": 4.91
+    },
+    {
+     "heroid": 111,
+     "delta": 4.03
+    }
+   ]
+  },
+  {
+   "name": "Karina",
+   "heroid": 8,
+   "pick": 0.44,
+   "win": 44.73,
+   "ban": 0.67,
+   "counters": [
+    {
+     "heroid": 47,
+     "delta": 24.16
+    },
+    {
+     "heroid": 21,
+     "delta": 11.1
+    },
+    {
+     "heroid": 117,
+     "delta": 11.08
+    },
+    {
+     "heroid": 118,
+     "delta": 9.99
+    },
+    {
+     "heroid": 67,
+     "delta": 9.23
+    }
+   ]
+  },
+  {
+   "name": "Karrie",
+   "heroid": 40,
+   "pick": 0.54,
+   "win": 44.48,
+   "ban": 0.58,
+   "counters": [
+    {
+     "heroid": 60,
+     "delta": 24.56
+    },
+    {
+     "heroid": 43,
+     "delta": 22.04
+    },
+    {
+     "heroid": 65,
+     "delta": 18.69
+    },
+    {
+     "heroid": 100,
+     "delta": 16.15
+    },
+    {
+     "heroid": 121,
+     "delta": 13.66
+    }
+   ]
+  },
+  {
+   "name": "Jawhead",
+   "heroid": 54,
+   "pick": 0.11,
+   "win": 44.48,
+   "ban": 0.05,
+   "counters": [
+    {
+     "heroid": 118,
+     "delta": 18.02
+    },
+    {
+     "heroid": 9,
+     "delta": 9.7
+    },
+    {
+     "heroid": 123,
+     "delta": 9.52
+    },
+    {
+     "heroid": 24,
+     "delta": 9.34
+    },
+    {
+     "heroid": 22,
+     "delta": 8.99
+    }
+   ]
+  },
+  {
+   "name": "Alpha",
+   "heroid": 28,
+   "pick": 0.38,
+   "win": 44.32,
+   "ban": 0.07,
+   "counters": [
+    {
+     "heroid": 96,
+     "delta": 11.52
+    },
+    {
+     "heroid": 101,
+     "delta": 7.91
+    },
+    {
+     "heroid": 39,
+     "delta": 6.74
+    },
+    {
+     "heroid": 97,
+     "delta": 6.12
+    },
+    {
+     "heroid": 67,
+     "delta": 5.79
+    }
+   ]
+  },
+  {
+   "name": "Layla",
+   "heroid": 18,
+   "pick": 0.26,
+   "win": 43.97,
+   "ban": 0.23,
+   "counters": [
+    {
+     "heroid": 41,
+     "delta": 8.07
+    },
+    {
+     "heroid": 39,
+     "delta": 8.03
+    },
+    {
+     "heroid": 98,
+     "delta": 7.49
+    },
+    {
+     "heroid": 7,
+     "delta": 6.51
+    },
+    {
+     "heroid": 114,
+     "delta": 5.51
+    }
+   ]
+  },
+  {
+   "name": "Hilda",
+   "heroid": 35,
+   "pick": 0.16,
+   "win": 43.95,
+   "ban": 0.26,
+   "counters": [
+    {
+     "heroid": 78,
+     "delta": 17.05
+    },
+    {
+     "heroid": 16,
+     "delta": 15.45
+    },
+    {
+     "heroid": 89,
+     "delta": 14.93
+    },
+    {
+     "heroid": 96,
+     "delta": 13.31
+    },
+    {
+     "heroid": 76,
+     "delta": 12.53
+    }
+   ]
+  },
+  {
+   "name": "Hylos",
+   "heroid": 49,
+   "pick": 0.23,
+   "win": 43.85,
+   "ban": 0.05,
+   "counters": [
+    {
+     "heroid": 124,
+     "delta": 26.98
+    },
+    {
+     "heroid": 41,
+     "delta": 12.12
+    },
+    {
+     "heroid": 67,
+     "delta": 9.48
+    },
+    {
+     "heroid": 51,
+     "delta": 8.86
+    },
+    {
+     "heroid": 32,
+     "delta": 8.72
+    }
+   ]
+  },
+  {
+   "name": "Hanzo",
+   "heroid": 69,
+   "pick": 0.4,
+   "win": 43.47,
+   "ban": 5.76,
+   "counters": [
+    {
+     "heroid": 87,
+     "delta": 10.36
+    },
+    {
+     "heroid": 58,
+     "delta": 5.68
+    },
+    {
+     "heroid": 55,
+     "delta": 5.58
+    },
+    {
+     "heroid": 113,
+     "delta": 4.96
+    },
+    {
+     "heroid": 32,
+     "delta": 4.79
+    }
+   ]
+  },
+  {
+   "name": "Chou",
+   "heroid": 26,
+   "pick": 0.81,
+   "win": 43.29,
+   "ban": 0.93,
+   "counters": [
+    {
+     "heroid": 66,
+     "delta": 5.48
+    },
+    {
+     "heroid": 9,
+     "delta": 5.29
+    },
+    {
+     "heroid": 19,
+     "delta": 3.81
+    },
+    {
+     "heroid": 78,
+     "delta": 3.74
+    },
+    {
+     "heroid": 89,
+     "delta": 3.55
+    }
+   ]
+  },
+  {
+   "name": "Chang'e",
+   "heroid": 61,
+   "pick": 0.3,
+   "win": 42.95,
+   "ban": 0.04,
+   "counters": [
+    {
+     "heroid": 101,
+     "delta": 53.13
+    },
+    {
+     "heroid": 52,
+     "delta": 31.28
+    },
+    {
+     "heroid": 57,
+     "delta": 14.84
+    },
+    {
+     "heroid": 115,
+     "delta": 10.61
+    },
+    {
+     "heroid": 46,
+     "delta": 8.29
+    }
+   ]
+  },
+  {
+   "name": "Nana",
+   "heroid": 5,
+   "pick": 0.6,
+   "win": 42.48,
+   "ban": 0.3,
+   "counters": [
+    {
+     "heroid": 125,
+     "delta": 31.75
+    },
+    {
+     "heroid": 101,
+     "delta": 28.61
+    },
+    {
+     "heroid": 66,
+     "delta": 20.66
+    },
+    {
+     "heroid": 52,
+     "delta": 14.58
+    },
+    {
+     "heroid": 115,
+     "delta": 11.36
+    }
+   ]
+  },
+  {
+   "name": "Balmond",
+   "heroid": 2,
+   "pick": 0.19,
+   "win": 42.38,
+   "ban": 0.09,
+   "counters": [
+    {
+     "heroid": 117,
+     "delta": 13.85
+    },
+    {
+     "heroid": 113,
+     "delta": 10
+    },
+    {
+     "heroid": 27,
+     "delta": 9.08
+    },
+    {
+     "heroid": 87,
+     "delta": 8
+    },
+    {
+     "heroid": 114,
+     "delta": 7.86
+    }
+   ]
+  },
+  {
+   "name": "Tigreal",
+   "heroid": 6,
+   "pick": 0.72,
+   "win": 41.69,
+   "ban": 1.11,
+   "counters": [
+    {
+     "heroid": 20,
+     "delta": 57.84
+    },
+    {
+     "heroid": 34,
+     "delta": 12.76
+    },
+    {
+     "heroid": 10,
+     "delta": 11.24
+    },
+    {
+     "heroid": 55,
+     "delta": 11.22
+    },
+    {
+     "heroid": 112,
+     "delta": 10.08
+    }
+   ]
+  },
+  {
+   "name": "Roger",
+   "heroid": 39,
+   "pick": 0.17,
+   "win": 41.12,
+   "ban": 0.03,
+   "counters": [
+    {
+     "heroid": 44,
+     "delta": 12.93
+    },
+    {
+     "heroid": 106,
+     "delta": 12.58
+    },
+    {
+     "heroid": 47,
+     "delta": 11.92
+    },
+    {
+     "heroid": 35,
+     "delta": 10.18
+    },
+    {
+     "heroid": 94,
+     "delta": 9.18
+    }
+   ]
+  },
+  {
+   "name": "Lancelot",
+   "heroid": 47,
+   "pick": 0.34,
+   "win": 40.84,
+   "ban": 0.06,
+   "counters": [
+    {
+     "heroid": 84,
+     "delta": 30.21
+    },
+    {
+     "heroid": 21,
+     "delta": 25.65
+    },
+    {
+     "heroid": 8,
+     "delta": 24.16
+    },
+    {
+     "heroid": 67,
+     "delta": 12.92
+    },
+    {
+     "heroid": 126,
+     "delta": 12.16
+    }
+   ]
+  },
+  {
+   "name": "Zilong",
+   "heroid": 16,
+   "pick": 0.11,
+   "win": 40.23,
+   "ban": 0.11,
+   "counters": [
+    {
+     "heroid": 64,
+     "delta": 28.38
+    },
+    {
+     "heroid": 101,
+     "delta": 20.61
+    },
+    {
+     "heroid": 29,
+     "delta": 19.04
+    },
+    {
+     "heroid": 111,
+     "delta": 17.78
+    },
+    {
+     "heroid": 82,
+     "delta": 16.98
+    }
+   ]
+  },
+  {
+   "name": "Franco",
+   "heroid": 10,
+   "pick": 0.34,
+   "win": 35.62,
+   "ban": 0.85,
+   "counters": [
+    {
+     "heroid": 20,
+     "delta": 13.93
+    },
+    {
+     "heroid": 76,
+     "delta": 13.09
+    },
+    {
+     "heroid": 98,
+     "delta": 12.89
+    },
+    {
+     "heroid": 24,
+     "delta": 11.67
+    },
+    {
+     "heroid": 6,
+     "delta": 11.24
+    }
+   ]
+  }
+ ],
+ "mt2": [],
+ "mt3": [],
+ "mt4": [],
+ "all7": [],
+ "_meta": {
+  "rank": "Mythical Glory+",
+  "rankFilter": "bigrank=9",
+  "source": "mobilelegends.com/rank (official Moonton endpoint)",
+  "heroes": 133
+ }
+}

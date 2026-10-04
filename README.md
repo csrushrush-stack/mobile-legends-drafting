@@ -7,8 +7,10 @@ happens, and get recommendations driven by real professional match data — then
 teams are locked.
 
 Runs entirely in the browser. No install, no account, no server — and it works offline once loaded.
-Works on desktop and phone: on mobile the draft board, recommendations and hero pool become three tabs
-with a fixed bottom bar, so you never have to scroll between them mid-draft.
+Works on desktop and phone. On mobile the board and the draft are two tabs with a fixed bottom bar, and the
+hero pool sits directly under the recommendations so picks and heroes are in one place.
+
+A **Show more** button under the recommendations reveals further down the ranked list.
 
 ---
 
@@ -27,6 +29,14 @@ Phase 2 picks  R4 → B4 → B5 → R5
 
 Tell it whether you are blue or red, then click heroes as they are picked or banned. On your turn it shows
 the best options; on the enemy's turn it shows what they are likely to take.
+
+**The draft order changes with the data source.** `Ranked + All` switches to the ranked format:
+
+- 5 bans each, in **two blind rounds** — the enemy's first three bans stay hidden until that round ends,
+  and their last two stay hidden until picks begin
+- Then picks in the ranked order: **B1 → R2 → B2 → R2 → B2 → R1**
+
+The other two sources use the tournament order (open bans, B1 → R2 → B2 → R1 in two phases).
 
 ### 2. Post-draft game plan
 
@@ -66,8 +76,19 @@ Every recommendation shows:
 
 Plus patch 2.2.16 ranked statistics and a 133-hero counter matrix.
 
-**Switch the data source at the top of the app** between `Asian Games 2026` (32-game international sample)
-and `AG + MPL` (all 960 games pooled).
+Plus **official Moonton ranked data for the highest tier (Mythical Glory+)**, pulled from the public
+endpoint behind mobilelegends.com/rank. This is the publisher's own ranked dataset, not a third-party estimate.
+
+**Three data sources, switchable at the top of the app:**
+
+| Source | What it uses |
+|---|---|
+| `AG 2026` | The 32-game Asian Games sample only |
+| `AG + MPL` | All 960 professional games pooled |
+| `Ranked + All` | Official Mythical Glory+ ranked stats **and** the professional dataset |
+
+The high-rank meta is genuinely different from all-ranks. Aulus is 59.7% win / 21.1% ban across all ranks,
+but **61.4% win / 69.4% ban** at Mythical Glory+. Use `Ranked + All` when you are drafting for ranked.
 
 Sources: [Liquipedia](https://liquipedia.net/mobilelegends) tournament statistics pages, plus ranked data
 aggregators. Game counts were verified by back-solving `bans ÷ ban%` — it returns the same integer for every
@@ -120,6 +141,8 @@ src/
   draft_app_template.html app source with a data placeholder
   build_draft_app.py      injects the dataset into the template
   league_data.py          per-league hero tables — edit here to add a league
+  rank_official.json      official Mythical Glory+ ranked stats
+  fetch_rank.js           re-pulls the official ranked data
   draft_data.json         generated dataset
 reports/
   *.html                  full written analyses (meta, combinations, draft datasheet)
