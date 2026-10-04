@@ -37,6 +37,29 @@ button.sm{padding:6px 11px;font-size:12px}
 .srcbar b{color:#0f172a}
 .srcbar .lg{border:1px solid var(--line);border-radius:7px;padding:3px 9px;background:#f8fafc}
 .srcbar .lg.on{background:#ecfdf5;border-color:#a7f3d0;color:#065f46;font-weight:700}
+.rules{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;
+  margin-bottom:12px}
+.rhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.rtitle{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.55px;color:#64748b}
+.rprog{font-size:11.5px;font-weight:700;color:#0891b2}
+.rlist{display:flex;gap:8px;flex-wrap:wrap}
+.rule{display:flex;align-items:center;gap:6px;border-radius:9px;padding:6px 11px;
+  border:1px solid var(--line);font-size:12.5px;background:#f8fafc}
+.rule.ok{background:#f0fdf4;border-color:#bbf7d0;color:#14532d}
+.rule.next{background:#eff6ff;border-color:#bfdbfe;color:#1e3a8a;font-weight:700}
+.rule.todo{color:#94a3b8}
+.rnum{font-weight:800;font-size:10.5px;color:#94a3b8}
+.rule.ok .rnum,.rule.next .rnum{color:inherit}
+.rmark{font-weight:800;font-size:11px}
+.rlabel b{color:#0f172a;font-weight:700}
+.rnow{margin-left:4px;font-size:9.5px;font-weight:800;text-transform:uppercase;
+  letter-spacing:.4px;background:#2563eb;color:#fff;border-radius:5px;padding:1px 6px}
+.rhint{margin-top:9px;font-size:11.5px;color:#475569}
+.rhint b{color:#0f172a}
+.rhint.allmet{color:#15803d}
+.flexbadge{display:inline-block;border-radius:5px;padding:1px 6px;font-size:9.5px;font-weight:800;
+  background:#fef3c7;color:#92400e;letter-spacing:.3px}
+
 .recmetrics{display:flex;gap:12px;flex-wrap:wrap;margin-top:5px}
 .metric{font-size:11px;color:#64748b}
 .metric b{font-size:12.5px;color:#0f172a;font-variant-numeric:tabular-nums}
@@ -365,6 +388,7 @@ input[type=search]:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 
 </div>
 
 <div class="tabpane active" id="pane-draft">
+<div class="rules" id="rulesPanel"></div>
 <div class="cols">
   <div class="panel">
     <h3 id="recTitle">Recommendations</h3>
@@ -615,8 +639,18 @@ function scorePick(h, myPicks, enemyPicks, used){
   if(b.needMagic && ['Mid','Gold'].includes(h.lane) && h.magic){ sc += 9; why.push('you have no magic damage yet'); }
   if(b.needPhys && ['Mid','Gold'].includes(h.lane) && !h.magic){ sc += 7; why.push('you have no physical carry yet'); }
 
+  /* The three draft rules only drive YOUR recommendations. When it is the enemy's turn
+     the list answers "what will they take", so applying your own priorities would be wrong. */
+  const picking = SEQ[cursor] && SEQ[cursor].s === mySide;
+  const rb = picking ? ruleBonus(h, myPicks) : { bonus: 0, rule: null };
+  if(rb.bonus){
+    const n = RULES.map(function(r){ return r.id; }).indexOf(nextRule(myPicks).id) + 1;
+    sc += rb.bonus;
+    why.push('<b>rule ' + n + '</b>: ' + rb.rule);
+  }
+
   if(used.has(h.name)) sc = -999;
-  return {h:h, sc:sc, why:why, syn:links.length ? {g:g,w:w} : null, match:m, d:d};
+  return {h:h, sc:sc, why:why, syn:links.length ? {g:g,w:w} : null, match:m, d:d, rule:rb.rule};
 }
 
 function diversify(list, cap, want){
@@ -1016,8 +1050,11 @@ function renderRecs(){
     return '<div class="rec'+(i===0&&myTurn?' top':'')+'" data-hero="'+h.name+'">'
       + '<div class="rank">'+(i+1)+'</div><div class="recbody">'
       + '<div class="recname">'+h.name
-      + '<span class="lane '+h.lane+'">'+h.lane+'</span>'
-      + '<span class="tier '+tierCls+'">'+tierCls+'</span></div>'
+      + '<span class="lane '+h.lane+'">'+(h.lanes && h.lanes.length>1 ? h.lanes.join('/') : h.lane)+'</span>'
+      + '<span class="tier '+tierCls+'">'+tierCls+'</span>'
+      + (h.flex ? '<span class="flexbadge">FLEX</span>' : '')
+      + (r.rule ? '<span class="flexbadge" style="background:#dcfce7;color:#15803d">RULE</span>' : '')
+      + '</div>'
       + '<div class="recwhy">'+r.why.join(' &middot; ')+'</div>'
       + '<div class="recmetrics">'+metrics+'</div></div>'
       + '<div class="score">'+r.sc.toFixed(0)+'</div></div>';
@@ -1146,7 +1183,8 @@ function renderPool(){
                        : ('meta '+h.meta.toFixed(0)+' &middot; ban '+h.ban.toFixed(0)+'%');
     return '<div class="hcard '+cls+'" data-hero="'+h.name+'">'
       + '<div class="hn">'+h.name+'<span class="tier '+(h.tier||'C')+'">'+(h.tier||'C')+'</span></div>'
-      + '<div class="hm"><span class="lane '+h.lane+'">'+h.lane+'</span></div>'
+      + '<div class="hm"><span class="lane '+h.lane+'">'+(h.lanes && h.lanes.length>1 ? h.lanes.join('/') : h.lane)+'</span>'
+      + (h.flex ? ' <span class="flexbadge">FLEX</span>' : '') + '</div>'
       + '<div class="hm">'+stats+'</div>'
       + '<div class="hm">'+banLine+'</div></div>';
   }).join('');
@@ -1188,6 +1226,69 @@ function setTab(name, scroll){
   if(scroll !== false && isMobile()) window.scrollTo(0, 0);
 }
 
+/* ---- draft rules: the three priorities applied to every recommendation ---- */
+const S_JUNG = DATA.sJunglers || [];
+const META_MG = DATA.metaMidGold || [];
+
+const RULES = [
+  { id:'jung', label:'S-tier jungler',
+    why:'Secure a top-tier jungler first — it is the highest-impact slot.',
+    met: function(my){ return my.some(function(p){ return S_JUNG.indexOf(p) >= 0; }); },
+    match: function(h){ return S_JUNG.indexOf(h.name) >= 0; } },
+  { id:'flex', label:'Flex hero',
+    why:'A hero that plays two lanes keeps your comp hidden from the enemy.',
+    met: function(my){ return my.some(function(p){ return HERO[p] && HERO[p].flex; }); },
+    match: function(h){ return !!h.flex; } },
+  { id:'midgold', label:'Meta mid or gold',
+    why:'Anchor your damage with a strong mid or gold laner.',
+    met: function(my){ return my.some(function(p){ return META_MG.indexOf(p) >= 0; }); },
+    match: function(h){ return META_MG.indexOf(h.name) >= 0; } }
+];
+
+/* the highest-priority rule you have not satisfied yet */
+function nextRule(myPicks){
+  for(let i=0;i<RULES.length;i++){
+    if(!RULES[i].met(myPicks)) return RULES[i];
+  }
+  return null;
+}
+
+function ruleBonus(h, myPicks){
+  const r = nextRule(myPicks);
+  if(!r) return { bonus: 0, rule: null };
+  if(r.match(h)) return { bonus: 30, rule: r.label };
+  return { bonus: 0, rule: null };
+}
+
+function renderRules(){
+  const el = $('rulesPanel');
+  if(!el) return;
+  if(!mySide){ el.innerHTML = ''; return; }
+  const my = teamData(mySide).picks;
+  const active = nextRule(my);
+  const done = RULES.filter(function(r){ return r.met(my); }).length;
+  el.innerHTML =
+    '<div class="rhead"><span class="rtitle">Draft rules</span>'
+    + '<span class="rprog">' + done + ' of ' + RULES.length + ' done</span></div>'
+    + '<div class="rlist">'
+    + RULES.map(function(r, i){
+        const ok = r.met(my);
+        const isNext = active && active.id === r.id;
+        const hit = my.filter(function(p){ return r.match(HERO[p] || {}); });
+        return '<div class="rule ' + (ok ? 'ok' : (isNext ? 'next' : 'todo')) + '">'
+          + '<span class="rnum">' + (i + 1) + '</span>'
+          + '<span class="rmark">' + (ok ? '&#10003;' : (isNext ? '&#9654;' : '&#9675;')) + '</span>'
+          + '<span class="rlabel">' + r.label
+          + (hit.length ? ' <b>' + hit.join(', ') + '</b>' : '')
+          + '</span>'
+          + (isNext ? '<span class="rnow">prioritising</span>' : '')
+          + '</div>';
+      }).join('')
+    + '</div>'
+    + (active ? '<div class="rhint">Next up: <b>' + active.label + '</b> &mdash; ' + active.why + '</div>'
+              : '<div class="rhint allmet">All three rules satisfied. Drafting on pure value now.</div>');
+}
+
 function renderSrcBar(){
   const active = MODE === 'ag' ? LEAGUES.filter(function(l){ return l.id === 'ag'; }) : LEAGUES;
   const games = active.reduce(function(a,l){ return a + l.games; }, 0);
@@ -1208,7 +1309,7 @@ function renderSrcBar(){
 }
 
 function renderAll(){
-  renderTurn(); renderSeq(); renderBoard(); renderRecs(); renderCounters(); renderPool(); renderGamePlan(); renderSrcBar();
+  renderTurn(); renderSeq(); renderBoard(); renderRecs(); renderCounters(); renderPool(); renderGamePlan(); renderSrcBar(); renderRules();
   renderTabBadge();
   const done = filled.filter(Boolean).length;
   $('foot').textContent = 'Draft progress: ' + done + ' / ' + SEQ.length + ' steps  ·  You are ' + (mySide?mySide.toUpperCase():'—')

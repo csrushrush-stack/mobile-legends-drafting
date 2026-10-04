@@ -48,7 +48,32 @@ Once both teams have five picks, a game plan opens automatically:
 - **Verdict** — whether the draft is structurally even or one side has the edge, and why
 - **Matchup edges** in both directions from the counter matrix
 
-### 3. Per-hero metrics
+### 3. Draft rules
+
+Every recommendation follows three priorities, applied in order:
+
+1. **S-tier jungler** — secure a top-tier jungler first
+2. **Flex hero** — a hero that plays two or more lanes, so the enemy cannot read your comp
+3. **Meta mid or gold** — anchor your damage with a strong mid or gold laner
+
+A panel above the recommendations tracks which rules are satisfied and which one is being prioritised.
+The list re-ranks itself to serve the highest unmet rule, then falls back to pure value once all three are done.
+
+The three lists are derived from the data, not hard-coded:
+
+- **S-tier junglers** are ranked on high-rank win rate, ban respect, pick rate, professional record and
+  ranked meta, restricted to heroes whose *primary* lane is jungle — so EXP heroes that can flex into the
+  jungle do not head the list.
+- **Flex heroes** are the 59 heroes with a second genuine pro-play lane.
+- **Meta mid/gold** uses the same composite over mid and gold laners.
+
+A *flex hero* is one that can be played in two or more lanes. You pick it early without revealing where it
+goes, so the enemy has to guess — Aulus (EXP/Jungle), Gloo (Roam/EXP), Kimmy (Mid/Gold).
+
+Rules only drive **your** recommendations. On the enemy's turn the list answers "what will they take",
+so your own priorities are not applied.
+
+### 4. Per-hero metrics
 
 Every recommendation shows:
 

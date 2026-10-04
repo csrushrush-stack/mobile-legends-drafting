@@ -133,6 +133,41 @@ try:
 except Exception:
     RANKED_OFFICIAL = {}
 
+# ---------------------------------------------- multi-lane (flex) assignments
+# A hero is a FLEX pick when it can be played in two or more different lanes.
+# Only lanes that are a genuine pro-play option are listed.
+EXTRA_LANES = {
+ "Uranus":["Roam"], "Edith":["Roam"], "Gloo":["EXP"], "Lukas":["Jungle"],
+ "Barats":["Jungle"], "Paquito":["Jungle"], "Fredrinn":["EXP"], "Yi Sun-shin":["Jungle"],
+ "Kimmy":["Gold"], "Selena":["Roam"], "Kadita":["Roam"], "Esmeralda":["Mid"],
+ "Alice":["Mid"], "Ruby":["Roam"], "Akai":["Roam"], "Hylos":["EXP"],
+ "Belerick":["EXP"], "Gatotkaca":["Roam"], "Kalea":["EXP"], "Chip":["EXP"],
+ "Faramis":["Mid"], "Masha":["Jungle"], "Guinevere":["Mid"], "Chou":["Roam"],
+ "Jawhead":["Roam"], "Silvanna":["Mid"], "Terizla":["Roam"], "Julian":["Mid"],
+ "Harley":["Mid"], "Joy":["EXP"], "Benedetta":["Jungle"], "Arlott":["Jungle"],
+ "Suyou":["EXP"], "Grock":["EXP"], "Baxia":["Roam"], "Hilda":["Roam"],
+ "Minsitthar":["EXP"], "Aulus":["Jungle"], "Sun":["Jungle"], "Aldous":["Jungle"],
+ "Zilong":["Jungle"], "Yin":["Jungle"], "Roger":["Jungle","Gold"], "Alpha":["Jungle"],
+ "Dyrroth":["Jungle"], "Thamuz":["Jungle"], "X.Borg":["Jungle"], "Leomord":["Jungle"],
+ "Martis":["Jungle"], "Freya":["Jungle"], "Lapu-Lapu":["Jungle"], "Cyclops":["Jungle"],
+ "Nana":["Roam"], "Badang":["Roam"], "Khaleed":["Roam"], "Phoveus":["Roam"],
+ "Bane":["EXP"], "Granger":["Jungle"], "Yi Sun-shin ":["Jungle"],
+ "Valentina":["Roam"], "Cecilion":["Roam"], "Pharsa":["Roam"], "Yve":["Roam"],
+ "Natalia":["Gold"], "Melissa":["Mid"], "Ixia":["Mid"], "Layla":["Mid"],
+}
+
+def lanes_of(name):
+    base = LANE.get(name, "Flex")
+    out = [base] if base != "Flex" else []
+    for l in EXTRA_LANES.get(name, []):
+        if l not in out:
+            out.append(l)
+    return out or ["Flex"]
+
+def norm(v, lo, hi):
+    if v is None: return 0.5
+    return max(0.0, min(1.0, (v - lo) / (hi - lo)))
+
 HEROES = []
 for name, s in STATS.items():
     lane = LANE.get(name, "Flex")
@@ -169,8 +204,9 @@ for name, s in STATS.items():
                     wr=round(w / p * 100, 2), presence=round((p + b) / g * 100, 2) if g else 0)
 
     rk = RANKED_OFFICIAL.get(name)
+    lanes = lanes_of(name)
     HEROES.append(dict(
-        name=name, lane=lane,
+        name=name, lane=lane, lanes=lanes, flex=len(lanes) >= 2,
         meta=float(s["RankedMetaScore"] or 0),
         ban=float(s["BanRate%"] or 0),
         tier=s["Tier"],
@@ -185,11 +221,38 @@ for name, s in STATS.items():
     ))
 HEROES.sort(key=lambda h: h["name"])
 
+# ------------------------------------------------ S-tier junglers, derived from data
+# Rank junglers on high-rank win rate, high-rank ban respect, pick rate, pro record and meta.
+# Pick rate is included so a rarely-played hero with a flattering win rate does not top a
+# list that is meant to describe the actual meta.
+for h in HEROES:
+    h["jscore"] = round(
+        0.28 * norm(h["rk"]["win"] if h["rk"] else None, 45, 62) +
+        0.24 * norm(h["rk"]["ban"] if h["rk"] else None, 0, 100) +
+        0.16 * norm(h["rk"]["pick"] if h["rk"] else None, 0, 2.5) +
+        0.16 * norm(h["all"]["wr"] if h["all"] else None, 40, 65) +
+        0.16 * (h["meta"] / 100.0), 4)
+
+# "Jungler" means the hero's PRIMARY lane is jungle. Heroes that merely flex into the
+# jungle (Aulus, Masha, Paquito) are EXP picks and should not head a jungler list.
+JUNGLERS = sorted([h for h in HEROES if h["lane"] == "Jungle"], key=lambda h: -h["jscore"])
+S_JUNGLERS = [h["name"] for h in JUNGLERS[:5]]
+
+# Meta mid or gold: primary lane is mid or gold, ranked on the same composite.
+MIDGOLD = sorted([h for h in HEROES if h["lane"] in ("Mid", "Gold")], key=lambda h: -h["jscore"])
+META_MIDGOLD = [h["name"] for h in MIDGOLD[:10]]
+
+FLEXES = sorted([h["name"] for h in HEROES if h["flex"]])
+S_FLEX = [h["name"] for h in sorted([h for h in HEROES if h["flex"]], key=lambda h: -h["jscore"])[:8]]
+
 DATA = dict(
     heroes=HEROES,
     pairs={"%s|%s" % (a, b): [g, w] for a, b, g, w, l in PAIRS},
     maxBan=MAXBAN,
     rankedMeta=RANKED_META,
+    sJunglers=S_JUNGLERS,
+    metaMidGold=META_MIDGOLD,
+    flexCount=len(FLEXES),
     leagues=[dict(id=x["id"], name=x["name"], short=x["short"], region=x["region"],
                   games=x["games"], note=x["note"], heroes=len(x["rows"])) for x in LEAGUES],
 )
@@ -204,3 +267,17 @@ with open(os.path.join(OUT, "draft_app.html"), "w", encoding="utf-8") as f:
     f.write(html)
 
 print("heroes:", len(HEROES), "| pairs:", len(PAIRS), "| json KB:", round(len(json.dumps(DATA))/1024, 1))
+print("flex heroes:", len(FLEXES))
+print("S-tier junglers:", S_JUNGLERS)
+print("meta mid/gold:", META_MIDGOLD)
+print("S-tier flex:", S_FLEX)
+print("top junglers by score:")
+for h in JUNGLERS[:6]:
+    rk = h["rk"] or {}
+    print("   %-14s score %.3f  rankWR %s  rankBan %s"
+          % (h["name"], h["jscore"], rk.get("win"), rk.get("ban")))
+print("top mid/gold by score:")
+for h in MIDGOLD[:8]:
+    rk = h["rk"] or {}
+    print("   %-14s %-6s score %.3f  rankWR %s  rankBan %s  meta %.0f"
+          % (h["name"], h["lane"], h["jscore"], rk.get("win"), rk.get("ban"), h["meta"]))
