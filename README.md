@@ -1,11 +1,12 @@
 # Mobile Legends Drafting
 
+### ▶ **[Open the draft assistant](https://csrushrush-stack.github.io/mobile-legends-drafting/)**
+
 A draft assistant for Mobile Legends: Bang Bang tournament play. Pick your side, enter the draft as it
 happens, and get recommendations driven by real professional match data — then a full game plan once both
 teams are locked.
 
-**Open `draft_app.html` in any browser.** Single self-contained file — no install, no server, no internet
-connection required. All data is embedded.
+Runs entirely in the browser. No install, no account, no server — and it works offline once loaded.
 
 ---
 
@@ -111,7 +112,8 @@ Where two heroes actually played together at the 2026 Asian Games, the app shows
 ## Repository layout
 
 ```
-draft_app.html            the app — open this
+index.html                redirects to the app (GitHub Pages entry point)
+draft_app.html            the app itself
 src/
   draft_app_template.html app source with a data placeholder
   build_draft_app.py      injects the dataset into the template
