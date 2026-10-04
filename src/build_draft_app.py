@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Build draft_app.html - MLBB draft assistant with embedded data."""
-import csv, json, os
+import csv, json, os, math
 
 OUT = os.path.dirname(os.path.abspath(__file__))
 
@@ -54,17 +54,17 @@ LANE = {
  "Nolan":"Jungle","Hirara":"Jungle","Hayabusa":"Jungle","Fanny":"Jungle","Suyou":"Jungle",
  "Harley":"Jungle","Sora":"Jungle","Lancelot":"Jungle","Ling":"Jungle","Joy":"Jungle",
  "Fredrinn":"Jungle","Julian":"Jungle","Bane":"Jungle","Baxia":"Jungle","Akai":"Jungle",
- "Granger":"Jungle","Gusion":"Jungle","Hanzo":"Jungle","Helcurt":"Jungle","Karina":"Jungle",
- "Natalia":"Jungle","Saber":"Jungle",
+ "Gusion":"Jungle","Hanzo":"Jungle","Helcurt":"Jungle","Karina":"Jungle",
+ "Natalia":"Jungle","Saber":"Jungle","Aamon":"Jungle",
  "Eudora":"Mid","Zhuxin":"Mid","Yve":"Mid","Lylia":"Mid","Novaria":"Mid","Cecilion":"Mid",
  "Valentina":"Mid","Vexana":"Mid","Lunox":"Mid","Gord":"Mid","Odette":"Mid","Harith":"Mid",
  "Selena":"Mid","Xavier":"Mid","Pharsa":"Mid","Kagura":"Mid","Cyclops":"Mid","Vale":"Mid",
  "Aurora":"Mid","Zetian":"Mid","Luo Yi":"Mid","Zhask":"Mid","Chang'e":"Mid","Valir":"Mid",
- "Faramis":"Mid","Nana":"Mid","Aamon":"Mid","Kadita":"Mid",
+ "Faramis":"Mid","Nana":"Mid","Kadita":"Mid",
  "Brody":"Gold","Claude":"Gold","Moskov":"Gold","Miya":"Gold","Bruno":"Gold","Clint":"Gold",
  "Obsidia":"Gold","Karrie":"Gold","Melissa":"Gold","Beatrix":"Gold","Irithel":"Gold",
  "Wanwan":"Gold","Layla":"Gold","Lesley":"Gold","Natan":"Gold","Yi Sun-shin":"Gold",
- "Ixia":"Gold","Popol and Kupa":"Gold","Kimmy":"Gold","Hanabi":"Gold","Grock":"Roam",
+ "Ixia":"Gold","Popol and Kupa":"Gold","Kimmy":"Gold","Hanabi":"Gold","Granger":"Gold","Grock":"Roam",
  "Gloo":"Roam","Atlas":"Roam","Minotaur":"Roam","Carmilla":"Roam","Belerick":"Roam",
  "Rafaela":"Roam","Angela":"Roam","Chip":"Roam","Mathilda":"Roam","Kalea":"Roam",
  "Marcel":"Roam","Tigreal":"Roam","Khufra":"Roam","Lolita":"Roam","Franco":"Roam",
@@ -223,26 +223,56 @@ for name, s in STATS.items():
     ))
 HEROES.sort(key=lambda h: h["name"])
 
-# ------------------------------------------------ S-tier junglers, derived from data
-# Rank junglers on high-rank win rate, high-rank ban respect, pick rate, pro record and meta.
-# Pick rate is included so a rarely-played hero with a flattering win rate does not top a
-# list that is meant to describe the actual meta.
+# ------------------------------------------------ tiers, driven by BAN RATE
+# Ban rate is the draft market's own valuation: it says what high-rank players
+# refuse to play against. A hero nobody picks or bans cannot be S-tier however
+# flattering its win rate looks, so presence gates every tier.
 for h in HEROES:
+    rk = h["rk"] or {}
+    # Square-root scaling, not linear: ban rates run from 91% down to 0.1%, so a linear
+    # scale crushes everything below the top hero to roughly zero and destroys the order.
+    def sq(v, cap):
+        return min(1.0, math.sqrt(max(0.0, v or 0.0) / cap))
     h["jscore"] = round(
-        0.28 * norm(h["rk"]["win"] if h["rk"] else None, 45, 62) +
-        0.24 * norm(h["rk"]["ban"] if h["rk"] else None, 0, 100) +
-        0.16 * norm(h["rk"]["pick"] if h["rk"] else None, 0, 2.5) +
-        0.16 * norm(h["all"]["wr"] if h["all"] else None, 40, 65) +
-        0.16 * (h["meta"] / 100.0), 4)
+        0.55 * sq(rk.get("ban"), 60) +
+        0.30 * sq(rk.get("pick"), 3.5) +
+        0.15 * norm(rk.get("win"), 47, 60), 4)
 
-# "Jungler" means the hero's PRIMARY lane is jungle. Heroes that merely flex into the
-# jungle (Aulus, Masha, Paquito) are EXP picks and should not head a jungler list.
+def tier_of(h):
+    rk = h["rk"]
+    if not rk:
+        return "D"
+    ban, pick, wr = rk["ban"], rk["pick"], rk["win"]
+    if ban >= 15:                                   return "S"
+    if ban >= 5:                                    return "A"
+    if ban >= 1.5 or (pick >= 2.0 and wr >= 52.0):  return "B"
+    if ban >= 0.3 or pick >= 1.0:                   return "C"
+    return "D"
+
+for h in HEROES:
+    h["tierNow"] = tier_of(h)
+
+TIER_ORDER = ["S", "A", "B", "C", "D"]
+
+# S-tier lists used by the draft rules.
+# Start from heroes that are genuinely S or A tier, then top up to a usable number so
+# the rule still has options when the top pick is banned. Ordering is by jscore, which
+# is ban-rate dominant, so the top-up entries are the next most contested, not filler.
+def rule_list(pred, min_n=4, cap=5):
+    pool = sorted([h for h in HEROES if pred(h)], key=lambda h: -h["jscore"])
+    out = [h["name"] for h in pool if h["tierNow"] in ("S", "A")]
+    for h in pool:
+        if len(out) >= min_n:
+            break
+        if h["name"] not in out:
+            out.append(h["name"])
+    return out[:cap]
+
+S_TIER = [h["name"] for h in HEROES if h["tierNow"] == "S"]
 JUNGLERS = sorted([h for h in HEROES if h["lane"] == "Jungle"], key=lambda h: -h["jscore"])
-S_JUNGLERS = [h["name"] for h in JUNGLERS[:5]]
-
-# Meta mid or gold: primary lane is mid or gold, ranked on the same composite.
 MIDGOLD = sorted([h for h in HEROES if h["lane"] in ("Mid", "Gold")], key=lambda h: -h["jscore"])
-META_MIDGOLD = [h["name"] for h in MIDGOLD[:10]]
+S_JUNGLERS = rule_list(lambda h: h["lane"] == "Jungle")
+META_MIDGOLD = rule_list(lambda h: h["lane"] in ("Mid", "Gold"))
 
 FLEXES = sorted([h["name"] for h in HEROES if h["flex"]])
 S_FLEX = [h["name"] for h in sorted([h for h in HEROES if h["flex"]], key=lambda h: -h["jscore"])[:8]]

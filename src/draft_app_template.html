@@ -436,9 +436,22 @@ input[type=search]:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 
   <b>vs their lineup</b> = a matchup estimate from the 133-hero counter matrix, capped at 30&ndash;70% because it is an
   estimate, not a measurement. Both are shown on every recommendation.
   <br><br>
-  Switch the data source at the top: <b>Asian Games 2026</b> uses only the 32-game international dataset, while
-  <b>AG + MPL</b> pools every current league. Small samples are labelled &mdash; a hero with fewer than 3 pro games
-  is flagged as unproven rather than scored highly.
+  Switch the data source at the top: <b>AG 2026</b> uses only the 32-game Asian Games dataset,
+  <b>AG + MPL</b> pools every current league, and <b>Ranked + All</b> adds the publisher's own high-rank
+  numbers. The three draft rules apply to the two professional sources only.
+  <br><br>
+  <b>Where the data comes from.</b>
+  <b>Ranked win / pick / ban rates</b> are the publisher's own figures, pulled from the public endpoint behind
+  <code>mobilelegends.com/rank</code> filtered to <b>Mythical Glory+</b> (133 heroes, patch 2.2.16).
+  <b>Professional records</b> come from the tournament statistics pages on Liquipedia: Asian Games 2026 (32 games),
+  MPL Philippines S17 (169), MPL Indonesia S17 (205), MPL Malaysia S17 (164), MSL Myanmar S4 (86),
+  MTC T&uuml;rkiye S7 (142) and MCC S7 CIS/EECA (162) &mdash; 960 games in total.
+  <b>Counter matchups</b> come from a 133-hero ranked counter matrix.
+  <br><br>
+  <b>Tiers are driven by ban rate, not win rate.</b> Ban rate is the draft market's own valuation &mdash; it says
+  what high-rank players refuse to play against. A hero with almost no pick or ban presence cannot be top tier
+  however flattering its win rate looks, so every tier is gated on presence.
+  <b>S</b> = banned in 15%+ of games, <b>A</b> = 5%+, <b>B</b> = 1.5%+ or played in 2%+ with a 52%+ win rate.
 </details>
 
 <div class="foot" id="foot"></div>
@@ -1030,7 +1043,7 @@ function renderRecs(){
 
   L.innerHTML = list.map(function(r,i){
     const h = r.h;
-    const tierCls = h.tier || 'C';
+    const tierCls = h.tierNow || h.tier || 'C';
     const lu = lineupWR(base.concat([h.name]));
     const me = r.match || matchupEst(h.name, enemyP);
     const d = r.d;
@@ -1046,6 +1059,10 @@ function renderRecs(){
         + (MODE === 'all' && d.leagues > 1 ? ' &middot; '+d.leagues+' events' : '')+'</span>';
     } else {
       metrics += '<span class="metric"><b>&ndash;</b> not picked in dataset</span>';
+    }
+    if(rk){
+      metrics += '<span class="metric '+(rk.ban >= 15 ? 'bad' : (rk.ban >= 5 ? '' : 'dim'))+'">'
+        + '<b>'+rk.ban.toFixed(1)+'%</b> banned &middot; '+rk.pick.toFixed(2)+'% picked at high rank</span>';
     }
     return '<div class="rec'+(i===0&&myTurn?' top':'')+'" data-hero="'+h.name+'">'
       + '<div class="rank">'+(i+1)+'</div><div class="recbody">'
@@ -1182,7 +1199,7 @@ function renderPool(){
     const banLine = rk ? ('ban <b style="color:'+(rk.ban>=40?'#b91c1c':'#0f172a')+'">'+rk.ban.toFixed(0)+'%</b>')
                        : ('meta '+h.meta.toFixed(0)+' &middot; ban '+h.ban.toFixed(0)+'%');
     return '<div class="hcard '+cls+'" data-hero="'+h.name+'">'
-      + '<div class="hn">'+h.name+'<span class="tier '+(h.tier||'C')+'">'+(h.tier||'C')+'</span></div>'
+      + '<div class="hn">'+h.name+'<span class="tier '+(h.tierNow||h.tier||'C')+'">'+(h.tierNow||h.tier||'C')+'</span></div>'
       + '<div class="hm"><span class="lane '+h.lane+'">'+(h.lanes && h.lanes.length>1 ? h.lanes.join('/') : h.lane)+'</span>'
       + (h.flex ? ' <span class="flexbadge">FLEX</span>' : '') + '</div>'
       + '<div class="hm">'+stats+'</div>'
@@ -1245,8 +1262,11 @@ const RULES = [
     match: function(h){ return META_MG.indexOf(h.name) >= 0; } }
 ];
 
-/* the highest-priority rule you have not satisfied yet */
+/* the highest-priority rule you have not satisfied yet.
+   The rules describe professional drafting, so they apply to the AG and AG+MPL
+   sources only - in ranked mode the list is pure value. */
 function nextRule(myPicks){
+  if(MODE === 'ranked') return null;
   for(let i=0;i<RULES.length;i++){
     if(!RULES[i].met(myPicks)) return RULES[i];
   }
@@ -1264,6 +1284,13 @@ function renderRules(){
   const el = $('rulesPanel');
   if(!el) return;
   if(!mySide){ el.innerHTML = ''; return; }
+  if(MODE === 'ranked'){
+    el.innerHTML = '<div class="rhead"><span class="rtitle">Draft rules</span>'
+      + '<span class="rprog">off</span></div>'
+      + '<div class="rhint">The three rules are for professional drafting, so they are applied on '
+      + '<b>AG 2026</b> and <b>AG + MPL</b> only. In ranked mode the list is pure value.</div>';
+    return;
+  }
   const my = teamData(mySide).picks;
   const active = nextRule(my);
   const done = RULES.filter(function(r){ return r.met(my); }).length;
