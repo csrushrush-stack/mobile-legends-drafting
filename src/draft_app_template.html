@@ -59,6 +59,9 @@ button.sm{padding:6px 11px;font-size:12px}
 .rhint.allmet{color:#15803d}
 .flexbadge{display:inline-block;border-radius:5px;padding:1px 6px;font-size:9.5px;font-weight:800;
   background:#fef3c7;color:#92400e;letter-spacing:.3px}
+/* badge for heroes the player has rated themselves */
+.yours{display:inline-block;border-radius:5px;padding:1px 6px;font-size:9.5px;font-weight:800;
+  background:#16a34a;color:#fff;letter-spacing:.3px}
 
 .recmetrics{display:flex;gap:12px;flex-wrap:wrap;margin-top:5px}
 .metric{font-size:11px;color:#64748b}
@@ -1075,6 +1078,7 @@ function renderRecs(){
       + '<div class="recname">'+h.name
       + '<span class="lane '+h.lane+'">'+(h.lanes && h.lanes.length>1 ? h.lanes.join('/') : h.lane)+'</span>'
       + '<span class="tier '+tierCls+'">'+tierCls+'</span>'
+      + (h.userTier && h.userTier.length ? '<span class="yours" title="You rate this: '+h.userTier.join(', ')+'">YOUR S</span>' : '')
       + (h.flex ? '<span class="flexbadge">FLEX</span>' : '')
       + (r.rule ? '<span class="flexbadge" style="background:#dcfce7;color:#15803d">RULE</span>' : '')
       + '</div>'
@@ -1207,7 +1211,9 @@ function renderPool(){
     return '<div class="hcard '+cls+'" data-hero="'+h.name+'">'
       + '<div class="hn">'+h.name+'<span class="tier '+(h.tierNow||h.tier||'C')+'">'+(h.tierNow||h.tier||'C')+'</span></div>'
       + '<div class="hm"><span class="lane '+h.lane+'">'+(h.lanes && h.lanes.length>1 ? h.lanes.join('/') : h.lane)+'</span>'
-      + (h.flex ? ' <span class="flexbadge">FLEX</span>' : '') + '</div>'
+      + (h.flex ? ' <span class="flexbadge">FLEX</span>' : '')
+      + (h.userTier && h.userTier.length ? ' <span class="yours" title="You rate this: '+h.userTier.join(', ')+'">S</span>' : '')
+      + '</div>'
       + '<div class="hm">'+stats+'</div>'
       + '<div class="hm">'+banLine+'</div></div>';
   }).join('');
