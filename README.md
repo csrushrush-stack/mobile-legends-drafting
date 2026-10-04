@@ -7,6 +7,8 @@ happens, and get recommendations driven by real professional match data — then
 teams are locked.
 
 Runs entirely in the browser. No install, no account, no server — and it works offline once loaded.
+Works on desktop and phone: on mobile the draft board, recommendations and hero pool become three tabs
+with a fixed bottom bar, so you never have to scroll between them mid-draft.
 
 ---
 
