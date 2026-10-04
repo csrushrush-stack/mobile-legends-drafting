@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MLBB Composition Playbook - From Duo to Full 5</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--ink:#0f172a;--mut:#64748b;--line:#e5e7eb;--red:#dc2626;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:14px;line-height:1.58}
+.wrap{max-width:1180px;margin:0 auto;padding:32px 22px 80px}
+header.top{background:linear-gradient(135deg,#0f172a,#334155 55%,#7c3aed);color:#fff;border-radius:18px;padding:34px 36px;margin-bottom:24px;box-shadow:0 12px 34px rgba(15,23,42,.2)}
+header.top h1{margin:0 0 6px;font-size:29px;letter-spacing:-.4px}
+header.top .sub{opacity:.88;font-size:14.5px;max-width:840px}
+.pills{margin-top:18px;display:flex;flex-wrap:wrap;gap:9px}
+.pill{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:5px 13px;font-size:12.5px;font-weight:600}
+h2{font-size:21px;margin:40px 0 6px;letter-spacing:-.3px}
+h2 .n{color:#7c3aed;font-weight:800;margin-right:8px}
+h3{font-size:16px;margin:0}
+p.lead{color:var(--mut);margin:0 0 16px;max-width:920px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:18px;box-shadow:0 1px 3px rgba(15,23,42,.05)}
+.grid{display:grid;gap:16px}.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:980px){.g2,.g3{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{position:sticky;top:0;background:#f1f5f9;text-align:left;padding:9px 10px;font-size:11.5px;text-transform:uppercase;letter-spacing:.4px;color:#475569;border-bottom:1px solid var(--line);white-space:nowrap;cursor:pointer;z-index:2}
+th.no{cursor:default}
+td{padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:middle}
+tr:hover td{background:#f8fafc}
+.scroll{max-height:560px;overflow:auto;border:1px solid var(--line);border-radius:11px;background:#fff}
+.num{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.num.hi{color:#dc2626;font-weight:650}.num.lo{color:#0284c7}.dim{color:#cbd5e1}
+.tri{font-weight:700;white-space:nowrap}
+.combo b{color:#0f172a}
+.lane{background:#eef2ff;color:#4338ca;border-radius:5px;padding:2px 7px;font-size:11px;font-weight:650;white-space:nowrap}
+.fill{font-size:12px;color:#475569}
+.le{background:#fef3c7;color:#92400e}.lj{background:#dcfce7;color:#15803d}
+.lm{background:#ede9fe;color:#6d28d9}.lg{background:#fee2e2;color:#b91c1c}.lr{background:#e0f2fe;color:#0369a1}
+.le,.lj,.lm,.lg,.lr{display:inline-block;border-radius:5px;padding:2px 7px;font-size:10.5px;font-weight:750;letter-spacing:.3px}
+.arch{background:#fff;border:1px solid var(--line);border-left:5px solid #7c3aed;border-radius:14px;padding:20px 24px;margin-bottom:16px;box-shadow:0 1px 3px rgba(15,23,42,.05)}
+.ahead{display:flex;gap:14px;align-items:flex-start;margin-bottom:12px}
+.anum{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:9px;color:#fff;font-weight:800;font-size:14px;flex:0 0 auto}
+.atitle{font-size:18px;letter-spacing:-.2px}
+.aka{font-size:12.5px;color:var(--mut);font-weight:600;margin-left:6px}
+.aident{margin:4px 0 0;color:#475569;font-size:13.5px}
+.awin{background:#f8fafc;border:1px solid var(--line);border-radius:9px;padding:9px 13px;font-size:13px;margin-bottom:14px}
+.awin b{color:#0f172a}
+.slots{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-bottom:16px}
+@media(max-width:900px){.slots{grid-template-columns:1fr 1fr}}
+.slot{background:#f8fafc;border:1px solid var(--line);border-radius:9px;padding:9px 11px}
+.sl{display:block;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:#7c3aed;margin-bottom:3px}
+.sv{font-size:12px;color:#334155;line-height:1.45}
+.acols{display:grid;grid-template-columns:1.15fr 1fr;gap:22px}
+@media(max-width:900px){.acols{grid-template-columns:1fr}}
+.acols h5{margin:0 0 6px;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:#64748b}
+.acols h5:not(:first-child){margin-top:14px}
+ul.tight{margin:0 0 0 17px;padding:0}
+ul.tight li{margin-bottom:5px;font-size:13px;color:#334155}
+.cp,.lose,.ev{margin:0;font-size:12.5px;color:#334155;line-height:1.6}
+.lose{color:#b91c1c}
+.ev{color:#475569;background:#f8fafc;border-radius:8px;padding:8px 11px;border:1px solid var(--line)}
+.sm{color:#64748b;font-size:11.5px}
+.winrow td{background:#f0fdf4}
+.stg{font-size:12px;color:#64748b;white-space:nowrap;font-weight:600}
+.tm{font-weight:700;white-space:nowrap}
+.ch{font-weight:650;font-size:12.5px;margin-bottom:2px;white-space:nowrap}
+.tl{display:grid;grid-template-columns:150px 190px 1fr;gap:14px;padding:11px 0;border-bottom:1px solid #f1f5f9;align-items:baseline}
+.tl:last-child{border-bottom:0}
+.tlk{font-weight:800;font-size:13px;color:#7c3aed;font-variant-numeric:tabular-nums}
+.tlv{font-weight:650;font-size:13px}
+.tld{font-size:12.5px;color:#475569}
+@media(max-width:760px){.tl{grid-template-columns:1fr;gap:3px}}
+.dl{font-weight:700;white-space:nowrap;font-size:12.5px;color:#7c3aed;width:150px}
+.note{background:#fffbeb;border:1px solid #fde68a;border-left:4px solid #f59e0b;border-radius:10px;padding:14px 17px;font-size:13px;color:#78350f;margin-bottom:18px}
+.note b{color:#92400e}
+.note.purple{background:#faf5ff;border-color:#e9d5ff;border-left-color:#7c3aed;color:#4c1d95}
+.note.purple b{color:#5b21b6}
+.src{font-size:12.5px;color:var(--mut);line-height:1.75}
+.toolbar{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-bottom:12px}
+input[type=search]{border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:13px;font-family:inherit;background:#fff;color:var(--ink);outline:none;min-width:210px}
+input[type=search]:focus{border-color:#7c3aed;box-shadow:0 0 0 3px rgba(124,58,237,.12)}
+.cntlbl{font-size:12.5px;color:#64748b;font-weight:600}
+.hide{display:none!important}
+footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);color:var(--mut);font-size:12.5px}
+</style></head><body><div class="wrap">
+
+<header class="top">
+  <h1>From Duo to Full Five</h1>
+  <div class="sub">How to turn a good hero pair into a working team &mdash; composition archetypes, measured trios, real 5-man drafts from the 2026 Asian Games, and the macro to run them.</div>
+  <div class="pills">
+    <span class="pill">Built on 32 measured AG2026 games</span>
+    <span class="pill">50 duos &rarr; 31 measured trios</span>
+    <span class="pill">6 composition archetypes</span>
+    <span class="pill">Macro timeline + draft rules</span>
+  </div>
+</header>
+
+<div class="note purple"><b>You were right, and the data proves it.</b> A duo is 2 of 5 slots. When I re-ran the
+Asian Games pair data looking for <i>triangles</i> &mdash; three heroes where all three pairs were actually played
+together &mdash; <b>31 trios</b> fell out, and they are far more predictive than the duos. The single best-sampled
+core in the whole tournament was <b>Aulus + Hirara + Obsidia</b>: the three component pairs went 4&ndash;1, 4&ndash;1 and
+4&ndash;0, a combined <b>12&ndash;2 (85.7%)</b>. No duo in the dataset is that stable.
+Everything below builds the duo out into a full five.</div>
+
+<h2><span class="n">01</span>Why the duo is only a third of the answer</h2>
+<div class="card">
+<p class="lead" style="margin-bottom:14px">Every MLBB team has exactly five jobs. A duo covers two of them, and often
+the same one twice &mdash; which is how good duos turn into bad drafts.</p>
+<div class="slots" style="grid-template-columns:repeat(5,1fr)">
+  <div class="slot"><span class="sl">EXP</span><div class="sv">Absorbs pressure alone, becomes the second frontline late</div></div>
+  <div class="slot"><span class="sl">Jungle</span><div class="sv">Owns the tempo, the objectives, and the gold curve</div></div>
+  <div class="slot"><span class="sl">Mid</span><div class="sv">Waveclear, rotation speed, the magic damage source</div></div>
+  <div class="slot"><span class="sl">Gold</span><div class="sv">The sustained damage that ends the game</div></div>
+  <div class="slot"><span class="sl">Roam</span><div class="sv">Vision, engage or peel, and the comp's identity</div></div>
+</div>
+<h3 style="margin:18px 0 8px">The three failure modes of a "good duo"</h3>
+<ul class="tight">
+<li><b>Slot collision.</b> Two sustain heroes win lane and then lose the game &mdash; you have no damage. Two carries have damage and no frontline, so any dive deletes you. A duo that both want the same job is a duo that costs you a lane.</li>
+<li><b>Missing enabler.</b> A carry needs someone to hold the enemy still. Obsidia is a fine marksman, but she only becomes a tournament-winning pick once there is a frontline to stand behind &mdash; which is exactly why every top AG2026 trio contains a fighter <i>and</i> a roam alongside the carry.</li>
+<li><b>Wrong archetype.</b> Eudora + Atlas and Fredrinn + Angela are both excellent pairs that want opposite games. Play the first slowly and you lose; play the second aggressively and you lose. The pair is not the plan &mdash; the <b>archetype</b> is the plan.</li>
+</ul>
+</div>
+
+<h2><span class="n">02</span>Measured trios &mdash; the real unit of a draft</h2>
+<p class="lead">Three heroes where <b>all three pairs were actually played together</b> in the tournament. Sample shown is
+the combined games across the three pairs; <b>min</b> is the smallest individual pair sample, so a high min means the trio is
+genuinely stable rather than one lucky pairing. Filtered to min &ge; 3.</p>
+<div class="card">
+<div class="toolbar">
+  <input type="search" id="q" placeholder="Search hero...">
+  <span class="cntlbl" id="c"></span>
+</div>
+<div class="scroll"><table id="t1">
+<thead><tr><th data-i="0">Trio</th><th class="no">Lanes covered</th><th data-i="2">Games</th>
+<th data-i="3">Win %</th><th data-i="4">W&ndash;L</th><th data-i="5">Min pair</th><th class="no">Still needs</th></tr></thead>
+<tbody><tr><td class="tri">Atlas + Hirara + Obsidia</td><td><span class="lane">Gold / Jungle / Roam</span></td><td class="num">11</td><td class="num hi">90.9</td><td class="num">10&ndash;1</td><td class="num dim">3</td><td class="fill">EXP, Mid</td></tr>
+<tr><td class="tri">Aulus + Eudora + Minotaur</td><td><span class="lane">EXP / Mid / Roam</span></td><td class="num">11</td><td class="num hi">90.9</td><td class="num">10&ndash;1</td><td class="num dim">3</td><td class="fill">Jungle, Gold</td></tr>
+<tr><td class="tri">Aulus + Gloo + Obsidia</td><td><span class="lane">EXP / Gold / Roam</span></td><td class="num">11</td><td class="num hi">90.9</td><td class="num">10&ndash;1</td><td class="num dim">3</td><td class="fill">Jungle, Mid</td></tr>
+<tr><td class="tri">Aulus + Minotaur + Valentina</td><td><span class="lane">EXP / Mid / Roam</span></td><td class="num">10</td><td class="num hi">90.0</td><td class="num">9&ndash;1</td><td class="num dim">3</td><td class="fill">Jungle, Gold</td></tr>
+<tr><td class="tri">Aulus + Hirara + Obsidia</td><td><span class="lane">EXP / Gold / Jungle</span></td><td class="num">14</td><td class="num hi">85.7</td><td class="num">12&ndash;2</td><td class="num dim">4</td><td class="fill">Mid, Roam</td></tr>
+<tr><td class="tri">Gloo + Hirara + Obsidia</td><td><span class="lane">Gold / Jungle / Roam</span></td><td class="num">12</td><td class="num hi">83.3</td><td class="num">10&ndash;2</td><td class="num dim">3</td><td class="fill">EXP, Mid</td></tr>
+<tr><td class="tri">Eudora + Minotaur + Nolan</td><td><span class="lane">Jungle / Mid / Roam</span></td><td class="num">11</td><td class="num hi">81.8</td><td class="num">9&ndash;2</td><td class="num dim">3</td><td class="fill">EXP, Gold</td></tr>
+<tr><td class="tri">Aulus + Gloo + Hirara</td><td><span class="lane">EXP / Jungle / Roam</span></td><td class="num">13</td><td class="num ">76.9</td><td class="num">10&ndash;3</td><td class="num dim">3</td><td class="fill">Mid, Gold</td></tr>
+<tr><td class="tri">Gloo + Nolan + Obsidia</td><td><span class="lane">Gold / Jungle / Roam</span></td><td class="num">15</td><td class="num ">66.7</td><td class="num">10&ndash;5</td><td class="num dim">3</td><td class="fill">EXP, Mid</td></tr>
+<tr><td class="tri">Eudora + Minotaur + Paquito</td><td><span class="lane">EXP / Mid / Roam</span></td><td class="num">12</td><td class="num ">66.7</td><td class="num">8&ndash;4</td><td class="num dim">3</td><td class="fill">Jungle, Gold</td></tr>
+<tr><td class="tri">Atlas + Esmeralda + Eudora</td><td><span class="lane">EXP / Mid / Roam</span></td><td class="num">14</td><td class="num ">64.3</td><td class="num">9&ndash;5</td><td class="num dim">4</td><td class="fill">Jungle, Gold</td></tr>
+<tr><td class="tri">Aulus + Belerick + Eudora</td><td><span class="lane">EXP / Mid / Roam</span></td><td class="num">11</td><td class="num ">63.6</td><td class="num">7&ndash;4</td><td class="num dim">3</td><td class="fill">Jungle, Gold</td></tr>
+<tr><td class="tri">Atlas + Esmeralda + Obsidia</td><td><span class="lane">EXP / Gold / Roam</span></td><td class="num">11</td><td class="num ">63.6</td><td class="num">7&ndash;4</td><td class="num dim">3</td><td class="fill">Jungle, Mid</td></tr>
+<tr><td class="tri">Esmeralda + Eudora + Nolan</td><td><span class="lane">EXP / Jungle / Mid</span></td><td class="num">13</td><td class="num ">61.5</td><td class="num">8&ndash;5</td><td class="num dim">4</td><td class="fill">Gold, Roam</td></tr>
+<tr><td class="tri">Esmeralda + Nolan + Obsidia</td><td><span class="lane">EXP / Gold / Jungle</span></td><td class="num">14</td><td class="num ">57.1</td><td class="num">8&ndash;6</td><td class="num dim">4</td><td class="fill">Mid, Roam</td></tr>
+<tr><td class="tri">Atlas + Eudora + Paquito</td><td><span class="lane">EXP / Mid / Roam</span></td><td class="num">16</td><td class="num ">56.2</td><td class="num">9&ndash;7</td><td class="num dim">5</td><td class="fill">Jungle, Gold</td></tr>
+<tr><td class="tri">Nolan + Uranus + Zhuxin</td><td><span class="lane">EXP / Jungle / Mid</span></td><td class="num">14</td><td class="num ">50.0</td><td class="num">7&ndash;7</td><td class="num dim">4</td><td class="fill">Gold, Roam</td></tr>
+<tr><td class="tri">Eudora + Nolan + Uranus</td><td><span class="lane">EXP / Jungle / Mid</span></td><td class="num">13</td><td class="num lo">46.2</td><td class="num">6&ndash;7</td><td class="num dim">3</td><td class="fill">Gold, Roam</td></tr>
+<tr><td class="tri">Esmeralda + Nolan + Zhuxin</td><td><span class="lane">EXP / Jungle / Mid</span></td><td class="num">11</td><td class="num lo">45.5</td><td class="num">5&ndash;6</td><td class="num dim">3</td><td class="fill">Gold, Roam</td></tr>
+<tr><td class="tri">Belerick + Eudora + Nolan</td><td><span class="lane">Jungle / Mid / Roam</span></td><td class="num">11</td><td class="num lo">36.4</td><td class="num">4&ndash;7</td><td class="num dim">3</td><td class="fill">EXP, Gold</td></tr>
+<tr><td class="tri">Eudora + Paquito + Uranus</td><td><span class="lane">EXP / Mid</span></td><td class="num">11</td><td class="num lo">36.4</td><td class="num">4&ndash;7</td><td class="num dim">3</td><td class="fill">Jungle, Gold, Roam</td></tr></tbody></table></div>
+</div>
+
+<div class="card">
+<h3>What the trios tell you</h3>
+<ul class="tight">
+<li><b>Aulus + Hirara + Obsidia</b> (12&ndash;2, 85.7%, min pair 4 games) is the most trustworthy core in the dataset &mdash; an EXP fighter, an assassin jungler and a gold-lane marksman. It leaves <b>Mid and Roam</b> open, which is exactly where you should be flexible.</li>
+<li><b>Atlas + Hirara + Obsidia</b> (10&ndash;1, 90.9%) swaps the fighter for a lockdown roam. Same carry, same jungler, different frontline &mdash; and it still worked. That is the sign of a genuine core rather than a coincidence.</li>
+<li><b>Aulus + Eudora + Minotaur</b> (10&ndash;1) and <b>Aulus + Gloo + Obsidia</b> (10&ndash;1) show the two ways to build around Aulus: sustain-and-outlast, or frontline-and-protect.</li>
+<li><b>Every single top trio contains a gold-lane carry.</b> Not one is three fighters or three mages. The carry is the constant; everything else is scaffolding.</li>
+<li><b>The bad trios are instructive.</b> Eudora + Paquito + Uranus went 8&ndash;13 (36.4%) &mdash; three heroes that all want to fight up close, with no one to hold the enemy in place and no sustained damage.</li>
+</ul>
+</div>
+
+<h2><span class="n">03</span>Extending your duo &mdash; what the third hero should be</h2>
+<p class="lead">For each top measured duo: the third hero that <b>actually completed a trio with them</b> in the tournament,
+ranked by the trio's win rate. If no triangle exists, the duo has no measured third and you should fill by lane fit.</p>
+<div class="card"><div class="scroll"><table>
+<thead><tr><th class="no">Duo</th><th class="no">Lanes it covers</th><th class="no">Duo W&ndash;L</th>
+<th class="no">Duo WR</th><th class="no">Best measured third hero (trio W&ndash;L, WR)</th></tr></thead>
+<tbody><tr><td class="combo"><b>Aulus</b> + <b>Hirara</b></td><td><span class="lane">EXP + Jungle</span></td><td class="num">4&ndash;1</td><td class="num hi">80%</td><td><b>Valentina</b> <span class='sm'>(9&ndash;1, 90%)</span> &middot; <b>Obsidia</b> <span class='sm'>(12&ndash;2, 86%)</span> &middot; <b>Gloo</b> <span class='sm'>(10&ndash;3, 77%)</span></td></tr>
+<tr><td class="combo"><b>Hirara</b> + <b>Obsidia</b></td><td><span class="lane">Gold + Jungle</span></td><td class="num">4&ndash;0</td><td class="num hi">100%</td><td><b>Atlas</b> <span class='sm'>(10&ndash;1, 91%)</span> &middot; <b>Aulus</b> <span class='sm'>(12&ndash;2, 86%)</span> &middot; <b>Gloo</b> <span class='sm'>(10&ndash;2, 83%)</span></td></tr>
+<tr><td class="combo"><b>Aulus</b> + <b>Obsidia</b></td><td><span class="lane">EXP + Gold</span></td><td class="num">4&ndash;1</td><td class="num hi">80%</td><td><b>Gloo</b> <span class='sm'>(10&ndash;1, 91%)</span> &middot; <b>Hirara</b> <span class='sm'>(12&ndash;2, 86%)</span> &middot; <b>Belerick</b> <span class='sm'>(7&ndash;4, 64%)</span></td></tr>
+<tr><td class="combo"><b>Hirara</b> + <b>Atlas</b></td><td><span class="lane">Jungle + Roam</span></td><td class="num">4&ndash;0</td><td class="num hi">100%</td><td><b>Obsidia</b> <span class='sm'>(10&ndash;1, 91%)</span></td></tr>
+<tr><td class="combo"><b>Aulus</b> + <b>Eudora</b></td><td><span class="lane">EXP + Mid</span></td><td class="num">4&ndash;0</td><td class="num hi">100%</td><td><b>Minotaur</b> <span class='sm'>(10&ndash;1, 91%)</span> &middot; <b>Belerick</b> <span class='sm'>(7&ndash;4, 64%)</span></td></tr>
+<tr><td class="combo"><b>Hirara</b> + <b>Gloo</b></td><td><span class="lane">Jungle + Roam</span></td><td class="num">3&ndash;2</td><td class="num ">60%</td><td><b>Obsidia</b> <span class='sm'>(10&ndash;2, 83%)</span> &middot; <b>Aulus</b> <span class='sm'>(10&ndash;3, 77%)</span></td></tr>
+<tr><td class="combo"><b>Gloo</b> + <b>Obsidia</b></td><td><span class="lane">Gold + Roam</span></td><td class="num">3&ndash;0</td><td class="num hi">100%</td><td><b>Aulus</b> <span class='sm'>(10&ndash;1, 91%)</span> &middot; <b>Hirara</b> <span class='sm'>(10&ndash;2, 83%)</span> &middot; <b>Nolan</b> <span class='sm'>(10&ndash;5, 67%)</span></td></tr>
+<tr><td class="combo"><b>Aulus</b> + <b>Minotaur</b></td><td><span class="lane">EXP + Roam</span></td><td class="num">3&ndash;1</td><td class="num hi">75%</td><td><b>Eudora</b> <span class='sm'>(10&ndash;1, 91%)</span> &middot; <b>Valentina</b> <span class='sm'>(9&ndash;1, 90%)</span></td></tr>
+<tr><td class="combo"><b>Minotaur</b> + <b>Eudora</b></td><td><span class="lane">Mid + Roam</span></td><td class="num">3&ndash;0</td><td class="num hi">100%</td><td><b>Aulus</b> <span class='sm'>(10&ndash;1, 91%)</span> &middot; <b>Nolan</b> <span class='sm'>(9&ndash;2, 82%)</span> &middot; <b>Paquito</b> <span class='sm'>(8&ndash;4, 67%)</span></td></tr>
+<tr><td class="combo"><b>Minotaur</b> + <b>Valentina</b></td><td><span class="lane">Mid + Roam</span></td><td class="num">3&ndash;0</td><td class="num hi">100%</td><td><b>Aulus</b> <span class='sm'>(9&ndash;1, 90%)</span></td></tr>
+<tr><td class="combo"><b>Hirara</b> + <b>Claude</b></td><td><span class="lane">Gold + Jungle</span></td><td class="num">3&ndash;0</td><td class="num hi">100%</td><td><b>Valentina</b> <span class='sm'>(7&ndash;0, 100%)</span></td></tr>
+<tr><td class="combo"><b>Zhuxin</b> + <b>Hirara</b></td><td><span class="lane">Jungle + Mid</span></td><td class="num">3&ndash;0</td><td class="num hi">100%</td><td><b>Uranus</b> <span class='sm'>(8&ndash;2, 80%)</span></td></tr>
+<tr><td class="combo"><b>Eudora</b> + <b>Atlas</b></td><td><span class="lane">Mid + Roam</span></td><td class="num">4&ndash;2</td><td class="num ">67%</td><td><b>Esmeralda</b> <span class='sm'>(9&ndash;5, 64%)</span> &middot; <b>Paquito</b> <span class='sm'>(9&ndash;7, 56%)</span></td></tr>
+<tr><td class="combo"><b>Nolan</b> + <b>Gloo</b></td><td><span class="lane">Jungle + Roam</span></td><td class="num">4&ndash;2</td><td class="num ">67%</td><td><b>Obsidia</b> <span class='sm'>(10&ndash;5, 67%)</span> &middot; <b>Carmilla</b> <span class='sm'>(7&ndash;6, 54%)</span></td></tr></tbody></table></div>
+<p class="src" style="margin:12px 0 0">Read the last column as: <i>this is the hero that made the pair work</i>. Where two or three options are listed, the first has the best trio record.</p>
+</div>
+
+<div class="card">
+<h3>Worked example &mdash; building out Hirara + Obsidia</h3>
+<p class="lead" style="margin-bottom:12px">The pair went 4&ndash;0 (100%). It covers Jungle + Gold. Three measured thirds exist:</p>
+<div class="grid g3">
+  <div class="slot"><span class="sl">Option A &mdash; Aulus (EXP)</span><div class="sv">Trio <b>12&ndash;2, 85.7%</b> on a 4-game minimum. The safest pick. Leaves Mid + Roam open for a mage and a tank.</div></div>
+  <div class="slot"><span class="sl">Option B &mdash; Atlas (Roam)</span><div class="sv">Trio <b>10&ndash;1, 90.9%</b>. Higher ceiling, smaller sample. Locks the roam slot into a hard-engage identity.</div></div>
+  <div class="slot"><span class="sl">Option C &mdash; Gloo (Roam)</span><div class="sv">Trio <b>10&ndash;2, 83.3%</b>. The comp Myanmar actually ran to win gold &mdash; durable frontline that disrupts positioning.</div></div>
+</div>
+<p class="lead" style="margin:16px 0 0">Then fill the last two slots by archetype. With Option A you have EXP + Jungle + Gold,
+so you need <b>Mid + Roam</b>. Because Aulus + Hirara + Obsidia is a sustain-frontline shell, the correct fills are a
+scaling or burst mage (Zhuxin, Eudora, Valentina, Cecilion) and a healing or tanky roam (Minotaur, Estes, Rafaela, Carmilla).
+Full comp: <b>Aulus &middot; Hirara &middot; Zhuxin &middot; Obsidia &middot; Minotaur</b> &mdash; and Myanmar's actual gold-medal game 2
+was the same shape with Gloo on roam instead.</p>
+</div>
+
+<h2><span class="n">04</span>The six archetypes &mdash; pick one before you pick heroes</h2>
+<p class="lead">A composition is not five good heroes. It is one plan, staffed by five heroes. Choose the archetype
+first, then draft heroes that serve it. These are the six that show up in real MLBB, each with the slot template,
+the win condition, the macro and what beats it.</p>
+
+<div class="arch" style="border-left-color:#7c3aed">
+  <div class="ahead"><span class="anum" style="background:#7c3aed">1</span>
+    <div><h3 class="atitle">Setup + AOE <span class="aka">Wombo / Lock-and-Load</span></h3>
+    <p class="aident">One hero locks several enemies in place; the rest dump area damage on the pile. Every fight is won in a single 1.5-second window.</p></div></div>
+  <div class="awin"><b>Win condition</b> Force one decisive 5v5. You do not want a long game &mdash; you want one clean teamfight at an objective.</div>
+  <div class="slots"><div class="slot"><span class="sl">Roam</span><div class="sv">Atlas, Tigreal, Khufra, Lolita, Minotaur, Franco</div></div><div class="slot"><span class="sl">Mid</span><div class="sv">Eudora, Cecilion, Gord, Lylia, Yve, Vexana, Pharsa</div></div><div class="slot"><span class="sl">Jungle</span><div class="sv">Nolan, Hayabusa, Lancelot, Gusion, Harley, Suyou</div></div><div class="slot"><span class="sl">EXP</span><div class="sv">Aulus, Paquito, Esmeralda, Barats, Arlott</div></div><div class="slot"><span class="sl">Gold</span><div class="sv">Obsidia, Claude, Brody, Moskov, Bruno</div></div></div>
+  <div class="acols">
+    <div><h5>How to play it (macro)</h5><ul class="tight"><li>Group from minute 3. Do not trade solo kills &mdash; you want the enemy <b>grouped</b>, not scattered.</li><li>Stage 20&ndash;30 seconds before Turtle or Lord spawns. Position so the enemy must walk into your lockdown.</li><li>Roam holds Flicker + Ultimate. Never burn the engage to chase a kill.</li><li>Take the fight only when the enemy has 3+ heroes within one screen. Otherwise walk away.</li><li>After a won fight, immediately convert to turret or Lord. Wombo comps decay if the game drags.</li></ul></div>
+    <div><h5>Core pairs seen in the data</h5><p class="cp">Atlas + Cecilion &middot; Eudora + Atlas &middot; Tigreal + Gord &middot; Atlas + Lylia &middot; Khufra + Xavier</p>
+      <h5>Loses to</h5><p class="lose">Split-push comps (you can never force the fight), <b>Diggie</b> (his Ultimate strips the crowd control), and anything that baits your cooldowns then re-engages.</p>
+      <h5>Tournament evidence</h5><p class="ev">AG2026: Eudora + Atlas was played 6 times (4&ndash;2). Atlas and Carmilla were the two most-banned heroes in the tournament at 19 bans each &mdash; teams feared exactly this pattern.</p></div>
+  </div>
+</div>
+<div class="arch" style="border-left-color:#16a34a">
+  <div class="ahead"><span class="anum" style="background:#16a34a">2</span>
+    <div><h3 class="atitle">Sustain / Attrition <span class="aka">Out-last</span></h3>
+    <p class="aident">Nobody dies. You out-heal, out-shield and out-tank until the enemy runs out of resources and has to walk into you.</p></div></div>
+  <div class="awin"><b>Win condition</b> Extend every fight past 8&ndash;10 seconds. Value accrues with time; the longer it goes, the more you win.</div>
+  <div class="slots"><div class="slot"><span class="sl">Roam</span><div class="sv">Estes, Angela, Floryn, Rafaela, Carmilla, Kalea</div></div><div class="slot"><span class="sl">Mid</span><div class="sv">Valentina, Harith, Cecilion, Zhuxin, Yve</div></div><div class="slot"><span class="sl">Jungle</span><div class="sv">Julian, Fredrinn, Hirara, Hayabusa, Akai</div></div><div class="slot"><span class="sl">EXP</span><div class="sv">Aulus, Yu Zhong, Esmeralda, Terizla, Uranus, Barats</div></div><div class="slot"><span class="sl">Gold</span><div class="sv">Obsidia, Claude, Moskov, Brody, Irithel</div></div></div>
+  <div class="acols">
+    <div><h5>How to play it (macro)</h5><ul class="tight"><li>Play slow. Do not force fights before minute 8 &mdash; your power curve starts late.</li><li>Take every even objective trade. You win the long game, so a 1-for-1 swap is always good for you.</li><li>Keep the healer <b>behind the frontline</b>, never on the engage. Losing the healer loses the comp.</li><li>Bait the enemy into committing on your tank, then heal through the burst.</li><li>Win condition arrives at 3 items and after the first Lord. Do not panic if you are 3k gold behind at 10 min.</li></ul></div>
+    <div><h5>Core pairs seen in the data</h5><p class="cp">Fredrinn + Angela &middot; Yu Zhong + Angela &middot; Terizla + Floryn &middot; Julian + Estes &middot; Harith + Floryn</p>
+      <h5>Loses to</h5><p class="lose">Burst that kills before healing matters (Eudora, Gusion, Lancelot), anti-heal itemisation (Necklace of Durance, Dominance Ice), and pure-pick comps that delete your healer first.</p>
+      <h5>Tournament evidence</h5><p class="ev">AG2026: the winning trio <b>Aulus + Eudora + Minotaur</b> (10&ndash;1) and <b>Aulus + Minotaur + Valentina</b> (9&ndash;1) are both sustain shells. Minotaur alone went 3&ndash;0 with each of Eudora, Nolan and Valentina.</p></div>
+  </div>
+</div>
+<div class="arch" style="border-left-color:#dc2626">
+  <div class="ahead"><span class="anum" style="background:#dc2626">3</span>
+    <div><h3 class="atitle">Pick / Dive <span class="aka">Assassinate</span></h3>
+    <p class="aident">Delete one target instantly, then play the rest of the fight 5v4. You never want a fair fight.</p></div></div>
+  <div class="awin"><b>Win condition</b> Isolate and remove a carry in rotation, snowball the gold lead, then force objectives 5v4.</div>
+  <div class="slots"><div class="slot"><span class="sl">Roam</span><div class="sv">Mathilda, Angela, Chip, Kalea, Marcel</div></div><div class="slot"><span class="sl">Mid</span><div class="sv">Eudora, Zhuxin, Selena, Kadita, Valentina</div></div><div class="slot"><span class="sl">Jungle</span><div class="sv">Nolan, Ling, Hayabusa, Fanny, Lancelot, Harley, Suyou</div></div><div class="slot"><span class="sl">EXP</span><div class="sv">Paquito, Arlott, Badang, Masha, Chou</div></div><div class="slot"><span class="sl">Gold</span><div class="sv">Claude, Brody, Moskov, Yi Sun-shin</div></div></div>
+  <div class="acols">
+    <div><h5>How to play it (macro)</h5><ul class="tight"><li>Invade the enemy jungle on the first buff. You want to be ahead before anyone has Ultimate.</li><li>Track the enemy carry's position constantly &mdash; your whole comp is aimed at one player.</li><li>Force fights near walls and bushes. Open ground is your enemy; corners are your friend.</li><li>Convert every pick into an objective immediately. A kill with no objective is wasted.</li><li>Never start a 5v5. If the enemy is grouped, split and look for the isolated target instead.</li></ul></div>
+    <div><h5>Core pairs seen in the data</h5><p class="cp">Ling + Mathilda &middot; Hayabusa + Mathilda &middot; Nolan + Angela &middot; Fanny + Mathilda</p>
+      <h5>Loses to</h5><p class="lose">Tight grouping, strong peel roams (Lolita, Diggie, Khufra), and being behind early &mdash; a dive comp that is not ahead has no way to win.</p>
+      <h5>Tournament evidence</h5><p class="ev">AG2026: <b>Nolan was the most-picked hero</b> (23 of 32 games) and Hirara had 15 bans. Both are dive junglers. But Nolan finished 47.83% &mdash; the most-picked hero was not the most successful one.</p></div>
+  </div>
+</div>
+<div class="arch" style="border-left-color:#0891b2">
+  <div class="ahead"><span class="anum" style="background:#0891b2">4</span>
+    <div><h3 class="atitle">Front-to-Back <span class="aka">Protect the Carry</span></h3>
+    <p class="aident">One unkillable front line, one shielded hyper-carry. The carry cannot be reached, and eventually cannot be stopped.</p></div></div>
+  <div class="awin"><b>Win condition</b> Survive to 12+ minutes. Once the marksman has 3 items, the fight is over.</div>
+  <div class="slots"><div class="slot"><span class="sl">Roam</span><div class="sv">Lolita, Edith, Angela, Rafaela, Chip, Khufra</div></div><div class="slot"><span class="sl">Mid</span><div class="sv">Yve, Xavier, Pharsa, Novaria, Zhuxin</div></div><div class="slot"><span class="sl">Jungle</span><div class="sv">Fredrinn, Barats, Akai, Hylos</div></div><div class="slot"><span class="sl">EXP</span><div class="sv">Barats, Uranus, Gatotkaca, Hilda, Edith</div></div><div class="slot"><span class="sl">Gold</span><div class="sv">Moskov, Claude, Brody, Beatrix, Melissa, Ixia</div></div></div>
+  <div class="acols">
+    <div><h5>How to play it (macro)</h5><ul class="tight"><li>Concede early. Farm safely, do not contest the first Turtle if it costs a life.</li><li>Defend turrets rather than chasing kills. Your job is to reach the item spike.</li><li>The roam's only job is to body-block for the carry. Never leave them alone.</li><li>Group at 3 items and walk down mid as a single unit.</li><li>Front line stays <b>between</b> the enemy and the carry at all times &mdash; never flank.</li></ul></div>
+    <div><h5>Core pairs seen in the data</h5><p class="cp">Lolita + Moskov &middot; Melissa + Lolita &middot; Brody + Tigreal &middot; Claude + Rafaela</p>
+      <h5>Loses to</h5><p class="lose">Dive and assassinate comps that bypass the front line, and losing all outer turrets before the carry spikes.</p>
+      <h5>Tournament evidence</h5><p class="ev">AG2026: <b>Obsidia</b> (a marksman) posted 60% across 15 picks and appeared in the two best trios in the tournament. Every top trio in the data contains a gold-lane carry protected by a fighter and a roam.</p></div>
+  </div>
+</div>
+<div class="arch" style="border-left-color:#ea580c">
+  <div class="ahead"><span class="anum" style="background:#ea580c">5</span>
+    <div><h3 class="atitle">Poke / Siege <span class="aka">Chip and Zone</span></h3>
+    <p class="aident">Never commit. Chip them down from range, take space for free, and let the enemy bleed out.</p></div></div>
+  <div class="awin"><b>Win condition</b> Take turrets without fighting. Force the enemy to walk into your range or lose the map.</div>
+  <div class="slots"><div class="slot"><span class="sl">Roam</span><div class="sv">Diggie, Khufra, Lolita, Atlas, Kalea</div></div><div class="slot"><span class="sl">Mid</span><div class="sv">Yve, Pharsa, Novaria, Xavier, Zhuxin, Cecilion</div></div><div class="slot"><span class="sl">Jungle</span><div class="sv">Kimmy, Yi Sun-shin, Sora, Nolan</div></div><div class="slot"><span class="sl">EXP</span><div class="sv">Aulus, Uranus, Esmeralda, Ruby, Barats</div></div><div class="slot"><span class="sl">Gold</span><div class="sv">Brody, Clint, Kimmy, Lesley, Ixia</div></div></div>
+  <div class="acols">
+    <div><h5>How to play it (macro)</h5><ul class="tight"><li>Hold mid and never cross the river without vision.</li><li>Poke the enemy off the turret, then take it. Repeat lane by lane.</li><li>Never chase. If the enemy retreats, take the objective, not the kill.</li><li>Use zone-control Ultimates (Yve, Pharsa) to deny the objective area entirely.</li><li>Stay spread &mdash; a poke comp that gets clumped loses to a single AOE engage.</li></ul></div>
+    <div><h5>Core pairs seen in the data</h5><p class="cp">Yve + Zhuxin &middot; Pharsa + Brody &middot; Novaria + Kimmy</p>
+      <h5>Loses to</h5><p class="lose">Hard engage (Atlas, Tigreal) and dive assassins. If you are forced into a 5v5 you lose.</p>
+      <h5>Tournament evidence</h5><p class="ev">AG2026: <b>Yve</b> (14 picks, 57.14%) and <b>Zhuxin</b> (12 picks, 50%) are the classic zone-control mids; both were picked heavily in the group stage.</p></div>
+  </div>
+</div>
+<div class="arch" style="border-left-color:#b45309">
+  <div class="ahead"><span class="anum" style="background:#b45309">6</span>
+    <div><h3 class="atitle">Split-push / Tempo <span class="aka">Map Pressure</span></h3>
+    <p class="aident">One hero never groups. You win by trading turrets 1-for-1 and forcing the enemy to split, then collapsing.</p></div></div>
+  <div class="awin"><b>Win condition</b> Never fight 5v5. Trade structures, force the enemy apart, then punish the split.</div>
+  <div class="slots"><div class="slot"><span class="sl">Roam</span><div class="sv">Mathilda, Chip, Angela, Marcel</div></div><div class="slot"><span class="sl">Mid</span><div class="sv">Yve, Lylia, Zhuxin, Cecilion</div></div><div class="slot"><span class="sl">Jungle</span><div class="sv">Nolan, Ling, Fanny, Hayabusa</div></div><div class="slot"><span class="sl">EXP</span><div class="sv">Masha, Sun, Zilong, Aldous, Chou, Aulus</div></div><div class="slot"><span class="sl">Gold</span><div class="sv">Claude, Wanwan, Melissa, Brody</div></div></div>
+  <div class="acols">
+    <div><h5>How to play it (macro)</h5><ul class="tight"><li>The split-pusher pushes the lane <b>opposite</b> the current objective &mdash; always the far side.</li><li>The other four stall. Do not fight; just hold the line and make noise.</li><li>When the enemy sends two to answer the push, collapse 4v3 on the objective.</li><li>Ward the enemy's rotation path so the pusher never gets collapsed on.</li><li>Turrets are worth more than kills. Take the tower and leave.</li></ul></div>
+    <div><h5>Core pairs seen in the data</h5><p class="cp">Masha + Nolan &middot; Sun + Yve &middot; Aldous + Mathilda</p>
+      <h5>Loses to</h5><p class="lose">Comps that can force a fight you cannot decline, and getting caught 4v5 while the pusher is elsewhere.</p>
+      <h5>Tournament evidence</h5><p class="ev">AG2026: <b>Masha</b> was reworked in patch 2.2.16 from a split-pusher into a sustained-combat bruiser, and was banned 4 times in the bracket &mdash; the pure split-push identity has largely left the pro meta.</p></div>
+  </div>
+</div>
+
+<h2><span class="n">05</span>Real 5-man compositions from the Asian Games</h2>
+<p class="lead">Actual drafts from the tournament, with the standard lane for each hero. Myanmar's four gold-medal
+games are the clearest teaching example in the dataset &mdash; look at how little the skeleton changes.</p>
+<div class="card"><div class="scroll" style="max-height:600px"><table>
+<thead><tr><th class="no">Stage</th><th class="no">Team</th><th class="no">EXP</th><th class="no">Jungle</th>
+<th class="no">Mid</th><th class="no">Gold</th><th class="no">Roam</th></tr></thead>
+<tbody><tr class="winrow"><td class="stg">Grand Final G1</td><td class="tm">Myanmar</td><td><div class="ch">Aulus</div><span class="le">EXP</span></td><td><div class="ch">Hirara</div><span class="lj">Jungle</span></td><td><div class="ch">Eudora</div><span class="lm">Mid</span></td><td><div class="ch">Brody</div><span class="lg">Gold</span></td><td><div class="ch">Gloo</div><span class="lr">Roam</span></td></tr><tr class=""><td class="stg">Grand Final G1</td><td class="tm">Indonesia</td><td><div class="ch">Barats</div><span class="le">EXP</span></td><td><div class="ch">Nolan</div><span class="lj">Jungle</span></td><td><div class="ch">Zhuxin</div><span class="lm">Mid</span></td><td><div class="ch">Moskov</div><span class="lg">Gold</span></td><td><div class="ch">Rafaela</div><span class="lr">Roam</span></td></tr><tr class="winrow"><td class="stg">Grand Final G2</td><td class="tm">Myanmar</td><td><div class="ch">Esmeralda</div><span class="le">EXP</span></td><td><div class="ch">Hirara</div><span class="lj">Jungle</span></td><td><div class="ch">Zhuxin</div><span class="lm">Mid</span></td><td><div class="ch">Obsidia</div><span class="lg">Gold</span></td><td><div class="ch">Gloo</div><span class="lr">Roam</span></td></tr><tr class="winrow"><td class="stg">Grand Final G3</td><td class="tm">Myanmar</td><td><div class="ch">Aulus</div><span class="le">EXP</span></td><td><div class="ch">Nolan</div><span class="lj">Jungle</span></td><td><div class="ch">Selena</div><span class="lm">Mid</span></td><td><div class="ch">Obsidia</div><span class="lg">Gold</span></td><td><div class="ch">Gloo</div><span class="lr">Roam</span></td></tr><tr class="winrow"><td class="stg">Grand Final G4</td><td class="tm">Myanmar</td><td><div class="ch">Esmeralda</div><span class="le">EXP</span></td><td><div class="ch">Nolan</div><span class="lj">Jungle</span></td><td><div class="ch">Selena</div><span class="lm">Mid</span></td><td><div class="ch">Moskov</div><span class="lg">Gold</span></td><td><div class="ch">Gloo</div><span class="lr">Roam</span></td></tr><tr class="winrow"><td class="stg">QF2 G1</td><td class="tm">Malaysia</td><td><div class="ch">Esmeralda</div><span class="le">EXP</span></td><td><div class="ch">Hirara</div><span class="lj">Jungle</span></td><td><div class="ch">Eudora</div><span class="lm">Mid</span></td><td><div class="ch">Moskov</div><span class="lg">Gold</span></td><td><div class="ch">Atlas</div><span class="lr">Roam</span></td></tr><tr class="winrow"><td class="stg">QF3 G1</td><td class="tm">Myanmar</td><td><div class="ch">Uranus</div><span class="le">EXP</span></td><td><div class="ch">Nolan</div><span class="lj">Jungle</span></td><td><div class="ch">Zhuxin</div><span class="lm">Mid</span></td><td><div class="ch">Brody</div><span class="lg">Gold</span></td><td><div class="ch">Marcel</div><span class="lr">Roam</span></td></tr><tr class=""><td class="stg">QF3 G1</td><td class="tm">Malaysia</td><td><div class="ch">Aulus</div><span class="le">EXP</span></td><td><div class="ch">Hayabusa</div><span class="lj">Jungle</span></td><td><div class="ch">Cecilion</div><span class="lm">Mid</span></td><td><div class="ch">Clint</div><span class="lg">Gold</span></td><td><div class="ch">Carmilla</div><span class="lr">Roam</span></td></tr><tr class="winrow"><td class="stg">Group C</td><td class="tm">Philippines</td><td><div class="ch">Uranus</div><span class="le">EXP</span></td><td><div class="ch">Nolan</div><span class="lj">Jungle</span></td><td><div class="ch">Zhuxin</div><span class="lm">Mid</span></td><td><div class="ch">Bruno</div><span class="lg">Gold</span></td><td><div class="ch">Gloo</div><span class="lr">Roam</span></td></tr><tr class="winrow"><td class="stg">Group C</td><td class="tm">Jordan</td><td><div class="ch">Barats</div><span class="le">EXP</span></td><td><div class="ch">Hirara</div><span class="lj">Jungle</span></td><td><div class="ch">Novaria</div><span class="lm">Mid</span></td><td><div class="ch">Obsidia</div><span class="lg">Gold</span></td><td><div class="ch">Atlas</div><span class="lr">Roam</span></td></tr><tr class=""><td class="stg">Group B</td><td class="tm">Indonesia</td><td><div class="ch">Barats</div><span class="le">EXP</span></td><td><div class="ch">Nolan</div><span class="lj">Jungle</span></td><td><div class="ch">Cecilion</div><span class="lm">Mid</span></td><td><div class="ch">Obsidia</div><span class="lg">Gold</span></td><td><div class="ch">Carmilla</div><span class="lr">Roam</span></td></tr><tr class="winrow"><td class="stg">Group A</td><td class="tm">Myanmar</td><td><div class="ch">Aulus</div><span class="le">EXP</span></td><td><div class="ch">Hirara</div><span class="lj">Jungle</span></td><td><div class="ch">Rafaela</div><span class="lm">Mid</span></td><td><div class="ch">Obsidia</div><span class="lg">Gold</span></td><td><div class="ch">Gloo</div><span class="lr">Roam</span></td></tr><tr class=""><td class="stg">Group D</td><td class="tm">Cambodia</td><td><div class="ch">Lukas</div><span class="le">EXP</span></td><td><div class="ch">Aulus</div><span class="lj">Jungle</span></td><td><div class="ch">Eudora</div><span class="lm">Mid</span></td><td><div class="ch">Miya</div><span class="lg">Gold</span></td><td><div class="ch">Belerick</div><span class="lr">Roam</span></td></tr><tr class="winrow"><td class="stg">QF6 G1</td><td class="tm">Indonesia</td><td><div class="ch">Carmilla</div><span class="le">EXP</span></td><td><div class="ch">Nolan</div><span class="lj">Jungle</span></td><td><div class="ch">Cecilion</div><span class="lm">Mid</span></td><td><div class="ch">Paquito</div><span class="lg">Gold</span></td><td><div class="ch">Gloo</div><span class="lr">Roam</span></td></tr></tbody></table></div>
+<p class="src" style="margin:12px 0 0">Lane assignments use each hero's standard pro role. A few heroes are genuinely
+flexible (Yi Sun-shin jungle or gold, Kimmy mid or gold, Selena mid or roam), so treat a slot as "the job this hero did",
+not a fixed label.</p>
+</div>
+
+<div class="note purple"><b>The lesson from Myanmar's four finals games.</b>
+They changed <b>one slot</b> across the whole series and kept the rest identical:
+<table style="margin-top:10px;font-size:12.5px">
+<tr><th class="no">Slot</th><th class="no">Game 1</th><th class="no">Game 2</th><th class="no">Game 3</th><th class="no">Game 4</th></tr>
+<tr><td><b>EXP</b></td><td>Aulus</td><td>Esmeralda</td><td>Aulus</td><td>Esmeralda</td></tr>
+<tr><td><b>Jungle</b></td><td>Hirara</td><td>Hirara</td><td>Nolan</td><td>Nolan</td></tr>
+<tr><td><b>Mid</b></td><td>Eudora</td><td>Zhuxin</td><td>Selena</td><td>Selena</td></tr>
+<tr><td><b>Gold</b></td><td>Brody</td><td>Obsidia</td><td>Obsidia</td><td>Moskov</td></tr>
+<tr><td><b>Roam</b></td><td><b>Gloo</b></td><td><b>Gloo</b></td><td><b>Gloo</b></td><td><b>Gloo</b></td></tr>
+</table>
+<p style="margin:12px 0 0">Gloo never changed. The archetype never changed &mdash; a frontline-and-protect shell with an
+assassin jungler. Only the damage sources rotated. Indonesia, by contrast, used <b>20 different heroes</b> across the same
+four games and lost every one. <b>Stable skeleton, flexible damage</b> is the single most transferable idea here.</p>
+</div>
+
+<h2><span class="n">06</span>Macro &mdash; the timeline you actually play</h2>
+<p class="lead">Same six windows every game. What changes between archetypes is <i>what you are trying to do</i> in each one,
+not the clock.</p>
+<div class="card"><div class="tl"><div class="tlk">0:00 &ndash; 1:00</div><div class="tlv">Laning setup</div><div class="tld">Know your win condition before the game starts. Sustain/poke comps farm; pick/dive comps invade the first buff. Do not fight before level 2.</div></div><div class="tl"><div class="tlk">1:00 &ndash; 4:00</div><div class="tlv">First Turtle window</div><div class="tld">First Turtle spawns around 2:00. Setup+dive comps want it; front-to-back comps can concede it. Rotate the mid + roam to the Turtle side <b>before</b> it spawns.</div></div><div class="tl"><div class="tlk">4:00 &ndash; 8:00</div><div class="tlv">Rotations and tempo</div><div class="tld">Clear wave, rotate, repeat. Never stand still. Pick/dive comps hunt isolated targets here; sustain comps just farm and hold.</div></div><div class="tl"><div class="tlk">8:00 &ndash; 12:00</div><div class="tlv">Mid game / Lord pressure</div><div class="tld">Lord spawns around 8:00. This is the decisive window for setup+AOE and sustain comps &mdash; both want a fight here, for opposite reasons. Group as five.</div></div><div class="tl"><div class="tlk">12:00 &ndash; 16:00</div><div class="tlv">Item spikes</div><div class="tld">Marksmen and scaling mids hit 3 items. Front-to-back comps become unstoppable now; poke comps must already have a turret lead.</div></div><div class="tl"><div class="tlk">16:00+</div><div class="tlv">Late game / Lord stacking</div><div class="tld">One mistake ends the game. Never contest Lord without vision. A won Lord fight with a live carry is usually lethal.</div></div></div>
+
+<div class="card">
+<h3>Five rules that apply to every archetype</h3>
+<ul class="tight">
+<li><b>Never fight without an objective on the table.</b> A kill with nothing to take is a wasted fight. If Turtle or Lord is not up, you should be farming or trading structures.</li>
+<li><b>Fight on your terms or not at all.</b> Setup comps want a grouped 5v5, dive comps want an isolated target, poke comps want nobody near them. If the fight does not match your archetype, disengage.</li>
+<li><b>Protect the healer, protect the carry.</b> In sustain and front-to-back comps those two heroes <i>are</i> the win condition. Trading them for a kill is always a bad trade.</li>
+<li><b>Vision before objectives.</b> Contesting Lord without a ward on the enemy's approach path is how you lose a 15-minute lead in 20 seconds.</li>
+<li><b>Convert, always.</b> Won fight &rarr; turret, Turtle or Lord, immediately. The single biggest difference between Mythic and Mythical Glory is what happens in the 10 seconds after a won fight.</li>
+</ul>
+</div>
+
+<h2><span class="n">07</span>Draft framework &mdash; order of operations</h2>
+<div class="card"><table><tbody><tr><td class="dl">1st pick</td><td>Take your <b>win-condition hero</b>, not the most popular hero. If you are running sustain, take Aulus or the healer; if dive, take the jungler.</td></tr><tr><td class="dl">2nd&ndash;3rd pick</td><td>Complete your <b>core duo</b>. Do not take two heroes that want the same job &mdash; two roamers or two carries loses the draft.</td></tr><tr><td class="dl">4th&ndash;5th pick</td><td>Fill the missing lanes and answer the enemy's threat. Leave the flexible pick last so you can counter.</td></tr><tr><td class="dl">Ban priority</td><td>Ban the hero that <b>breaks your archetype</b>, not the strongest hero overall. Sustain comps ban Eudora; setup comps ban Diggie; dive comps ban Lolita.</td></tr><tr><td class="dl">Always cover</td><td>One frontline, one crowd control, one sustained damage, one magic damage, one physical damage. Missing any of these is the most common draft loss.</td></tr><tr><td class="dl">Never</td><td>Never run two heroes with the same weakness. Two squishy carries with no frontline loses to any dive, no matter how good the duos are.</td></tr></tbody></table></div>
+
+<div class="card">
+<h3>Counter-drafting the archetypes</h3>
+<div class="grid g2">
+<div><h5 style="margin:0 0 6px;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:#64748b">If they pick&hellip;</h5>
+<ul class="tight">
+<li><b>Setup + AOE</b> &rarr; take <b>Diggie</b> (strips crowd control) or a split-pusher they cannot force a fight against.</li>
+<li><b>Sustain</b> &rarr; take burst (Eudora, Gusion, Lancelot) and build anti-heal. Kill before the healing matters.</li>
+<li><b>Pick / Dive</b> &rarr; take <b>Lolita</b> or <b>Khufra</b> for peel and group tightly. Never travel alone.</li>
+<li><b>Front-to-Back</b> &rarr; take dive assassins and delete the carry. Their whole comp is one hero.</li>
+<li><b>Poke / Siege</b> &rarr; take hard engage (Atlas, Tigreal). Force the 5v5 they cannot survive.</li>
+<li><b>Split-push</b> &rarr; ward the side lane and collapse on the pusher 2v1, then take the 4v3 objective.</li>
+</ul></div>
+<div><h5 style="margin:0 0 6px;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:#64748b">Universal ban logic</h5>
+<ul class="tight">
+<li>Ban the hero that <b>breaks your archetype</b>, not the strongest hero in the patch. A sustain comp should ban Eudora long before it bans Nolan.</li>
+<li>In AG2026 the two most-banned heroes were <b>Atlas and Carmilla (19 bans each)</b> &mdash; both roamers. The draft war is fought over the roam slot.</li>
+<li><b>Nolan</b> was banned only 6 times but picked 23 &mdash; teams were willing to play against him. The most-picked hero finished 47.83%, so letting him through was often correct.</li>
+<li>Ban for the <b>enemy's</b> archetype, not yours. If they are clearly building dive, take Lolita off the board.</li>
+</ul></div>
+</div>
+</div>
+
+<h2><span class="n">08</span>One-page cheat sheet</h2>
+<div class="card">
+<div class="grid g3">
+<div class="slot"><span class="sl">1. Pick the plan</span><div class="sv">Setup+AOE &middot; Sustain &middot; Dive &middot; Front-to-Back &middot; Poke &middot; Split-push. Choose one <i>before</i> the draft starts.</div></div>
+<div class="slot"><span class="sl">2. Lock the core trio</span><div class="sv">Carry + frontline + jungle. Aulus+Hirara+Obsidia or Atlas+Hirara+Obsidia if the enemy leaves them open.</div></div>
+<div class="slot"><span class="sl">3. Fill the two open slots</span><div class="sv">By lane, not by tier list. Every comp needs one frontline, one CC, one sustained damage.</div></div>
+<div class="slot"><span class="sl">4. Play the clock</span><div class="sv">Sustain and front-to-back want minute 12+. Dive wants minute 4. Setup wants one fight. Poke wants no fight at all.</div></div>
+<div class="slot"><span class="sl">5. Fight on your terms</span><div class="sv">If the fight does not match your archetype, walk away. Losing a fight you should not have taken is the #1 throw.</div></div>
+<div class="slot"><span class="sl">6. Convert every win</span><div class="sv">Won fight &rarr; turret / Turtle / Lord within 10 seconds. Never reset after a win.</div></div>
+</div>
+</div>
+
+<h2><span class="n">09</span>Methodology</h2>
+<div class="card">
+<h3 style="margin-top:0">How the trios were derived</h3>
+<ul class="tight">
+<li>Start from the <b>50 measured pairs</b> in Liquipedia's "Played With" tables for the 2026 Asian Games (each pair records how many games two heroes were picked together and how those games ended).</li>
+<li>Build a graph where heroes are nodes and measured pairs are edges, then find every <b>triangle</b> &mdash; three heroes where all three edges exist. A triangle means all three duos genuinely occurred together, so the trio is measured, not inferred.</li>
+<li><b>31 trios</b> emerged. Combined games and combined W&ndash;L are the sum across the three component pairs; <b>min pair</b> is the smallest individual pair sample, used as a stability filter.</li>
+<li>Lanes are the standard pro role for each hero. The "still needs" column lists which of the five jobs the trio does not yet cover.</li>
+</ul>
+<h3>Caveats</h3>
+<ul class="tight">
+<li>32 games is a small sample. A 10&ndash;1 trio has wide error bars &mdash; treat the ordering as a strong hint, not a ranking.</li>
+<li>A triangle proves the three heroes were played together at some point, not that they were picked together in the same game as a deliberate package. It is strong evidence of fit, not proof of intent.</li>
+<li>Patch context: this is patch 2.2.16 with the Masha and Bruno reworks live. The archetype framework is patch-agnostic; the specific hero recommendations are not.</li>
+</ul>
+<h3>Sources</h3>
+<p class="src">
+Hero pair and pick/ban data &mdash; Liquipedia, 2026 Asian Games / Statistics (32 games, verified by reconciling presence %).<br>
+Match drafts, bracket and results &mdash; Liquipedia 2026 Asian Games (Group Stage, Playoffs); dotesports MLBB Asian Games 2026 coverage.<br>
+Archetype framework and macro &mdash; standard MLBB composition theory, cross-checked against the AG2026 draft data.
+</p>
+</div>
+
+<footer>Composition playbook &middot; built on the 2026 Asian Games MLBB dataset (32 games, 11 teams, patch 2.2.16).
+Trios are derived from measured pair data, not estimated.</footer>
+</div>
+
+<script>
+function sortable(tid){
+  var t=document.getElementById(tid); if(!t) return;
+  t.querySelectorAll('th[data-i]').forEach(function(th){
+    th.addEventListener('click',function(){
+      var i=+th.dataset.i, tb=t.tBodies[0], rs=Array.prototype.slice.call(tb.rows);
+      var dir = th.dataset.dir==='asc'?-1:1; th.dataset.dir = dir===1?'asc':'desc';
+      rs.sort(function(a,b){
+        var x=parseFloat(a.cells[i].innerText.replace(/[^0-9.\-]/g,'')),
+            y=parseFloat(b.cells[i].innerText.replace(/[^0-9.\-]/g,''));
+        if(isNaN(x)||isNaN(y)) return a.cells[i].innerText.localeCompare(b.cells[i].innerText)*dir;
+        return (x-y)*dir;
+      });
+      rs.forEach(function(r){tb.appendChild(r)});
+    });
+  });
+}
+sortable('t1');
+var q=document.getElementById('q'), c=document.getElementById('c'), t=document.getElementById('t1');
+function run(){
+  var v=(q.value||'').toLowerCase(), n=0;
+  Array.prototype.forEach.call(t.tBodies[0].rows,function(row){
+    var show=!v||row.innerText.toLowerCase().indexOf(v)>-1;
+    row.classList.toggle('hide',!show); if(show)n++;
+  });
+  c.textContent=n+' trios shown';
+}
+q.addEventListener('input',run); run();
+</script>
+</body></html>

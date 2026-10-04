@@ -1,0 +1,134 @@
+﻿Hero,Role,RankedWinRate%,BanRate%,CounteredBy,StrongAgainst
+Aamon,Assassin,49.57,2.33,Roger; Tigreal; Martis; Popol and Kupa; Gloo,Cici; Chip; Moskov; Khaleed; Claude
+Akai,Tank,50.0,1.34,Valir; Valentina; Khufra; Zilong; Marcel,Vale; Helcurt; Aldous; Baxia; Bane
+Aldous,Fighter,50.72,0.62,Hirara; Minsitthar; Wanwan; Tigreal; Akai,Phoveus; Natalia; Harley; Masha; Gatotkaca
+Alice,Tank / Mage,50.77,4.26,Estes; Angela; Karrie; Diggie; Valir,Gloo; Bane; Marcel; Tigreal; Grock
+Alpha,Fighter,47.6,0.65,Lancelot; Luo Yi; Aurora; X.Borg; Cici,Faramis; Vale; Kalea; Ruby; Minsitthar
+Alucard,Fighter / Assassin,47.91,0.28,Lapu-Lapu; Luo Yi; Melissa; Khufra; Fredrinn,Terizla; Vale; Harley; Sun; Gloo
+Angela,Support,49.43,8.77,Franco; Zilong; Silvanna; Lolita; Popol and Kupa,Alice; Marcel; Balmond; Faramis; Lancelot
+Argus,Fighter,55.43,1.47,Silvanna; Bane; Vexana; Diggie; Roger,Joy; Helcurt; Arlott; X.Borg; Franco
+Arlott,Fighter / Assassin,47.9,0.27,Kadita; Argus; Cyclops; Hylos; Johnson,Terizla; Alpha; Martis; Wanwan; X.Borg
+Atlas,Tank,51.89,12.39,Marcel; Masha; Lancelot; Alice; Yin,Ixia; Popol and Kupa; Estes; Cyclops; Layla
+Aulus,Fighter,59.31,13.08,Saber; Diggie; Alice; Balmond; Floryn,Gloo; Sun; Luo Yi; Minsitthar; Tigreal
+Aurora,Mage,48.34,0.35,Hirara; Pharsa; Wanwan; Cici; Helcurt,Saber; Baxia; Alpha; Thamuz; Lolita
+Badang,Fighter,50.17,6.15,Claude; Yve; Belerick; Diggie; Karina,Yin; Irithel; Thamuz; Chip; Fanny
+Balmond,Fighter,45.98,0.37,Luo Yi; Thamuz; Lancelot; Fanny; Ixia,Khaleed; Johnson; Terizla; Melissa; Hylos
+Bane,Fighter / Mage,50.92,0.15,Yin; Akai; Khaleed; Roger; Edith,Kalea; Cyclops; Guinevere; Argus; Phoveus
+Barats,Tank / Fighter,51.82,4.94,X.Borg; Gord; Valir; Alpha; Alice,Cyclops; Silvanna; Zilong; Phoveus; Alucard
+Baxia,Tank,46.97,0.09,Johnson; Aurora; Thamuz; Akai; Hanzo,Cyclops; Harith; Pharsa; Lapu-Lapu; Argus
+Beatrix,Marksman,51.5,0.42,Kaja; Khufra; Helcurt; Natalia; Moskov,Estes; Diggie; Baxia; Ixia; Hanabi
+Belerick,Tank,52.38,55.83,Aldous; Lesley; Karrie; X.Borg; Cici,Vale; Zilong; Layla; Hirara; Badang
+Benedetta,Assassin / Fighter,52.53,0.3,Karrie; Joy; Irithel; Cyclops; Phoveus,Popol and Kupa; Yve; X.Borg; Lylia; Alpha
+Brody,Marksman,50.54,2.53,Hanzo; Atlas; Sun; Hirara; Masha,Karina; Belerick; Melissa; Irithel; Lolita
+Bruno,Marksman,53.29,0.35,Diggie; Natalia; Karina; Lesley; Estes,Harith; X.Borg; Yu Zhong; Zhask; Wanwan
+Carmilla,Support / Tank,53.7,11.37,X.Borg; Valentina; Benedetta; Aldous; Lylia,Chip; Popol and Kupa; Silvanna; Vexana; Estes
+Cecilion,Mage,50.98,0.13,Balmond; Vale; Alucard; Helcurt; Ixia,Phoveus; Martis; Melissa; Kalea; Lancelot
+Chang'e,Mage,47.97,0.31,Roger; Melissa; Joy; Lolita; Gusion,Franco; Faramis; Gatotkaca; Natalia; Xavier
+Chip,Support / Tank,47.24,0.24,Karina; Alpha; Zhask; Cyclops; Carmilla,Jawhead; Aldous; Silvanna; Pharsa; Johnson
+Chou,Fighter,44.86,3.07,Lukas; Bane; Vale; Phoveus; Cyclops,Helcurt; Lylia; X.Borg; Hayabusa; Yu Zhong
+Cici,Fighter,49.04,0.9,Zilong; Aamon; Harley; Estes; Sun,Alpha; Phoveus; Balmond; Alice; Hanzo
+Claude,Marksman,49.01,0.2,Odette; Lesley; Gatotkaca; Aamon; Zhask,Johnson; Grock; Ixia; Badang; Lancelot
+Clint,Marksman,51.15,0.85,Fanny; Harley; Balmond; Roger; Alice,Aldous; Baxia; Karina; Lylia; Lolita
+Cyclops,Mage,51.07,0.25,Lolita; Saber; Bane; Baxia; Barats,Helcurt; Khaleed; Chip; Natalia; Harith
+Diggie,Support,53.6,3.3,Estes; Beatrix; Lancelot; Ixia; Esmeralda,Alice; Rafaela; Tigreal; Bruno; Obsidia
+Dyrroth,Fighter,47.44,1.29,Karrie; Roger; Julian; Thamuz; Grock,Hilda; Lolita; Uranus; Esmeralda; Gatotkaca
+Edith,Tank / Marksman,52.67,0.22,Zilong; Kalea; Franco; Minsitthar; Lolita,Thamuz; Bane; Cyclops; Irithel; Esmeralda
+Esmeralda,Tank / Mage,47.59,2.15,Kimmy; Fredrinn; Estes; Edith; Karrie,Natalia; Yin; Mathilda; Marcel; Lolita
+Estes,Support,53.18,37.05,Kaja; Beatrix; Ixia; Roger; Grock,Alice; Cici; Diggie; Cyclops; Uranus
+Eudora,Mage,51.23,59.57,Lylia; Atlas; X.Borg; Diggie; Masha,Terizla; Marcel; Vale; Zilong; Hirara
+Fanny,Assassin,42.6,1.75,Cyclops; Lancelot; Phoveus; Bane; Saber,Balmond; Granger; Clint; Alpha; Gloo
+Faramis,Support / Mage,51.53,0.26,Alpha; Chang'e; Phoveus; Kalea; Lylia,X.Borg; Gloo; Aldous; Atlas; Silvanna
+Floryn,Support,54.32,12.85,Tigreal; Johnson; Baxia; Lolita; Ixia,Alice; Marcel; X.Borg; Ling; Rafaela
+Franco,Tank,41.43,3.05,Hilda; Lolita; Chang'e; Natalia; Argus,Edith; Joy; Yve; Fanny; Harith
+Fredrinn,Fighter / Tank,51.36,1.77,Valir; Karrie; Phoveus; Bane; X.Borg,Esmeralda; Roger; Alucard; Odette; Saber
+Freya,Fighter,47.74,1.32,Phoveus; Minsitthar; Popol and Kupa; Edith; Wanwan,Yve; Khaleed; Vale; Zilong; Masha
+Gatotkaca,Tank / Fighter,44.4,0.27,Harley; Chang'e; Roger; Aldous; Alpha,Kalea; Layla; Lancelot; Vexana; Claude
+Gloo,Tank,53.89,38.2,Faramis; Vexana; Moskov; Alice; Ling,Aamon; Hylos; Alpha; Esmeralda; Karina
+Gord,Mage,52.94,0.59,Kaja; Zilong; Karina; Harith; Benedetta,Khaleed; Hilda; Barats; Silvanna; Fredrinn
+Granger,Marksman,43.44,1.39,Fanny; Popol and Kupa; Irithel; Johnson; Hilda,Karina; Baxia; Diggie; Kimmy; Rafaela
+Grock,Tank / Fighter,46.96,0.68,Popol and Kupa; Valentina; Natan; Khaleed; Claude,Jawhead; Estes; Terizla; Bane; Wanwan
+Guinevere,Fighter,51.37,2.82,Bane; Hylos; Diggie; Khufra; Faramis,Layla; Yve; Karrie; Uranus; Hilda
+Gusion,Assassin,48.19,4.47,Cyclops; Lukas; Hylos; Popol and Kupa; Phoveus,Uranus; Aamon; Chang'e; Natalia; X.Borg
+Hanabi,Marksman,51.87,5.81,Yve; Marcel; Yu Zhong; Karina; Silvanna,Uranus; Mathilda; Popol and Kupa; Harith; Saber
+Hanzo,Assassin,49.55,17.84,Zilong; Cici; Natalia; Kimmy; Ling,Jawhead; Baxia; Silvanna; Yve; Diggie
+Harith,Mage,46.76,0.05,Bruno; Phoveus; Martis; Balmond; Cyclops,Wanwan; Zhask; Lancelot; Terizla; Lolita
+Harley,Assassin / Mage,47.81,3.89,Natalia; Aldous; Martis; Johnson; Alucard,Kalea; Gatotkaca; Cici; Valentina; Zetian
+Hayabusa,Assassin,48.15,2.01,Hilda; Chip; Chou; Baxia; Hirara,Balmond; Zhuxin; Xavier; Aamon; Lesley
+Helcurt,Assassin,46.96,5.89,Lancelot; Akai; Cyclops; Roger; Chou,Lylia; Odette; Aurora; Yve; Nolan
+Hilda,Fighter / Tank,50.24,6.31,Popol and Kupa; Sun; Dyrroth; Gord; Odette,Franco; Karina; Hayabusa; Kaja; Zilong
+Hirara,Assassin,53.7,66.28,Ruby; Marcel; Belerick; Saber; Fanny,Aurora; Aldous; Layla; Zhask; Wanwan
+Hylos,Tank,48.11,0.24,Zhask; Lylia; Gloo; Balmond; X.Borg,Jawhead; Minsitthar; Tigreal; Guinevere; Lancelot
+Irithel,Marksman,52.3,0.23,Jawhead; Edith; Badang; Balmond; Claude,Silvanna; Bane; Kalea; Nana; Sun
+Ixia,Marksman,49.77,0.72,Kalea; X.Borg; Roger; Atlas; Beatrix,Balmond; Estes; Diggie; Baxia; Cyclops
+Jawhead,Fighter,46.94,0.25,Grock; Zhuxin; Hanzo; Hylos; Chip,Thamuz; Irithel; Ruby; Bane; Lukas
+Johnson,Tank / Support,47.89,1.96,Lancelot; Luo Yi; Balmond; Zhask; Minsitthar,Baxia; Natalia; Harley; Floryn; Valentina
+Joy,Assassin,49.0,0.19,Wanwan; Argus; Silvanna; Franco; Lunox,Khaleed; Balmond; Benedetta; Luo Yi; Mathilda
+Julian,Assassin / Fighter,49.92,0.84,Zhuxin; Pharsa; Vale; Chip; Silvanna,Zilong; Hilda; Dyrroth; Phoveus; Lolita
+Kadita,Mage / Assassin,51.53,4.51,Marcel; Tigreal; Alpha; Alice; Helcurt,Arlott; Lolita; Odette; Ixia; Johnson
+Kagura,Mage,52.16,1.2,Balmond; Hilda; Terizla; Phoveus; Esmeralda,Natan; Bane; Lolita; Silvanna; Kimmy
+Kaja,Support,49.63,20.47,Odette; Hilda; Chip; Lolita; Lunox,Estes; Roger; Valir; Wanwan; Gord
+Kalea,Support / Fighter,44.51,0.33,Bane; Harley; Gatotkaca; Alpha; Natalia,Edith; Lolita; Ixia; Popol and Kupa; Faramis
+Karina,Assassin,47.39,2.73,Granger; Brody; Hilda; Bane; Cici,Chip; Minsitthar; Natalia; Ling; Hanabi
+Karrie,Marksman,48.49,0.89,Zilong; Vexana; X.Borg; Sun; Minsitthar,Benedetta; Yin; Alice; Martis; Balmond
+Khaleed,Fighter,50.83,0.08,Terizla; Gord; Cyclops; Balmond; Alice,Silvanna; Bane; Luo Yi; X.Borg; Yin
+Khufra,Tank,54.59,1.9,Marcel; Zhuxin; Lesley; Alice; Minotaur,Silvanna; Alucard; Akai; Saber; Sora
+Kimmy,Marksman / Mage,48.65,0.27,Karina; Saber; Granger; Kaja; Fanny,Esmeralda; Joy; Hanzo; Balmond; Sun
+Lancelot,Assassin,43.09,0.4,Yve; Harith; Khaleed; Gatotkaca; Cecilion,Johnson; Saber; Layla; Zilong; Helcurt
+Lapu-Lapu,Fighter,48.69,0.27,Baxia; Esmeralda; Claude; Lolita; Franco,Alucard; Hilda; Vexana; Hanabi; Jawhead
+Layla,Marksman,48.75,0.84,Lancelot; Pharsa; Silvanna; Gatotkaca; Hirara,Yin; Vale; Odette; Baxia; Valentina
+Leomord,Fighter,50.31,0.45,Hylos; Valir; Karina; Zhuxin; Phoveus,Kalea; Wanwan; Zhask; Zilong; Saber
+Lesley,Marksman / Assassin,48.17,7.11,Tigreal; Sun; Helcurt; Gloo; Hayabusa,Claude; Khufra; Marcel; Yve; Belerick
+Ling,Assassin,52.62,0.88,Natalia; Saber; Karina; Floryn; Khaleed,Layla; Yve; Gloo; X.Borg; Xavier
+Lolita,Support / Tank,54.13,0.18,Phoveus; Kalea; X.Borg; Wanwan; Melissa,Cyclops; Franco; Odette; Edith; Chang'e
+Lukas,Fighter,53.21,28.05,Minsitthar; Valentina; Jawhead; Hylos; Zhuxin,Popol and Kupa; Ruby; Gusion; Chou; Ling
+Lunox,Mage,49.07,0.15,Lylia; Lancelot; Sora; Luo Yi; Odette,Joy; Baxia; Kaja; Gloo; Karina
+Luo Yi,Mage,47.78,0.09,Phoveus; Khaleed; Melissa; Joy; Chou,Balmond; Johnson; Alpha; Alucard; Zhask
+Lylia,Mage,49.57,0.34,Helcurt; Chou; Vale; Benedetta; Natalia,Roger; X.Borg; Hylos; Faramis; Eudora
+Marcel,Support,58.2,32.46,Saber; Angela; Alice; Esmeralda; Floryn,Atlas; Zhask; Popol and Kupa; Hanabi; Sun
+Martis,Fighter,46.86,0.37,Valentina; X.Borg; Karrie; Cecilion; Hirara,Vale; Harley; Sun; Aamon; Johnson
+Masha,Fighter / Tank,59.0,25.49,Aldous; Estes; Cyclops; Mathilda; Popol and Kupa,Atlas; Yu Zhong; Cici; Gloo; Eudora
+Mathilda,Support / Assassin,45.51,0.18,Saber; Esmeralda; Hanabi; Khaleed; Joy,Pharsa; Natalia; X.Borg; Masha; Zilong
+Melissa,Marksman,48.37,2.14,Balmond; Terizla; Cecilion; Alpha; Brody,Lolita; Luo Yi; Alucard; Chang'e; Jawhead
+Minotaur,Tank / Support,55.06,6.8,Natalia; Gloo; Alice; Kimmy; Hylos,Silvanna; Khufra; Cyclops; Lolita; Odette
+Minsitthar,Fighter,50.99,5.17,Hylos; Karina; Alpha; Natalia; Yin,Johnson; Aldous; Edith; Freya; Phoveus
+Miya,Marksman,49.3,8.24,Vale; Gord; Estes; Aldous; Belerick,Lolita; Zhuxin; Saber; Obsidia; Valentina
+Moskov,Marksman,50.49,0.25,Aamon; Karina; Ruby; Cyclops; Bane,Gloo; Baxia; Thamuz; Joy; Fanny
+Nana,Mage,46.98,3.79,Yve; Akai; Irithel; Balmond; Terizla,Natalia; Aldous; Zhask; Jawhead; Odette
+Natalia,Assassin,50.87,1.33,Aldous; Johnson; Nana; Karina; Esmeralda,Harley; Ling; Popol and Kupa; Zhask; Terizla
+Natan,Marksman,51.3,0.12,Karina; Estes; Yu Zhong; Fanny; Harith,Zilong; Balmond; Grock; Sun; Silvanna
+Nolan,Assassin,49.02,2.53,Natalia; Helcurt; Hilda; Saber; Arlott,Estes; Hylos; Hanabi; Lolita; Karrie
+Novaria,Mage,49.98,4.3,Zilong; Natalia; Ling; Estes; Aldous,Lylia; Gatotkaca; Valentina; Valir; Diggie
+Obsidia,Marksman,53.59,8.7,Diggie; Baxia; Miya; Karina; Estes,Benedetta; Helcurt; Lukas; Granger; Yin
+Odette,Mage,49.51,0.44,Yin; Helcurt; Vale; Lolita; Layla,Kaja; Hilda; Claude; Lancelot; Cici
+Paquito,Fighter / Assassin,50.32,45.16,Esmeralda; Saber; Hilda; Baxia; Khufra,X.Borg; Natalia; Karina; Valentina; Karrie
+Pharsa,Mage,47.22,0.17,Baxia; Mathilda; Bane; Chip; Jawhead,Layla; Wanwan; Aurora; Julian; Tigreal
+Phoveus,Fighter,47.8,0.48,Aldous; Zilong; Cici; Bane; Cecilion,Lolita; Freya; Luo Yi; Faramis; Wanwan
+Popol and Kupa,Marksman,54.07,0.27,Benedetta; Natalia; Wanwan; Marcel; Kalea,Grock; Hilda; Aamon; Freya; Granger
+Rafaela,Support,59.36,16.09,Diggie; Estes; Ixia; Floryn; Granger,Valir; Natalia; Lancelot; Balmond; Harley
+Roger,Fighter / Marksman,49.21,0.11,Zilong; Kaja; Lylia; Fredrinn; Uranus,Aamon; Helcurt; Estes; Saber; Bane
+Ruby,Fighter,49.52,0.25,Yve; Alpha; Jawhead; Lukas; X.Borg,Bane; Hirara; Gloo; Cici; Sun
+Saber,Assassin,49.17,21.54,Lancelot; X.Borg; Aurora; Roger; Vexana,Marcel; Mathilda; Aulus; Cyclops; Ling
+Selena,Assassin / Mage,49.18,3.51,Johnson; Silvanna; Baxia; Gloo; Phoveus,Lylia; Yve; Pharsa; Helcurt; X.Borg
+Silvanna,Fighter,50.61,1.47,Khaleed; X.Borg; Irithel; Zhask; Natan,Layla; Joy; Argus; Yve; Hanabi
+Sora,Fighter / Assassin,49.71,2.82,Khufra; Valentina; Phoveus; Alice; Gatotkaca,Estes; Lunox; Popol and Kupa; Terizla; Rafaela
+Sun,Fighter,52.35,18.91,Martis; Natan; Marcel; Irithel; Alucard,Hilda; Cici; X.Borg; Phoveus; Jawhead
+Suyou,Assassin / Fighter,49.7,0.96,Pharsa; Guinevere; Edith; Arlott; Odette,Bane; Faramis; Diggie; Natalia; Aulus
+Terizla,Fighter / Tank,50.67,0.16,Alucard; Grock; Balmond; Arlott; X.Borg,Khaleed; Tigreal; Melissa; Silvanna; Lolita
+Thamuz,Fighter,48.37,1.46,Jawhead; Edith; Aurora; Yve; Cici,Balmond; Baxia; Zilong; Aamon; Phoveus
+Tigreal,Tank,44.08,5.3,Terizla; Hylos; Zhuxin; Pharsa; Alice,Aamon; Aldous; Floryn; Baxia; Layla
+Uranus,Tank,49.42,0.34,Hanabi; Gusion; Estes; Karrie; Alpha,Cici; Lylia; Phoveus; X.Borg; Roger
+Vale,Mage,49.9,0.18,Akai; Martis; Alpha; Layla; Alucard,Lylia; Silvanna; Julian; Popol and Kupa; Odette
+Valentina,Mage,45.53,0.16,Zhask; Harley; Cyclops; Johnson; Layla,Grock; Martis; Aldous; Atlas; Akai
+Valir,Mage,53.23,1.78,Kaja; Marcel; Rafaela; Benedetta; X.Borg,Fredrinn; Akai; Alice; Balmond; Johnson
+Vexana,Mage,49.25,1.1,Gatotkaca; Lapu-Lapu; Carmilla; Bane; Alice,Gloo; Saber; Yve; Argus; Karrie
+Wanwan,Marksman,48.49,0.11,Pharsa; Harith; Phoveus; Hirara; Leomord,Joy; Johnson; Aurora; Lolita; Aldous
+X.Borg,Fighter,49.85,1.64,Faramis; Lylia; Khaleed; Yve; Zhask,Saber; Silvanna; Barats; Martis; Alpha
+Xavier,Mage,49.93,0.12,Ling; Natalia; Chang'e; Hayabusa; Helcurt,Aurora; Saber; Yin; Phoveus; Belerick
+Yi Sun-shin,Assassin / Marksman,49.99,8.26,Uranus; Karina; Harley; Khaleed; Johnson,Balmond; Zilong; Layla; Thamuz; Phoveus
+Yin,Fighter / Assassin,48.39,1.6,Karrie; Layla; Khaleed; Esmeralda; Popol and Kupa,Bane; Odette; Phoveus; Atlas; Minsitthar
+Yu Zhong,Fighter,49.2,0.66,Chou; Bruno; Edith; Masha; Cici,Hanabi; Natalia; Natan; Minsitthar; Silvanna
+Yve,Mage,52.56,0.04,Benedetta; Silvanna; Marcel; Vexana; Helcurt,Lancelot; Balmond; Hanabi; Ruby; Nana
+Zetian,Mage,50.89,3.85,Harley; Gloo; Claude; Floryn; Valentina,Aamon; Natalia; Lolita; Tigreal; Helcurt
+Zhask,Mage,52.16,0.35,Marcel; Hirara; Natalia; Nana; Harith,Hylos; Johnson; Chip; Silvanna; Valentina
+Zhuxin,Mage,50.21,0.28,Yve; Saber; Miya; Minsitthar; Hayabusa,Jawhead; Julian; Tigreal; Lolita; Khufra
+Zilong,Fighter / Assassin,45.19,0.43,Lancelot; Julian; Natan; Thamuz; Belerick,Edith; Hanzo; Phoveus; Roger; Karrie

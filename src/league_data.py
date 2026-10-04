@@ -1,0 +1,157 @@
+# -*- coding: utf-8 -*-
+"""League hero-stat tables for the draft app.
+
+Every row is (hero, picks, wins, losses, bans).
+Win/loss derived from the published win rate where the source gave a percentage.
+'games' is the tournament game count, verified against the published ban% where possible.
+"""
+
+# ---- Asian Games 2026 (Aichi-Nagoya) - 32 games, 15 tracked heroes -------------
+AG2026 = dict(id="ag", name="Asian Games 2026", short="AG26", region="International",
+              games=32, note="MLBB's debut as an official medal event. Gold: Myanmar.",
+              rows=[("Nolan",23,11,12,6),("Hirara",16,12,4,15),("Aulus",16,11,5,16),
+                    ("Eudora",16,10,6,7),("Obsidia",15,9,6,6),("Esmeralda",14,7,7,8),
+                    ("Atlas",13,8,5,19),("Minotaur",13,8,5,13),("Uranus",13,5,8,12),
+                    ("Zhuxin",12,6,6,3),("Gloo",11,7,4,6),("Paquito",11,5,6,13),
+                    ("Carmilla",11,3,8,19),("Belerick",9,2,7,4),("Valentina",6,6,0,6)])
+
+# ---- MPL Philippines S17 - 169 games -----------------------------------------
+PH17 = dict(id="ph", name="MPL Philippines S17", short="PH", region="Philippines",
+            games=169, note="Team Liquid PH dominant in the regular season.",
+            rows=[("Claude",124,60.48,17),("Valentina",83,48.19,28),("Suyou",78,51.28,49),
+                  ("Harley",72,54.17,47),("Zhuxin",72,45.83,90),("Leomord",66,40.91,33),
+                  ("Yve",64,57.81,39),("Khaleed",60,43.33,30),("Phoveus",55,49.09,99),
+                  ("Harith",48,52.08,42),("Karrie",44,45.45,45),("Lapu-Lapu",43,48.84,9),
+                  ("Kalea",42,59.52,97),("Hylos",41,48.78,32),("Marcel",40,50.00,90),
+                  ("Sora",39,48.72,44),("Moskov",39,35.90,13),("Gloo",38,42.11,37),
+                  ("Alice",37,48.65,23),("Hilda",37,48.65,41),("Gatotkaca",36,52.78,27),
+                  ("Baxia",34,61.76,122),("Uranus",34,47.06,41),("Fredrinn",30,53.33,21),
+                  ("Pharsa",30,43.33,11),("Guinevere",29,51.72,60),("Arlott",27,44.44,34),
+                  ("Chou",25,40.00,18),("Gord",24,58.33,12),("Yi Sun-shin",24,41.67,14),
+                  ("Kimmy",22,63.64,14),("Terizla",20,65.00,19),("Freya",18,66.67,151),
+                  ("Yu Zhong",16,62.50,13),("Paquito",15,73.33,9),("Granger",15,40.00,3),
+                  ("Grock",15,40.00,11),("Lylia",11,54.55,12),("Zetian",11,36.36,14),
+                  ("Atlas",8,62.50,9),("Lancelot",8,62.50,2),("Bruno",8,50.00,4),
+                  ("Fanny",8,37.50,112),("Selena",8,37.50,4),("Badang",7,57.14,2),
+                  ("Benedetta",7,57.14,1),("Luo Yi",7,57.14,11),("Clint",7,42.86,7),
+                  ("Obsidia",7,14.29,7),("Hayabusa",6,50.00,4),("Valir",6,33.33,3),
+                  ("Esmeralda",5,40.00,2),("Kaja",4,75.00,10),("Nolan",4,75.00,2),
+                  ("Cici",3,33.33,6),("Joy",3,0.00,3),("Belerick",2,50.00,2),
+                  ("Chip",2,50.00,2),("Dyrroth",2,50.00,2),("Khufra",2,50.00,2),
+                  ("Thamuz",2,50.00,2),("Hanabi",2,0.00,2),("Irithel",2,0.00,2),
+                  ("Beatrix",1,100.00,1),("Brody",1,100.00,1),("Aulus",1,0.00,1),
+                  ("Balmond",1,0.00,1),("Edith",1,0.00,1),("Kagura",1,0.00,1),
+                  ("Lesley",1,0.00,1),("Lunox",1,0.00,1),("Roger",1,0.00,1),
+                  ("Saber",1,0.00,1),("Vexana",1,0.00,3),("Wanwan",1,0.00,2)])
+
+# ---- MPL Indonesia S17 - 205 games -------------------------------------------
+ID17 = dict(id="id", name="MPL Indonesia S17", short="ID", region="Indonesia",
+            games=205, note="Zhuxin and Claude were the two most-picked heroes.",
+            rows=[("Zhuxin",130,65,65,72),("Claude",123,74,49,19),("Leomord",96,52,44,28),
+                  ("Harith",92,46,46,55),("Suyou",82,32,50,20),("Sora",77,33,44,44),
+                  ("Yve",75,40,35,43),("Gloo",69,40,29,61),("Phoveus",66,43,23,116),
+                  ("Khaleed",64,26,38,39),("Valentina",61,27,34,42),("Kalea",56,28,28,85),
+                  ("Harley",53,29,24,92),("Yi Sun-shin",48,18,30,19),("Fredrinn",43,23,20,32),
+                  ("Lapu-Lapu",43,23,20,12),("Baxia",43,21,22,68),("Hylos",43,20,23,14),
+                  ("Moskov",41,24,17,17),("Gatotkaca",39,20,19,10),("Freya",38,23,15,167),
+                  ("Granger",37,17,20,18),("Marcel",36,23,13,142),("Zetian",35,16,19,26),
+                  ("Arlott",34,23,11,64),("Uranus",33,10,23,37),("Karrie",32,10,22,23),
+                  ("Guinevere",31,18,13,132),("Terizla",30,15,15,14),("Pharsa",26,13,13,5),
+                  ("Alice",25,9,16,23),("Hilda",24,13,11,24),("Paquito",24,12,12,14),
+                  ("Chou",24,10,14,24),("Gord",23,14,9,14),("Fanny",21,13,8,164),
+                  ("Lylia",21,7,14,10),("Kimmy",17,8,9,0),("Yu Zhong",16,9,7,8),
+                  ("Atlas",14,7,7,17),("Valir",14,7,7,14),("Chip",13,8,5,108),
+                  ("Lancelot",12,7,5,7),("Cici",11,3,8,11),("Obsidia",10,5,5,9),
+                  ("Badang",8,2,6,2),("Lunox",7,6,1,6),("Masha",6,3,3,10),
+                  ("Faramis",5,3,2,1),("Grock",5,1,4,8),("Kaja",4,3,1,3),
+                  ("Akai",4,2,2,1),("Luo Yi",4,2,2,0),("Selena",4,2,2,6),
+                  ("Bruno",4,1,3,0),("Helcurt",4,1,3,29),("Nolan",4,1,3,3),
+                  ("Odette",3,2,1,1),("Beatrix",3,1,2,0),("Belerick",3,1,2,1),
+                  ("Lukas",3,1,2,0),("Vexana",3,1,2,0),("Benedetta",3,0,3,0),
+                  ("Esmeralda",3,0,3,3),("Brody",2,2,0,1),("Kadita",2,2,0,0),
+                  ("Hayabusa",2,1,1,3),("Irithel",2,1,1,0),("Khufra",2,1,1,2),
+                  ("Clint",2,0,2,0),("Nana",1,1,0,0),("Barats",1,0,1,0),
+                  ("Edith",1,0,1,0),("Franco",1,0,1,1),("Gusion",1,0,1,0),
+                  ("Joy",1,0,1,3),("Kagura",1,0,1,0),("Ling",1,0,1,0),
+                  ("Minsitthar",1,0,1,0),("Ruby",1,0,1,0),("Saber",1,0,1,0),
+                  ("Tigreal",1,0,1,0),("X.Borg",1,0,1,2)])
+
+# ---- MPL Malaysia S17 - 164 games --------------------------------------------
+MY17 = dict(id="my", name="MPL Malaysia S17", short="MY", region="Malaysia",
+            games=164, note="Fanny banned in 142 of 164 games.",
+            rows=[("Claude",94,44,50,24),("Zhuxin",93,39,54,63),("Suyou",71,35,36,23),
+                  ("Leomord",64,33,31,27),("Harith",63,37,26,61),("Gloo",60,29,31,50),
+                  ("Valentina",59,27,32,28),("Khaleed",58,23,35,26),("Phoveus",57,31,26,80),
+                  ("Yve",55,29,26,22),("Chou",48,29,19,35),("Guinevere",47,30,17,101),
+                  ("Moskov",45,25,20,27),("Yi Sun-shin",41,18,23,38),("Harley",39,18,21,66),
+                  ("Uranus",38,25,13,43),("Gatotkaca",33,18,15,15),("Marcel",33,17,16,88),
+                  ("Zetian",31,13,18,14),("Kalea",29,16,13,65),("Freya",29,15,14,133),
+                  ("Karrie",29,15,14,24),("Sora",29,12,17,38),("Hilda",28,10,18,22),
+                  ("Granger",26,13,13,6),("Lapu-Lapu",26,9,17,7),("Hylos",25,11,14,13),
+                  ("Paquito",24,16,8,7),("Arlott",24,15,9,30),("Lylia",23,14,9,9),
+                  ("Baxia",23,8,15,64),("Terizla",20,9,11,12),("Nolan",19,12,7,9),
+                  ("Kimmy",19,9,10,7),("Pharsa",16,12,4,6),("Alice",16,5,11,28),
+                  ("Obsidia",15,6,9,10),("Benedetta",15,5,10,25),("Gord",14,8,6,4),
+                  ("Fredrinn",13,6,7,19),("Clint",12,8,4,2),("Yu Zhong",12,6,6,8),
+                  ("Atlas",9,5,4,22),("Badang",9,5,4,2),("Fanny",8,6,2,142),
+                  ("Irithel",7,4,3,1),("Hayabusa",6,2,4,1),("Lancelot",6,2,4,4),
+                  ("Chip",5,3,2,32),("Cici",5,3,2,5),("Lunox",5,2,3,2),
+                  ("Joy",5,1,4,7),("Akai",5,0,5,2),("Faramis",4,4,0,2),
+                  ("Valir",4,4,0,6),("Esmeralda",4,2,2,3),("Dyrroth",4,1,3,1),
+                  ("Grock",4,1,3,7),("Brody",3,0,3,1),("Hanabi",2,2,0,0),
+                  ("Saber",2,2,0,4),("Bruno",2,1,1,0),("Helcurt",2,1,1,2),
+                  ("Kaja",2,1,1,3),("Masha",2,1,1,7),("Minsitthar",2,1,1,4),
+                  ("Edith",2,0,2,0),("Luo Yi",2,0,2,1),("Zhask",2,0,2,0),
+                  ("Angela",1,1,0,0),("Khufra",1,1,0,0),("Odette",1,1,0,0),
+                  ("Sun",1,1,0,0),("Thamuz",1,1,0,0),("Vexana",1,1,0,1),
+                  ("Beatrix",1,0,1,0),("Belerick",1,0,1,0),("Martis",1,0,1,0),
+                  ("Melissa",1,0,1,0),("Roger",1,0,1,0),("Ruby",1,0,1,0)])
+
+# ---- MSL Myanmar S4 - 86 games ------------------------------------------------
+MM4 = dict(id="mm", name="MSL Myanmar S4", short="MM", region="Myanmar",
+           games=86, note="Myanmar won Asian Games gold off the back of this league.",
+           rows=[("Hirara",58,44.83,26),("Paquito",54,59.26,16),("Belerick",48,52.08,32),
+                 ("Eudora",47,61.70,13),("Uranus",36,50.00,45),("Barats",31,38.71,22),
+                 ("Gloo",30,60.00,26),("Rafaela",25,52.00,23),("Zhuxin",25,40.00,16),
+                 ("Minotaur",23,60.87,16),("Gatotkaca",23,52.17,8),("Obsidia",22,50.00,11),
+                 ("Selena",22,50.00,17),("Miya",22,45.45,7),("Carmilla",22,31.82,16),
+                 ("Brody",21,80.95,27),("Melissa",21,61.90,44),("Nolan",17,47.06,4),
+                 ("Yi Sun-shin",17,47.06,13),("Moskov",17,29.41,17),("Dyrroth",16,68.75,7),
+                 ("Novaria",14,50.00,7),("Esmeralda",14,35.71,13),("Clint",13,46.15,3),
+                 ("Granger",12,50.00,3),("Alice",11,72.73,7),("Claude",11,45.45,3),
+                 ("Ruby",11,45.45,5),("Chou",11,27.27,1),("Sora",10,40.00,3),
+                 ("Fanny",8,62.50,29),("Freya",8,50.00,77),("Mathilda",7,71.43,13),
+                 ("Lylia",7,57.14,11),("Hylos",7,42.86,3),("Kaja",7,42.86,11),
+                 ("Atlas",7,28.57,78),("Suyou",7,28.57,8),("Vexana",7,14.29,2),
+                 ("Kimmy",6,50.00,2),("Marcel",6,50.00,77),("Valentina",6,50.00,19),
+                 ("Zetian",5,60.00,1),("Bruno",5,40.00,3),("Guinevere",4,75.00,3),
+                 ("Harley",4,75.00,9),("Phoveus",4,75.00,4),("Aurora",4,50.00,0),
+                 ("Cici",4,0.00,5),("Gord",3,66.67,0),("Kalea",3,66.67,1),
+                 ("Angela",3,33.33,2),("Cecilion",3,33.33,1),("Harith",3,33.33,1),
+                 ("Leomord",3,33.33,1),("Hanabi",3,0.00,2),("Arlott",2,100.00,2),
+                 ("Khaleed",2,50.00,0),("Aulus",2,0.00,0),("Beatrix",2,0.00,0),
+                 ("Chip",1,100.00,12),("Ixia",1,100.00,2),("Jawhead",1,100.00,0),
+                 ("Masha",1,100.00,1),("Yu Zhong",1,100.00,0),("Yve",1,100.00,0),
+                 ("Balmond",1,0.00,0),("Edith",1,0.00,0),("Kagura",1,0.00,1),
+                 ("Karrie",1,0.00,0),("Lukas",1,0.00,2),("Odette",1,0.00,2),
+                 ("Pharsa",1,0.00,0),("Tigreal",1,0.00,1)])
+
+# ---- MTC Turkiye Championship S7 - 142 games (top 15 tracked) ----------------
+MTC7 = dict(id="tr", name="MTC Turkiye S7", short="TR", region="Türkiye",
+            games=142, note="Aurora Gaming took a third straight title.",
+            rows=[("Claude",64,54.69,24),("Guinevere",58,48.28,76),("Phoveus",56,57.14,67),
+                  ("Yve",51,58.82,42),("Harith",49,59.18,49),("Valentina",48,50.00,30),
+                  ("Harley",47,53.19,63),("Alice",47,42.55,23),("Suyou",44,47.73,28),
+                  ("Freya",43,65.12,93),("Kalea",43,60.47,92),("Uranus",43,51.16,19),
+                  ("Karrie",39,51.28,49),("Zhuxin",34,44.12,108),("Hylos",33,57.58,7)])
+
+# ---- MCC S7 (CIS / Eastern Europe & Central Asia) - 162 games (top 14) -------
+MCC7 = dict(id="cis", name="MCC S7 (CIS/EECA)", short="CIS", region="CIS & E. Europe",
+            games=162, note="Zhuxin reached 100% pick/ban presence.",
+            rows=[("Valentina",88,46,42,36),("Claude",83,42,41,24),("Harith",64,36,28,64),
+                  ("Suyou",64,31,33,15),("Harley",63,46,17,86),("Baxia",54,28,26,100),
+                  ("Yve",51,26,25,80),("Zhuxin",51,26,25,111),("Moskov",50,21,29,29),
+                  ("Kalea",49,27,22,73),("Guinevere",45,23,22,88),("Phoveus",45,18,27,109),
+                  ("Leomord",45,16,29,16),("Freya",44,25,19,104)])
+
+LEAGUES = [AG2026, PH17, ID17, MY17, MM4, MTC7, MCC7]

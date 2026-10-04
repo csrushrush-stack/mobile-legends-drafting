@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MLBB Draft Assistant</title>
+<style>
+:root{
+  --bg:#f4f6fa; --card:#fff; --ink:#0f172a; --mut:#64748b; --line:#e2e8f0;
+  --blue:#2563eb; --blue-bg:#eff6ff; --blue-line:#bfdbfe;
+  --red:#dc2626; --red-bg:#fef2f2; --red-line:#fecaca;
+  --gold:#d97706; --green:#16a34a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:Inter,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:14px;line-height:1.5}
+.wrap{max-width:1440px;margin:0 auto;padding:18px 18px 60px}
+
+header.top{display:flex;justify-content:space-between;align-items:center;gap:18px;
+  flex-wrap:wrap;background:#fff;border:1px solid var(--line);border-radius:14px;
+  padding:16px 20px;margin-bottom:14px;box-shadow:0 1px 3px rgba(15,23,42,.05)}
+header.top h1{margin:0;font-size:20px;letter-spacing:-.3px}
+header.top .tag{font-size:12px;color:var(--mut);margin-top:2px}
+.sidepick{display:flex;gap:8px;align-items:center}
+.sidepick span{font-size:12px;color:var(--mut);font-weight:600;margin-right:2px}
+button{font-family:inherit;font-size:13px;border-radius:9px;border:1px solid var(--line);
+  background:#fff;color:var(--ink);padding:8px 14px;cursor:pointer;font-weight:600;
+  transition:background .12s,border-color .12s}
+button:hover{background:#f8fafc}
+button.bsel.on{background:var(--blue);border-color:var(--blue);color:#fff}
+button.rsel.on{background:var(--red);border-color:var(--red);color:#fff}
+button.dsrc.on{background:#0f172a;border-color:#0f172a;color:#fff}
+button.ghost{background:transparent}
+button.sm{padding:6px 11px;font-size:12px}
+.srcbar{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 18px;
+  margin-bottom:14px;font-size:12px;color:#475569;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.srcbar b{color:#0f172a}
+.srcbar .lg{border:1px solid var(--line);border-radius:7px;padding:3px 9px;background:#f8fafc}
+.srcbar .lg.on{background:#ecfdf5;border-color:#a7f3d0;color:#065f46;font-weight:700}
+.recmetrics{display:flex;gap:12px;flex-wrap:wrap;margin-top:5px}
+.metric{font-size:11px;color:#64748b}
+.metric b{font-size:12.5px;color:#0f172a;font-variant-numeric:tabular-nums}
+.metric.good b{color:#15803d}
+.metric.bad b{color:#b91c1c}
+
+.turnbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 20px;margin-bottom:14px}
+.turnlabel{font-size:16px;font-weight:750;letter-spacing:-.2px}
+.turnlabel .you{color:var(--green)}
+.turnlabel .them{color:var(--mut)}
+.pill{display:inline-block;border-radius:999px;padding:3px 11px;font-size:11.5px;font-weight:700}
+.pill.blue{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-line)}
+.pill.red{background:var(--red-bg);color:var(--red);border:1px solid var(--red-line)}
+.seq{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
+.seqdot{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+  font-size:9.5px;font-weight:800;border:1px solid var(--line);background:#f8fafc;color:#94a3b8;cursor:pointer}
+.seqdot.b{background:var(--blue-bg);border-color:var(--blue-line);color:var(--blue)}
+.seqdot.r{background:var(--red-bg);border-color:var(--red-line);color:var(--red)}
+.seqdot.now{outline:2px solid #0f172a;outline-offset:1px}
+.seqdot.done{opacity:.42}
+
+.board{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+@media(max-width:900px){.board{grid-template-columns:1fr}}
+.team{border-radius:14px;padding:14px 16px;border:1px solid var(--line);background:#fff}
+.team.blue{border-left:5px solid var(--blue)}
+.team.red{border-left:5px solid var(--red)}
+.team h2{margin:0 0 10px;font-size:15px;letter-spacing:.4px;text-transform:uppercase}
+.team.blue h2{color:var(--blue)}
+.team.red h2{color:var(--red)}
+.rowlbl{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;
+  color:var(--mut);margin:10px 0 6px}
+.slots{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.slot{height:52px;border-radius:9px;border:1px dashed var(--line);background:#fafbfc;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-size:10.5px;color:#94a3b8;cursor:pointer;text-align:center;padding:3px;line-height:1.25;
+  transition:background .12s,border-color .12s}
+.slot:hover{border-color:#94a3b8}
+.slot.filled{border-style:solid;font-weight:700;font-size:11.5px;color:var(--ink);cursor:pointer}
+.slot.filled small{display:block;font-size:9px;font-weight:800;color:var(--mut);letter-spacing:.3px}
+.team.blue .slot.filled{background:var(--blue-bg);border-color:var(--blue-line)}
+.team.red .slot.filled{background:var(--red-bg);border-color:var(--red-line)}
+.slot.banslot{height:40px;font-size:11px}
+.slot.cursor{border-color:#0f172a;border-style:solid;box-shadow:0 0 0 2px rgba(15,23,42,.12)}
+.slot.banned{text-decoration:line-through;color:#94a3b8;font-weight:600}
+.team.blue .slot.banned{background:#f1f5f9;border-color:var(--line)}
+.team.red .slot.banned{background:#f1f5f9;border-color:var(--line)}
+
+.cols{display:grid;grid-template-columns:1.35fr 1fr;gap:14px;margin-bottom:14px}
+@media(max-width:1050px){.cols{grid-template-columns:1fr}}
+.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.panel h3{margin:0 0 4px;font-size:14.5px;letter-spacing:-.2px}
+.panel .sub{font-size:12px;color:var(--mut);margin-bottom:12px}
+.rec{display:flex;gap:12px;align-items:flex-start;padding:9px 11px;border-radius:10px;
+  border:1px solid var(--line);margin-bottom:7px;cursor:pointer;background:#fff;transition:background .12s}
+.rec:hover{background:#f8fafc}
+.rec.top{border-color:#86efac;background:#f0fdf4}
+.rank{flex:0 0 24px;height:24px;border-radius:7px;background:#0f172a;color:#fff;
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11.5px}
+.rec.top .rank{background:var(--green)}
+.recbody{flex:1;min-width:0}
+.recname{font-weight:700;font-size:13.5px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.recwhy{font-size:11.5px;color:#475569;margin-top:2px;line-height:1.45}
+.recwhy b{color:#0f172a}
+.recwhy .warn{color:#b91c1c}
+.score{font-size:11px;font-weight:800;color:var(--mut);font-variant-numeric:tabular-nums;white-space:nowrap}
+.lane{display:inline-block;border-radius:5px;padding:1px 7px;font-size:9.5px;font-weight:800;letter-spacing:.3px}
+.lane.EXP{background:#fef3c7;color:#92400e}
+.lane.Jungle{background:#dcfce7;color:#15803d}
+.lane.Mid{background:#ede9fe;color:#6d28d9}
+.lane.Gold{background:#fee2e2;color:#b91c1c}
+.lane.Roam{background:#e0f2fe;color:#0369a1}
+.lane.Flex{background:#f1f5f9;color:#475569}
+
+.poolbar{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+input[type=search],select{font-family:inherit;font-size:13px;border:1px solid var(--line);
+  border-radius:9px;padding:8px 12px;background:#fff;color:var(--ink);outline:none}
+input[type=search]{min-width:200px;flex:1}
+input[type=search]:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.pool{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:7px;
+  max-height:460px;overflow:auto;padding:3px}
+.hcard{border:1px solid var(--line);border-radius:9px;padding:7px 9px;cursor:pointer;
+  background:#fff;transition:background .12s,border-color .12s}
+.hcard:hover{background:#f8fafc;border-color:#94a3b8}
+.hcard .hn{font-weight:700;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hcard .hm{font-size:10px;color:var(--mut);font-variant-numeric:tabular-nums;margin-top:2px}
+.hcard.used{opacity:.3;cursor:not-allowed;background:#f1f5f9}
+.hcard.banned{opacity:.3;cursor:not-allowed;background:#f1f5f9;text-decoration:line-through}
+.hcard.sug{border-color:#86efac;background:#f0fdf4}
+.tier{font-size:9px;font-weight:800;border-radius:4px;padding:0 4px;margin-left:4px;vertical-align:1px}
+.tier.S{background:#dc2626;color:#fff}.tier.A{background:#ea580c;color:#fff}
+.tier.B{background:#0891b2;color:#fff}.tier.C{background:#94a3b8;color:#fff}
+.tier.D{background:#cbd5e1;color:#475569}
+
+.cnt{display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:9px;
+  border:1px solid var(--line);margin-bottom:6px;background:#fff}
+.cnt .who{font-weight:700;font-size:12.5px;flex:0 0 auto}
+.cnt .ans{font-size:11.5px;color:#475569}
+.cnt .ans b{color:#15803d}
+.empty{color:var(--mut);font-size:12.5px;padding:8px 0}
+.note{background:#fffbeb;border:1px solid #fde68a;border-left:4px solid var(--gold);
+  border-radius:10px;padding:11px 14px;font-size:12px;color:#78350f;margin-bottom:12px}
+.note b{color:#92400e}
+
+.gp{border:1px solid var(--line);border-radius:14px;background:#fff;padding:18px 20px;margin-bottom:14px}
+.gphead{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;
+  flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:14px}
+.gphead h2{margin:0 0 4px;font-size:18px;letter-spacing:-.3px}
+.vsline{display:flex;align-items:center;gap:10px;font-size:13px;flex-wrap:wrap}
+.vsline .arch{font-weight:800;border-radius:7px;padding:4px 11px;font-size:12.5px}
+.vsline .arch.b{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-line)}
+.vsline .arch.r{background:var(--red-bg);color:var(--red);border:1px solid var(--red-line)}
+.verdict{border-radius:10px;padding:12px 15px;font-size:13px;margin-bottom:14px;border:1px solid}
+.verdict.good{background:#f0fdf4;border-color:#bbf7d0;color:#14532d}
+.verdict.bad{background:#fef2f2;border-color:#fecaca;color:#7f1d1d}
+.verdict.even{background:#f8fafc;border-color:var(--line);color:#334155}
+.verdict b{font-weight:750}
+.gpcols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+@media(max-width:1050px){.gpcols{grid-template-columns:1fr}}
+.gpcol{border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.gpcol.mine{border-top:4px solid var(--blue)}
+.gpcol.theirs{border-top:4px solid var(--red)}
+.gpcol h3{margin:0 0 3px;font-size:15px}
+.gpcol .archline{font-size:12px;color:var(--mut);margin-bottom:12px}
+.gpcol .archline b{color:var(--ink)}
+.blk{margin-bottom:13px}
+.blk .bt{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.55px;
+  margin-bottom:5px;color:var(--mut)}
+.blk ul{margin:0;padding-left:17px}
+.blk li{font-size:12.5px;margin-bottom:4px;line-height:1.5}
+.blk.str li::marker{color:var(--green)}
+.blk.wk li::marker{color:var(--red)}
+.mrow{display:grid;grid-template-columns:78px 1fr;gap:9px;font-size:12.5px;padding:5px 0;
+  border-bottom:1px solid #f1f5f9}
+.mrow:last-child{border-bottom:0}
+.mrow .mk{font-weight:750;color:var(--blue)}
+.gpcol.theirs .mrow .mk{color:var(--red)}
+.matrix{border-top:1px solid var(--line);padding-top:14px}
+.matrix h3{margin:0 0 10px;font-size:15px}
+.edge{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:1050px){.edge{grid-template-columns:1fr}}
+.edge .ec{border:1px solid var(--line);border-radius:11px;padding:12px 14px}
+.edge .ec h4{margin:0 0 7px;font-size:12.5px}
+.edge .ec.win h4{color:var(--green)}
+.edge .ec.lose h4{color:var(--red)}
+.pairline{font-size:12.5px;padding:4px 0;border-bottom:1px solid #f8fafc}
+.pairline:last-child{border-bottom:0}
+.pairline b{font-weight:750}
+.pairline .arw{color:var(--mut);margin:0 5px}
+.tagline{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.tg{font-size:10.5px;font-weight:700;border-radius:5px;padding:2px 8px;background:#f1f5f9;color:#475569}
+.tg.warn{background:#fef2f2;color:#b91c1c}
+.tg.ok{background:#f0fdf4;color:#15803d}
+
+.foot{margin-top:22px;padding-top:14px;border-top:1px solid var(--line);
+  color:var(--mut);font-size:11.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div>
+    <h1>MLBB Draft Assistant</h1>
+    <div class="tag">Tournament draft order &middot; 10 bans, 10 picks &middot; powered by the 2026 Asian Games dataset + patch 2.2.16 counters</div>
+  </div>
+  <div class="sidepick">
+    <span>Data</span>
+    <button id="dAg" class="dsrc on">Asian Games 2026</button>
+    <button id="dAll" class="dsrc">AG + MPL</button>
+  </div>
+  <div class="sidepick">
+    <span>I am</span>
+    <button id="pickBlue" class="bsel">BLUE</button>
+    <button id="pickRed" class="rsel">RED</button>
+    <button id="undoBtn" class="sm ghost">Undo</button>
+    <button id="resetBtn" class="sm ghost">Reset</button>
+  </div>
+</header>
+
+<div class="srcbar" id="srcBar"></div>
+
+<div class="turnbar">
+  <div class="turnlabel" id="turnLabel">Choose your side to begin</div>
+  <div class="seq" id="seqBar"></div>
+</div>
+
+<div class="board">
+  <div class="team blue">
+    <h2>Blue team</h2>
+    <div class="rowlbl">Bans</div><div class="slots" id="blueBans"></div>
+    <div class="rowlbl">Picks</div><div class="slots" id="bluePicks"></div>
+  </div>
+  <div class="team red">
+    <h2>Red team</h2>
+    <div class="rowlbl">Bans</div><div class="slots" id="redBans"></div>
+    <div class="rowlbl">Picks</div><div class="slots" id="redPicks"></div>
+  </div>
+</div>
+
+<section id="gameplan" class="gp" hidden>
+  <div class="gphead">
+    <div>
+      <h2>Game plan</h2>
+      <div class="vsline" id="gpVs"></div>
+    </div>
+  </div>
+  <div id="gpVerdict"></div>
+  <div class="gpcols">
+    <div class="gpcol mine" id="gpMine"></div>
+    <div class="gpcol theirs" id="gpTheirs"></div>
+  </div>
+  <div class="matrix">
+    <h3>Matchup edges</h3>
+    <div class="edge">
+      <div class="ec win"><h4>Your heroes that beat theirs</h4><div id="gpWin"></div></div>
+      <div class="ec lose"><h4>Their heroes that beat yours</h4><div id="gpLose"></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="cols">
+  <div class="panel">
+    <h3 id="recTitle">Recommendations</h3>
+    <div class="sub" id="recSub">Pick a side and start entering the draft.</div>
+    <div id="recList"><div class="empty">No recommendations yet.</div></div>
+  </div>
+  <div class="panel">
+    <h3>Counters to what the enemy picked</h3>
+    <div class="sub">For each enemy pick, the heroes that beat it. Click one to take it.</div>
+    <div id="cntList"><div class="empty">No enemy picks yet.</div></div>
+  </div>
+</div>
+
+<div class="panel">
+  <h3>Hero pool</h3>
+  <div class="sub">Click a hero to assign it to the current draft step. Used and banned heroes are greyed out.</div>
+  <div class="poolbar">
+    <input type="search" id="search" placeholder="Search hero...">
+    <select id="laneF">
+      <option value="">All lanes</option>
+      <option>EXP</option><option>Jungle</option><option>Mid</option><option>Gold</option><option>Roam</option>
+    </select>
+    <select id="sortF">
+      <option value="rec">Sort: recommended first</option>
+      <option value="meta">Sort: meta score</option>
+      <option value="name">Sort: name</option>
+      <option value="ban">Sort: ban rate</option>
+    </select>
+    <span id="poolCount" style="font-size:12px;color:var(--mut);font-weight:600"></span>
+  </div>
+  <div class="pool" id="pool"></div>
+</div>
+
+<div class="note">
+  <b>How the recommendations work.</b> Each candidate is scored on:
+  <b>lane fit</b> (does it fill a lane you still need) &middot;
+  <b>measured synergy</b> (real games it played alongside your picks at the 2026 Asian Games) &middot;
+  <b>matchup</b> (how many of the enemy's picks it beats, minus how many beat it) &middot;
+  <b>pro win rate</b> (its actual record across the selected leagues) &middot;
+  <b>ranked meta</b> (patch 2.2.16) &middot;
+  <b>team balance</b> (you need a frontline and both damage types).
+  <br><br>
+  <b>Lineup win %</b> = the mean pro win rate of your five heroes, so it answers "how proven is this lineup".
+  <b>vs their lineup</b> = a matchup estimate from the 133-hero counter matrix, capped at 30&ndash;70% because it is an
+  estimate, not a measurement. Both are shown on every recommendation.
+  <br><br>
+  Switch the data source at the top: <b>Asian Games 2026</b> uses only the 32-game international dataset, while
+  <b>AG + MPL</b> pools every current league. Small samples are labelled &mdash; a hero with fewer than 3 pro games
+  is flagged as unproven rather than scored highly.
+</div>
+
+<div class="foot" id="foot"></div>
+</div>
+
+<script>
+const DATA = {"heroes":[{"name":"Aamon","lane":"Mid","meta":29.0,"ban":2.33,"tier":"B","magic":false,"tags":["dive","early"],"ag":null,"all":null,"per":{},"beats":["Cici","Chip","Moskov","Khaleed","Claude"],"ctrBy":["Roger","Tigreal","Martis","Popol and Kupa","Gloo"]},{"name":"Akai","lane":"Jungle","meta":29.6,"ban":1.34,"tier":"B","magic":false,"tags":["tanky","hardCC"],"ag":null,"all":{"picks":9,"wins":2,"losses":7,"bans":3,"leagues":2,"wr":22.22,"presence":3.25},"per":{"id":{"picks":4,"wins":2,"losses":2,"bans":1,"wr":50.0,"presence":2.44},"my":{"picks":5,"wins":0,"losses":5,"bans":2,"wr":0.0,"presence":4.27}},"beats":["Vale","Helcurt","Aldous","Baxia","Bane"],"ctrBy":["Valir","Valentina","Khufra","Zilong","Marcel"]},{"name":"Aldous","lane":"EXP","meta":31.7,"ban":0.62,"tier":"B","magic":false,"tags":["dive","late","split","mobile"],"ag":null,"all":null,"per":{},"beats":["Phoveus","Natalia","Harley","Masha","Gatotkaca"],"ctrBy":["Hirara","Minsitthar","Wanwan","Tigreal","Akai"]},{"name":"Alice","lane":"EXP","meta":34.2,"ban":4.26,"tier":"B","magic":true,"tags":["tanky","sustain","late"],"ag":null,"all":{"picks":136,"wins":60,"losses":76,"bans":104,"leagues":5,"wr":44.12,"presence":31.33},"per":{"ph":{"picks":37,"wins":18,"losses":19,"bans":23,"wr":48.65,"presence":35.5},"id":{"picks":25,"wins":9,"losses":16,"bans":23,"wr":36.0,"presence":23.41},"my":{"picks":16,"wins":5,"losses":11,"bans":28,"wr":31.25,"presence":26.83},"mm":{"picks":11,"wins":8,"losses":3,"bans":7,"wr":72.73,"presence":20.93},"tr":{"picks":47,"wins":20,"losses":27,"bans":23,"wr":42.55,"presence":49.3}},"beats":["Gloo","Bane","Marcel","Tigreal","Grock"],"ctrBy":["Estes","Angela","Karrie","Diggie","Valir"]},{"name":"Alpha","lane":"EXP","meta":21.7,"ban":0.65,"tier":"C","magic":false,"tags":["tanky","hardCC","sustain","dive","early"],"ag":null,"all":null,"per":{},"beats":["Faramis","Vale","Kalea","Ruby","Minsitthar"],"ctrBy":["Lancelot","Luo Yi","Aurora","X.Borg","Cici"]},{"name":"Alucard","lane":"Flex","meta":22.1,"ban":0.28,"tier":"C","magic":false,"tags":[],"ag":null,"all":null,"per":{},"beats":["Terizla","Vale","Harley","Sun","Gloo"],"ctrBy":["Lapu-Lapu","Luo Yi","Melissa","Khufra","Fredrinn"]},{"name":"Angela","lane":"Roam","meta":33.0,"ban":8.77,"tier":"B","magic":true,"tags":["sustain","protect","mobile"],"ag":null,"all":{"picks":4,"wins":2,"losses":2,"bans":2,"leagues":2,"wr":50.0,"presence":2.4},"per":{"my":{"picks":1,"wins":1,"losses":0,"bans":0,"wr":100.0,"presence":0.61},"mm":{"picks":3,"wins":1,"losses":2,"bans":2,"wr":33.33,"presence":5.81}},"beats":["Alice","Marcel","Balmond","Faramis","Lancelot"],"ctrBy":["Franco","Zilong","Silvanna","Lolita","Popol and Kupa"]},{"name":"Argus","lane":"Flex","meta":48.0,"ban":1.47,"tier":"S","magic":false,"tags":["tanky","sustain","late","split"],"ag":null,"all":null,"per":{},"beats":["Joy","Helcurt","Arlott","X.Borg","Franco"],"ctrBy":["Silvanna","Bane","Vexana","Diggie","Roger"]},{"name":"Arlott","lane":"EXP","meta":22.0,"ban":0.27,"tier":"C","magic":false,"tags":["hardCC","dive","mobile"],"ag":null,"all":{"picks":87,"wins":52,"losses":35,"bans":130,"leagues":4,"wr":59.77,"presence":34.78},"per":{"ph":{"picks":27,"wins":12,"losses":15,"bans":34,"wr":44.44,"presence":36.09},"id":{"picks":34,"wins":23,"losses":11,"bans":64,"wr":67.65,"presence":47.8},"my":{"picks":24,"wins":15,"losses":9,"bans":30,"wr":62.5,"presence":32.93},"mm":{"picks":2,"wins":2,"losses":0,"bans":2,"wr":100.0,"presence":4.65}},"beats":["Terizla","Alpha","Martis","Wanwan","X.Borg"],"ctrBy":["Kadita","Argus","Cyclops","Hylos","Johnson"]},{"name":"Atlas","lane":"Roam","meta":43.0,"ban":12.39,"tier":"A","magic":true,"tags":["tanky","hardCC","aoe"],"ag":{"picks":13,"wins":8,"losses":5,"bans":19,"wr":61.54,"presence":100.0},"all":{"picks":51,"wins":27,"losses":24,"bans":145,"leagues":5,"wr":52.94,"presence":29.88},"per":{"ag":{"picks":13,"wins":8,"losses":5,"bans":19,"wr":61.54,"presence":100.0},"ph":{"picks":8,"wins":5,"losses":3,"bans":9,"wr":62.5,"presence":10.06},"id":{"picks":14,"wins":7,"losses":7,"bans":17,"wr":50.0,"presence":15.12},"my":{"picks":9,"wins":5,"losses":4,"bans":22,"wr":55.56,"presence":18.9},"mm":{"picks":7,"wins":2,"losses":5,"bans":78,"wr":28.57,"presence":98.84}},"beats":["Ixia","Popol and Kupa","Estes","Cyclops","Layla"],"ctrBy":["Marcel","Masha","Lancelot","Alice","Yin"]},{"name":"Aulus","lane":"EXP","meta":68.2,"ban":13.08,"tier":"S","magic":false,"tags":["sustain","late"],"ag":{"picks":16,"wins":11,"losses":5,"bans":16,"wr":68.75,"presence":100.0},"all":{"picks":19,"wins":11,"losses":8,"bans":17,"leagues":3,"wr":57.89,"presence":12.54},"per":{"ag":{"picks":16,"wins":11,"losses":5,"bans":16,"wr":68.75,"presence":100.0},"ph":{"picks":1,"wins":0,"losses":1,"bans":1,"wr":0.0,"presence":1.18},"mm":{"picks":2,"wins":0,"losses":2,"bans":0,"wr":0.0,"presence":2.33}},"beats":["Gloo","Sun","Luo Yi","Minsitthar","Tigreal"],"ctrBy":["Saber","Diggie","Alice","Balmond","Floryn"]},{"name":"Aurora","lane":"Mid","meta":23.6,"ban":0.35,"tier":"C","magic":true,"tags":["hardCC","aoe"],"ag":null,"all":{"picks":4,"wins":2,"losses":2,"bans":0,"leagues":1,"wr":50.0,"presence":4.65},"per":{"mm":{"picks":4,"wins":2,"losses":2,"bans":0,"wr":50.0,"presence":4.65}},"beats":["Saber","Baxia","Alpha","Thamuz","Lolita"],"ctrBy":["Hirara","Pharsa","Wanwan","Cici","Helcurt"]},{"name":"Badang","lane":"EXP","meta":33.8,"ban":6.15,"tier":"B","magic":false,"tags":["hardCC","dive","early","mobile"],"ag":null,"all":{"picks":24,"wins":11,"losses":13,"bans":6,"leagues":3,"wr":45.83,"presence":5.58},"per":{"ph":{"picks":7,"wins":4,"losses":3,"bans":2,"wr":57.14,"presence":5.33},"id":{"picks":8,"wins":2,"losses":6,"bans":2,"wr":25.0,"presence":4.88},"my":{"picks":9,"wins":5,"losses":4,"bans":2,"wr":55.56,"presence":6.71}},"beats":["Yin","Irithel","Thamuz","Chip","Fanny"],"ctrBy":["Claude","Yve","Belerick","Diggie","Karina"]},{"name":"Balmond","lane":"EXP","meta":15.8,"ban":0.37,"tier":"D","magic":false,"tags":["tanky","hardCC","sustain","early","late"],"ag":null,"all":{"picks":2,"wins":0,"losses":2,"bans":1,"leagues":2,"wr":0.0,"presence":1.18},"per":{"ph":{"picks":1,"wins":0,"losses":1,"bans":1,"wr":0.0,"presence":1.18},"mm":{"picks":1,"wins":0,"losses":1,"bans":0,"wr":0.0,"presence":1.16}},"beats":["Khaleed","Johnson","Terizla","Melissa","Hylos"],"ctrBy":["Luo Yi","Thamuz","Lancelot","Fanny","Ixia"]},{"name":"Bane","lane":"Jungle","meta":31.9,"ban":0.15,"tier":"B","magic":true,"tags":["hardCC"],"ag":null,"all":null,"per":{},"beats":["Kalea","Cyclops","Guinevere","Argus","Phoveus"],"ctrBy":["Yin","Akai","Khaleed","Roger","Edith"]},{"name":"Barats","lane":"EXP","meta":38.1,"ban":4.94,"tier":"A","magic":true,"tags":["tanky","hardCC","sustain","late"],"ag":null,"all":{"picks":32,"wins":12,"losses":20,"bans":22,"leagues":2,"wr":37.5,"presence":18.56},"per":{"id":{"picks":1,"wins":0,"losses":1,"bans":0,"wr":0.0,"presence":0.49},"mm":{"picks":31,"wins":12,"losses":19,"bans":22,"wr":38.71,"presence":61.63}},"beats":["Cyclops","Silvanna","Zilong","Phoveus","Alucard"],"ctrBy":["X.Borg","Gord","Valir","Alpha","Alice"]},{"name":"Baxia","lane":"Jungle","meta":18.6,"ban":0.09,"tier":"D","magic":false,"tags":["tanky","hardCC"],"ag":null,"all":{"picks":154,"wins":78,"losses":76,"bans":354,"leagues":4,"wr":50.65,"presence":72.57},"per":{"ph":{"picks":34,"wins":21,"losses":13,"bans":122,"wr":61.76,"presence":92.31},"id":{"picks":43,"wins":21,"losses":22,"bans":68,"wr":48.84,"presence":54.15},"my":{"picks":23,"wins":8,"losses":15,"bans":64,"wr":34.78,"presence":53.05},"cis":{"picks":54,"wins":28,"losses":26,"bans":100,"wr":51.85,"presence":95.06}},"beats":["Cyclops","Harith","Pharsa","Lapu-Lapu","Argus"],"ctrBy":["Johnson","Aurora","Thamuz","Akai","Hanzo"]},{"name":"Beatrix","lane":"Gold","meta":34.3,"ban":0.42,"tier":"B","magic":false,"tags":["poke","late","carry"],"ag":null,"all":{"picks":7,"wins":2,"losses":5,"bans":1,"leagues":4,"wr":28.57,"presence":1.28},"per":{"ph":{"picks":1,"wins":1,"losses":0,"bans":1,"wr":100.0,"presence":1.18},"id":{"picks":3,"wins":1,"losses":2,"bans":0,"wr":33.33,"presence":1.46},"my":{"picks":1,"wins":0,"losses":1,"bans":0,"wr":0.0,"presence":0.61},"mm":{"picks":2,"wins":0,"losses":2,"bans":0,"wr":0.0,"presence":2.33}},"beats":["Estes","Diggie","Baxia","Ixia","Hanabi"],"ctrBy":["Kaja","Khufra","Helcurt","Natalia","Moskov"]},{"name":"Belerick","lane":"Roam","meta":71.1,"ban":55.83,"tier":"A","magic":true,"tags":["tanky","hardCC","sustain"],"ag":{"picks":9,"wins":2,"losses":7,"bans":4,"wr":22.22,"presence":40.62},"all":{"picks":63,"wins":29,"losses":34,"bans":39,"leagues":5,"wr":46.03,"presence":15.55},"per":{"ag":{"picks":9,"wins":2,"losses":7,"bans":4,"wr":22.22,"presence":40.62},"ph":{"picks":2,"wins":1,"losses":1,"bans":2,"wr":50.0,"presence":2.37},"id":{"picks":3,"wins":1,"losses":2,"bans":1,"wr":33.33,"presence":1.95},"my":{"picks":1,"wins":0,"losses":1,"bans":0,"wr":0.0,"presence":0.61},"mm":{"picks":48,"wins":25,"losses":23,"bans":32,"wr":52.08,"presence":93.02}},"beats":["Vale","Zilong","Layla","Hirara","Badang"],"ctrBy":["Aldous","Lesley","Karrie","X.Borg","Cici"]},{"name":"Benedetta","lane":"Flex","meta":37.5,"ban":0.3,"tier":"A","magic":false,"tags":["dive","early","mobile"],"ag":null,"all":{"picks":25,"wins":9,"losses":16,"bans":26,"leagues":3,"wr":36.0,"presence":9.48},"per":{"ph":{"picks":7,"wins":4,"losses":3,"bans":1,"wr":57.14,"presence":4.73},"id":{"picks":3,"wins":0,"losses":3,"bans":0,"wr":0.0,"presence":1.46},"my":{"picks":15,"wins":5,"losses":10,"bans":25,"wr":33.33,"presence":24.39}},"beats":["Popol and Kupa","Yve","X.Borg","Lylia","Alpha"],"ctrBy":["Karrie","Joy","Irithel","Cyclops","Phoveus"]},{"name":"Brody","lane":"Gold","meta":32.6,"ban":2.53,"tier":"B","magic":false,"tags":["poke","early","carry"],"ag":null,"all":{"picks":27,"wins":20,"losses":7,"bans":30,"leagues":4,"wr":74.07,"presence":9.13},"per":{"ph":{"picks":1,"wins":1,"losses":0,"bans":1,"wr":100.0,"presence":1.18},"id":{"picks":2,"wins":2,"losses":0,"bans":1,"wr":100.0,"presence":1.46},"my":{"picks":3,"wins":0,"losses":3,"bans":1,"wr":0.0,"presence":2.44},"mm":{"picks":21,"wins":17,"losses":4,"bans":27,"wr":80.95,"presence":55.81}},"beats":["Karina","Belerick","Melissa","Irithel","Lolita"],"ctrBy":["Hanzo","Atlas","Sun","Hirara","Masha"]},{"name":"Bruno","lane":"Gold","meta":40.1,"ban":0.35,"tier":"A","magic":false,"tags":["carry"],"ag":null,"all":{"picks":19,"wins":8,"losses":11,"bans":7,"leagues":4,"wr":42.11,"presence":4.17},"per":{"ph":{"picks":8,"wins":4,"losses":4,"bans":4,"wr":50.0,"presence":7.1},"id":{"picks":4,"wins":1,"losses":3,"bans":0,"wr":25.0,"presence":1.95},"my":{"picks":2,"wins":1,"losses":1,"bans":0,"wr":50.0,"presence":1.22},"mm":{"picks":5,"wins":2,"losses":3,"bans":3,"wr":40.0,"presence":9.3}},"beats":["Harith","X.Borg","Yu Zhong","Zhask","Wanwan"],"ctrBy":["Diggie","Natalia","Karina","Lesley","Estes"]},{"name":"Carmilla","lane":"Roam","meta":48.5,"ban":11.37,"tier":"S","magic":false,"tags":["tanky","hardCC","sustain","protect"],"ag":{"picks":11,"wins":3,"losses":8,"bans":19,"wr":27.27,"presence":93.75},"all":{"picks":33,"wins":10,"losses":23,"bans":35,"leagues":2,"wr":30.3,"presence":57.63},"per":{"ag":{"picks":11,"wins":3,"losses":8,"bans":19,"wr":27.27,"presence":93.75},"mm":{"picks":22,"wins":7,"losses":15,"bans":16,"wr":31.82,"presence":44.19}},"beats":["Chip","Popol and Kupa","Silvanna","Vexana","Estes"],"ctrBy":["X.Borg","Valentina","Benedetta","Aldous","Lylia"]},{"name":"Cecilion","lane":"Mid","meta":32.4,"ban":0.13,"tier":"B","magic":true,"tags":["poke","late","aoe"],"ag":null,"all":{"picks":3,"wins":1,"losses":2,"bans":1,"leagues":1,"wr":33.33,"presence":4.65},"per":{"mm":{"picks":3,"wins":1,"losses":2,"bans":1,"wr":33.33,"presence":4.65}},"beats":["Phoveus","Martis","Melissa","Kalea","Lancelot"],"ctrBy":["Balmond","Vale","Alucard","Helcurt","Ixia"]},{"name":"Chang'e","lane":"Mid","meta":22.4,"ban":0.31,"tier":"C","magic":true,"tags":["poke"],"ag":null,"all":null,"per":{},"beats":["Franco","Faramis","Gatotkaca","Natalia","Xavier"],"ctrBy":["Roger","Melissa","Joy","Lolita","Gusion"]},{"name":"Chip","lane":"Roam","meta":19.6,"ban":0.24,"tier":"D","magic":true,"tags":["tanky","hardCC","protect","mobile"],"ag":null,"all":{"picks":21,"wins":13,"losses":8,"bans":154,"leagues":4,"wr":61.9,"presence":28.04},"per":{"ph":{"picks":2,"wins":1,"losses":1,"bans":2,"wr":50.0,"presence":2.37},"id":{"picks":13,"wins":8,"losses":5,"bans":108,"wr":61.54,"presence":59.02},"my":{"picks":5,"wins":3,"losses":2,"bans":32,"wr":60.0,"presence":22.56},"mm":{"picks":1,"wins":1,"losses":0,"bans":12,"wr":100.0,"presence":15.12}},"beats":["Jawhead","Aldous","Silvanna","Pharsa","Johnson"],"ctrBy":["Karina","Alpha","Zhask","Cyclops","Carmilla"]},{"name":"Chou","lane":"EXP","meta":13.8,"ban":3.07,"tier":"D","magic":false,"tags":["hardCC","dive","early","split","mobile"],"ag":null,"all":{"picks":108,"wins":52,"losses":56,"bans":78,"leagues":4,"wr":48.15,"presence":29.81},"per":{"ph":{"picks":25,"wins":10,"losses":15,"bans":18,"wr":40.0,"presence":25.44},"id":{"picks":24,"wins":10,"losses":14,"bans":24,"wr":41.67,"presence":23.41},"my":{"picks":48,"wins":29,"losses":19,"bans":35,"wr":60.42,"presence":50.61},"mm":{"picks":11,"wins":3,"losses":8,"bans":1,"wr":27.27,"presence":13.95}},"beats":["Helcurt","Lylia","X.Borg","Hayabusa","Yu Zhong"],"ctrBy":["Lukas","Bane","Vale","Phoveus","Cyclops"]},{"name":"Cici","lane":"Flex","meta":26.2,"ban":0.9,"tier":"C","magic":false,"tags":["hardCC"],"ag":null,"all":{"picks":23,"wins":7,"losses":16,"bans":27,"leagues":4,"wr":30.43,"presence":8.01},"per":{"ph":{"picks":3,"wins":1,"losses":2,"bans":6,"wr":33.33,"presence":5.33},"id":{"picks":11,"wins":3,"losses":8,"bans":11,"wr":27.27,"presence":10.73},"my":{"picks":5,"wins":3,"losses":2,"bans":5,"wr":60.0,"presence":6.1},"mm":{"picks":4,"wins":0,"losses":4,"bans":5,"wr":0.0,"presence":10.47}},"beats":["Alpha","Phoveus","Balmond","Alice","Hanzo"],"ctrBy":["Zilong","Aamon","Harley","Estes","Sun"]},{"name":"Claude","lane":"Gold","meta":25.9,"ban":0.2,"tier":"C","magic":false,"tags":["late","mobile","carry"],"ag":null,"all":{"picks":499,"wins":275,"losses":224,"bans":111,"leagues":6,"wr":55.11,"presence":65.73},"per":{"ph":{"picks":124,"wins":75,"losses":49,"bans":17,"wr":60.48,"presence":83.43},"id":{"picks":123,"wins":74,"losses":49,"bans":19,"wr":60.16,"presence":69.27},"my":{"picks":94,"wins":44,"losses":50,"bans":24,"wr":46.81,"presence":71.95},"mm":{"picks":11,"wins":5,"losses":6,"bans":3,"wr":45.45,"presence":16.28},"tr":{"picks":64,"wins":35,"losses":29,"bans":24,"wr":54.69,"presence":61.97},"cis":{"picks":83,"wins":42,"losses":41,"bans":24,"wr":50.6,"presence":66.05}},"beats":["Johnson","Grock","Ixia","Badang","Lancelot"],"ctrBy":["Odette","Lesley","Gatotkaca","Aamon","Zhask"]},{"name":"Clint","lane":"Gold","meta":33.5,"ban":0.85,"tier":"B","magic":false,"tags":["poke","carry"],"ag":null,"all":{"picks":34,"wins":17,"losses":17,"bans":12,"leagues":4,"wr":50.0,"presence":7.37},"per":{"ph":{"picks":7,"wins":3,"losses":4,"bans":7,"wr":42.86,"presence":8.28},"id":{"picks":2,"wins":0,"losses":2,"bans":0,"wr":0.0,"presence":0.98},"my":{"picks":12,"wins":8,"losses":4,"bans":2,"wr":66.67,"presence":8.54},"mm":{"picks":13,"wins":6,"losses":7,"bans":3,"wr":46.15,"presence":18.6}},"beats":["Aldous","Baxia","Karina","Lylia","Lolita"],"ctrBy":["Fanny","Harley","Balmond","Roger","Alice"]},{"name":"Cyclops","lane":"Mid","meta":32.7,"ban":0.25,"tier":"B","magic":true,"tags":["hardCC"],"ag":null,"all":null,"per":{},"beats":["Helcurt","Khaleed","Chip","Natalia","Harith"],"ctrBy":["Lolita","Saber","Bane","Baxia","Barats"]},{"name":"Diggie","lane":"Roam","meta":42.8,"ban":3.3,"tier":"A","magic":true,"tags":["sustain","protect"],"ag":null,"all":null,"per":{},"beats":["Alice","Rafaela","Tigreal","Bruno","Obsidia"],"ctrBy":["Estes","Beatrix","Lancelot","Ixia","Esmeralda"]},{"name":"Dyrroth","lane":"EXP","meta":21.8,"ban":1.29,"tier":"C","magic":false,"tags":["dive","early"],"ag":null,"all":{"picks":22,"wins":13,"losses":9,"bans":10,"leagues":3,"wr":59.09,"presence":7.64},"per":{"ph":{"picks":2,"wins":1,"losses":1,"bans":2,"wr":50.0,"presence":2.37},"my":{"picks":4,"wins":1,"losses":3,"bans":1,"wr":25.0,"presence":3.05},"mm":{"picks":16,"wins":11,"losses":5,"bans":7,"wr":68.75,"presence":26.74}},"beats":["Hilda","Lolita","Uranus","Esmeralda","Gatotkaca"],"ctrBy":["Karrie","Roger","Julian","Thamuz","Grock"]},{"name":"Edith","lane":"EXP","meta":37.9,"ban":0.22,"tier":"A","magic":false,"tags":["tanky","hardCC","protect"],"ag":null,"all":{"picks":5,"wins":0,"losses":5,"bans":1,"leagues":4,"wr":0.0,"presence":0.96},"per":{"ph":{"picks":1,"wins":0,"losses":1,"bans":1,"wr":0.0,"presence":1.18},"id":{"picks":1,"wins":0,"losses":1,"bans":0,"wr":0.0,"presence":0.49},"my":{"picks":2,"wins":0,"losses":2,"bans":0,"wr":0.0,"presence":1.22},"mm":{"picks":1,"wins":0,"losses":1,"bans":0,"wr":0.0,"presence":1.16}},"beats":["Thamuz","Bane","Cyclops","Irithel","Esmeralda"],"ctrBy":["Zilong","Kalea","Franco","Minsitthar","Lolita"]},{"name":"Esmeralda","lane":"EXP","meta":22.4,"ban":2.15,"tier":"C","magic":true,"tags":["tanky","sustain","late"],"ag":{"picks":14,"wins":7,"losses":7,"bans":8,"wr":50.0,"presence":68.75},"all":{"picks":40,"wins":16,"losses":24,"bans":29,"leagues":5,"wr":40.0,"presence":10.52},"per":{"ag":{"picks":14,"wins":7,"losses":7,"bans":8,"wr":50.0,"presence":68.75},"ph":{"picks":5,"wins":2,"losses":3,"bans":2,"wr":40.0,"presence":4.14},"id":{"picks":3,"wins":0,"losses":3,"bans":3,"wr":0.0,"presence":2.93},"my":{"picks":4,"wins":2,"losses":2,"bans":3,"wr":50.0,"presence":4.27},"mm":{"picks":14,"wins":5,"losses":9,"bans":13,"wr":35.71,"presence":31.4}},"beats":["Natalia","Yin","Mathilda","Marcel","Lolita"],"ctrBy":["Kimmy","Fredrinn","Estes","Edith","Karrie"]},{"name":"Estes","lane":"Roam","meta":61.9,"ban":37.05,"tier":"S","magic":true,"tags":["sustain","protect"],"ag":null,"all":null,"per":{},"beats":["Alice","Cici","Diggie","Cyclops","Uranus"],"ctrBy":["Kaja","Beatrix","Ixia","Roger","Grock"]},{"name":"Eudora","lane":"Mid","meta":69.6,"ban":59.57,"tier":"A","magic":true,"tags":["hardCC","aoe"],"ag":{"picks":16,"wins":10,"losses":6,"bans":7,"wr":62.5,"presence":71.88},"all":{"picks":63,"wins":39,"losses":24,"bans":20,"leagues":2,"wr":61.9,"presence":70.34},"per":{"ag":{"picks":16,"wins":10,"losses":6,"bans":7,"wr":62.5,"presence":71.88},"mm":{"picks":47,"wins":29,"losses":18,"bans":13,"wr":61.7,"presence":69.77}},"beats":["Terizla","Marcel","Vale","Zilong","Hirara"],"ctrBy":["Lylia","Atlas","X.Borg","Diggie","Masha"]},{"name":"Fanny","lane":"Jungle","meta":5.3,"ban":1.75,"tier":"D","magic":false,"tags":["dive","early","split","mobile"],"ag":null,"all":{"picks":45,"wins":27,"losses":18,"bans":447,"leagues":4,"wr":60.0,"presence":78.85},"per":{"ph":{"picks":8,"wins":3,"losses":5,"bans":112,"wr":37.5,"presence":71.01},"id":{"picks":21,"wins":13,"losses":8,"bans":164,"wr":61.9,"presence":90.24},"my":{"picks":8,"wins":6,"losses":2,"bans":142,"wr":75.0,"presence":91.46},"mm":{"picks":8,"wins":5,"losses":3,"bans":29,"wr":62.5,"presence":43.02}},"beats":["Balmond","Granger","Clint","Alpha","Gloo"],"ctrBy":["Cyclops","Lancelot","Phoveus","Bane","Saber"]},{"name":"Faramis","lane":"Mid","meta":33.9,"ban":0.26,"tier":"B","magic":true,"tags":["sustain"],"ag":null,"all":{"picks":9,"wins":7,"losses":2,"bans":3,"leagues":2,"wr":77.78,"presence":3.25},"per":{"id":{"picks":5,"wins":3,"losses":2,"bans":1,"wr":60.0,"presence":2.93},"my":{"picks":4,"wins":4,"losses":0,"bans":2,"wr":100.0,"presence":3.66}},"beats":["X.Borg","Gloo","Aldous","Atlas","Silvanna"],"ctrBy":["Alpha","Chang'e","Phoveus","Kalea","Lylia"]},{"name":"Floryn","lane":"Roam","meta":51.4,"ban":12.85,"tier":"S","magic":true,"tags":["sustain","protect"],"ag":null,"all":null,"per":{},"beats":["Alice","Marcel","X.Borg","Ling","Rafaela"],"ctrBy":["Tigreal","Johnson","Baxia","Lolita","Ixia"]},{"name":"Franco","lane":"Roam","meta":2.3,"ban":3.05,"tier":"D","magic":false,"tags":["tanky","hardCC"],"ag":null,"all":{"picks":1,"wins":0,"losses":1,"bans":1,"leagues":1,"wr":0.0,"presence":0.98},"per":{"id":{"picks":1,"wins":0,"losses":1,"bans":1,"wr":0.0,"presence":0.98}},"beats":["Edith","Joy","Yve","Fanny","Harith"],"ctrBy":["Hilda","Lolita","Chang'e","Natalia","Argus"]},{"name":"Fredrinn","lane":"Jungle","meta":34.5,"ban":1.77,"tier":"B","magic":false,"tags":["tanky","hardCC","sustain"],"ag":null,"all":{"picks":86,"wins":45,"losses":41,"bans":72,"leagues":3,"wr":52.33,"presence":29.37},"per":{"ph":{"picks":30,"wins":16,"losses":14,"bans":21,"wr":53.33,"presence":30.18},"id":{"picks":43,"wins":23,"losses":20,"bans":32,"wr":53.49,"presence":36.59},"my":{"picks":13,"wins":6,"losses":7,"bans":19,"wr":46.15,"presence":19.51}},"beats":["Esmeralda","Roger","Alucard","Odette","Saber"],"ctrBy":["Valir","Karrie","Phoveus","Bane","X.Borg"]},{"name":"Freya","lane":"EXP","meta":22.2,"ban":1.32,"tier":"C","magic":false,"tags":["hardCC","dive","split"],"ag":null,"all":{"picks":180,"wins":107,"losses":73,"bans":725,"leagues":6,"wr":59.44,"presence":97.52},"per":{"ph":{"picks":18,"wins":12,"losses":6,"bans":151,"wr":66.67,"presence":100.0},"id":{"picks":38,"wins":23,"losses":15,"bans":167,"wr":60.53,"presence":100.0},"my":{"picks":29,"wins":15,"losses":14,"bans":133,"wr":51.72,"presence":98.78},"mm":{"picks":8,"wins":4,"losses":4,"bans":77,"wr":50.0,"presence":98.84},"tr":{"picks":43,"wins":28,"losses":15,"bans":93,"wr":65.12,"presence":95.77},"cis":{"picks":44,"wins":25,"losses":19,"bans":104,"wr":56.82,"presence":91.36}},"beats":["Yve","Khaleed","Vale","Zilong","Masha"],"ctrBy":["Phoveus","Minsitthar","Popol and Kupa","Edith","Wanwan"]},{"name":"Gatotkaca","lane":"EXP","meta":10.4,"ban":0.27,"tier":"D","magic":true,"tags":["tanky","hardCC","sustain"],"ag":null,"all":{"picks":131,"wins":69,"losses":62,"bans":60,"leagues":4,"wr":52.67,"presence":30.61},"per":{"ph":{"picks":36,"wins":19,"losses":17,"bans":27,"wr":52.78,"presence":37.28},"id":{"picks":39,"wins":20,"losses":19,"bans":10,"wr":51.28,"presence":23.9},"my":{"picks":33,"wins":18,"losses":15,"bans":15,"wr":54.55,"presence":29.27},"mm":{"picks":23,"wins":12,"losses":11,"bans":8,"wr":52.17,"presence":36.05}},"beats":["Kalea","Layla","Lancelot","Vexana","Claude"],"ctrBy":["Harley","Chang'e","Roger","Aldous","Alpha"]},{"name":"Gloo","lane":"Roam","meta":65.0,"ban":38.2,"tier":"S","magic":true,"tags":["tanky","hardCC"],"ag":{"picks":11,"wins":7,"losses":4,"bans":6,"wr":63.64,"presence":53.12},"all":{"picks":208,"wins":110,"losses":98,"bans":180,"leagues":5,"wr":52.88,"presence":59.15},"per":{"ag":{"picks":11,"wins":7,"losses":4,"bans":6,"wr":63.64,"presence":53.12},"ph":{"picks":38,"wins":16,"losses":22,"bans":37,"wr":42.11,"presence":44.38},"id":{"picks":69,"wins":40,"losses":29,"bans":61,"wr":57.97,"presence":63.41},"my":{"picks":60,"wins":29,"losses":31,"bans":50,"wr":48.33,"presence":67.07},"mm":{"picks":30,"wins":18,"losses":12,"bans":26,"wr":60.0,"presence":65.12}},"beats":["Aamon","Hylos","Alpha","Esmeralda","Karina"],"ctrBy":["Faramis","Vexana","Moskov","Alice","Ling"]},{"name":"Gord","lane":"Mid","meta":39.2,"ban":0.59,"tier":"A","magic":true,"tags":["poke","late","aoe"],"ag":null,"all":{"picks":64,"wins":38,"losses":26,"bans":30,"leagues":4,"wr":59.38,"presence":15.06},"per":{"ph":{"picks":24,"wins":14,"losses":10,"bans":12,"wr":58.33,"presence":21.3},"id":{"picks":23,"wins":14,"losses":9,"bans":14,"wr":60.87,"presence":18.05},"my":{"picks":14,"wins":8,"losses":6,"bans":4,"wr":57.14,"presence":10.98},"mm":{"picks":3,"wins":2,"losses":1,"bans":0,"wr":66.67,"presence":3.49}},"beats":["Khaleed","Hilda","Barats","Silvanna","Fredrinn"],"ctrBy":["Kaja","Zilong","Karina","Harith","Benedetta"]},{"name":"Granger","lane":"Jungle","meta":8.3,"ban":1.39,"tier":"D","magic":false,"tags":["early","carry"],"ag":null,"all":{"picks":90,"wins":42,"losses":48,"bans":30,"leagues":4,"wr":46.67,"presence":19.23},"per":{"ph":{"picks":15,"wins":6,"losses":9,"bans":3,"wr":40.0,"presence":10.65},"id":{"picks":37,"wins":17,"losses":20,"bans":18,"wr":45.95,"presence":26.83},"my":{"picks":26,"wins":13,"losses":13,"bans":6,"wr":50.0,"presence":19.51},"mm":{"picks":12,"wins":6,"losses":6,"bans":3,"wr":50.0,"presence":17.44}},"beats":["Karina","Baxia","Diggie","Kimmy","Rafaela"],"ctrBy":["Fanny","Popol and Kupa","Irithel","Johnson","Hilda"]},{"name":"Grock","lane":"Flex","meta":19.1,"ban":0.68,"tier":"D","magic":false,"tags":["tanky","hardCC","aoe"],"ag":null,"all":{"picks":24,"wins":8,"losses":16,"bans":26,"leagues":3,"wr":33.33,"presence":9.29},"per":{"ph":{"picks":15,"wins":6,"losses":9,"bans":11,"wr":40.0,"presence":15.38},"id":{"picks":5,"wins":1,"losses":4,"bans":8,"wr":20.0,"presence":6.34},"my":{"picks":4,"wins":1,"losses":3,"bans":7,"wr":25.0,"presence":6.71}},"beats":["Jawhead","Estes","Terizla","Bane","Wanwan"],"ctrBy":["Popol and Kupa","Valentina","Natan","Khaleed","Claude"]},{"name":"Guinevere","lane":"EXP","meta":35.4,"ban":2.82,"tier":"A","magic":false,"tags":["hardCC","dive"],"ag":null,"all":{"picks":214,"wins":117,"losses":97,"bans":460,"leagues":6,"wr":54.67,"presence":72.63},"per":{"ph":{"picks":29,"wins":15,"losses":14,"bans":60,"wr":51.72,"presence":52.66},"id":{"picks":31,"wins":18,"losses":13,"bans":132,"wr":58.06,"presence":79.51},"my":{"picks":47,"wins":30,"losses":17,"bans":101,"wr":63.83,"presence":90.24},"mm":{"picks":4,"wins":3,"losses":1,"bans":3,"wr":75.0,"presence":8.14},"tr":{"picks":58,"wins":28,"losses":30,"bans":76,"wr":48.28,"presence":94.37},"cis":{"picks":45,"wins":23,"losses":22,"bans":88,"wr":51.11,"presence":82.1}},"beats":["Layla","Yve","Karrie","Uranus","Hilda"],"ctrBy":["Bane","Hylos","Diggie","Khufra","Faramis"]},{"name":"Gusion","lane":"Flex","meta":26.1,"ban":4.47,"tier":"C","magic":false,"tags":["dive","early","mobile"],"ag":null,"all":{"picks":1,"wins":0,"losses":1,"bans":0,"leagues":1,"wr":0.0,"presence":0.49},"per":{"id":{"picks":1,"wins":0,"losses":1,"bans":0,"wr":0.0,"presence":0.49}},"beats":["Uranus","Aamon","Chang'e","Natalia","X.Borg"],"ctrBy":["Cyclops","Lukas","Hylos","Popol and Kupa","Phoveus"]},{"name":"Hanabi","lane":"Flex","meta":40.0,"ban":5.81,"tier":"A","magic":false,"tags":[],"ag":null,"all":{"picks":7,"wins":2,"losses":5,"bans":4,"leagues":3,"wr":28.57,"presence":2.63},"per":{"ph":{"picks":2,"wins":0,"losses":2,"bans":2,"wr":0.0,"presence":2.37},"my":{"picks":2,"wins":2,"losses":0,"bans":0,"wr":100.0,"presence":1.22},"mm":{"picks":3,"wins":0,"losses":3,"bans":2,"wr":0.0,"presence":5.81}},"beats":["Uranus","Mathilda","Popol and Kupa","Harith","Saber"],"ctrBy":["Yve","Marcel","Yu Zhong","Karina","Silvanna"]},{"name":"Hanzo","lane":"Flex","meta":38.1,"ban":17.84,"tier":"B","magic":false,"tags":[],"ag":null,"all":null,"per":{},"beats":["Jawhead","Baxia","Silvanna","Yve","Diggie"],"ctrBy":["Zilong","Cici","Natalia","Kimmy","Ling"]},{"name":"Harith","lane":"Mid","meta":17.9,"ban":0.05,"tier":"D","magic":true,"tags":["early","mobile"],"ag":null,"all":{"picks":319,"wins":174,"losses":145,"bans":272,"leagues":6,"wr":54.55,"presence":63.69},"per":{"ph":{"picks":48,"wins":25,"losses":23,"bans":42,"wr":52.08,"presence":53.25},"id":{"picks":92,"wins":46,"losses":46,"bans":55,"wr":50.0,"presence":71.71},"my":{"picks":63,"wins":37,"losses":26,"bans":61,"wr":58.73,"presence":75.61},"mm":{"picks":3,"wins":1,"losses":2,"bans":1,"wr":33.33,"presence":4.65},"tr":{"picks":49,"wins":29,"losses":20,"bans":49,"wr":59.18,"presence":69.01},"cis":{"picks":64,"wins":36,"losses":28,"bans":64,"wr":56.25,"presence":79.01}},"beats":["Wanwan","Zhask","Lancelot","Terizla","Lolita"],"ctrBy":["Bruno","Phoveus","Martis","Balmond","Cyclops"]},{"name":"Harley","lane":"Jungle","meta":24.1,"ban":3.89,"tier":"C","magic":false,"tags":["dive","early","mobile"],"ag":null,"all":{"picks":278,"wins":160,"losses":118,"bans":363,"leagues":6,"wr":57.55,"presence":69.07},"per":{"ph":{"picks":72,"wins":39,"losses":33,"bans":47,"wr":54.17,"presence":70.41},"id":{"picks":53,"wins":29,"losses":24,"bans":92,"wr":54.72,"presence":70.73},"my":{"picks":39,"wins":18,"losses":21,"bans":66,"wr":46.15,"presence":64.02},"mm":{"picks":4,"wins":3,"losses":1,"bans":9,"wr":75.0,"presence":15.12},"tr":{"picks":47,"wins":25,"losses":22,"bans":63,"wr":53.19,"presence":77.46},"cis":{"picks":63,"wins":46,"losses":17,"bans":86,"wr":73.02,"presence":91.98}},"beats":["Kalea","Gatotkaca","Cici","Valentina","Zetian"],"ctrBy":["Natalia","Aldous","Martis","Johnson","Alucard"]},{"name":"Hayabusa","lane":"Jungle","meta":24.1,"ban":2.01,"tier":"C","magic":false,"tags":["dive","early","split","mobile"],"ag":null,"all":{"picks":14,"wins":6,"losses":8,"bans":8,"leagues":3,"wr":42.86,"presence":4.09},"per":{"ph":{"picks":6,"wins":3,"losses":3,"bans":4,"wr":50.0,"presence":5.92},"id":{"picks":2,"wins":1,"losses":1,"bans":3,"wr":50.0,"presence":2.44},"my":{"picks":6,"wins":2,"losses":4,"bans":1,"wr":33.33,"presence":4.27}},"beats":["Balmond","Zhuxin","Xavier","Aamon","Lesley"],"ctrBy":["Hilda","Chip","Chou","Baxia","Hirara"]},{"name":"Helcurt","lane":"Flex","meta":22.3,"ban":5.89,"tier":"C","magic":false,"tags":["dive","early","mobile"],"ag":null,"all":{"picks":6,"wins":2,"losses":4,"bans":31,"leagues":2,"wr":33.33,"presence":10.03},"per":{"id":{"picks":4,"wins":1,"losses":3,"bans":29,"wr":25.0,"presence":16.1},"my":{"picks":2,"wins":1,"losses":1,"bans":2,"wr":50.0,"presence":2.44}},"beats":["Lylia","Odette","Aurora","Yve","Nolan"],"ctrBy":["Lancelot","Akai","Cyclops","Roger","Chou"]},{"name":"Hilda","lane":"EXP","meta":33.6,"ban":6.31,"tier":"B","magic":false,"tags":["tanky","hardCC","dive","early"],"ag":null,"all":{"picks":89,"wins":41,"losses":48,"bans":87,"leagues":3,"wr":46.07,"presence":32.71},"per":{"ph":{"picks":37,"wins":18,"losses":19,"bans":41,"wr":48.65,"presence":46.15},"id":{"picks":24,"wins":13,"losses":11,"bans":24,"wr":54.17,"presence":23.41},"my":{"picks":28,"wins":10,"losses":18,"bans":22,"wr":35.71,"presence":30.49}},"beats":["Franco","Karina","Hayabusa","Kaja","Zilong"],"ctrBy":["Popol and Kupa","Sun","Dyrroth","Gord","Odette"]},{"name":"Hirara","lane":"Jungle","meta":81.1,"ban":66.28,"tier":"S","magic":false,"tags":["dive","mobile"],"ag":{"picks":16,"wins":12,"losses":4,"bans":15,"wr":75.0,"presence":96.88},"all":{"picks":74,"wins":38,"losses":36,"bans":41,"leagues":2,"wr":51.35,"presence":97.46},"per":{"ag":{"picks":16,"wins":12,"losses":4,"bans":15,"wr":75.0,"presence":96.88},"mm":{"picks":58,"wins":26,"losses":32,"bans":26,"wr":44.83,"presence":97.67}},"beats":["Aurora","Aldous","Layla","Zhask","Wanwan"],"ctrBy":["Ruby","Marcel","Belerick","Saber","Fanny"]},{"name":"Hylos","lane":"Roam","meta":22.6,"ban":0.24,"tier":"C","magic":true,"tags":["tanky","hardCC","sustain"],"ag":null,"all":{"picks":149,"wins":73,"losses":76,"bans":69,"leagues":5,"wr":48.99,"presence":28.46},"per":{"ph":{"picks":41,"wins":20,"losses":21,"bans":32,"wr":48.78,"presence":43.2},"id":{"picks":43,"wins":20,"losses":23,"bans":14,"wr":46.51,"presence":27.8},"my":{"picks":25,"wins":11,"losses":14,"bans":13,"wr":44.0,"presence":23.17},"mm":{"picks":7,"wins":3,"losses":4,"bans":3,"wr":42.86,"presence":11.63},"tr":{"picks":33,"wins":19,"losses":14,"bans":7,"wr":57.58,"presence":28.17}},"beats":["Jawhead","Minsitthar","Tigreal","Guinevere","Lancelot"],"ctrBy":["Zhask","Lylia","Gloo","Balmond","X.Borg"]},{"name":"Irithel","lane":"Gold","meta":36.7,"ban":0.23,"tier":"A","magic":false,"tags":["late","carry"],"ag":null,"all":{"picks":11,"wins":5,"losses":6,"bans":3,"leagues":3,"wr":45.45,"presence":2.6},"per":{"ph":{"picks":2,"wins":0,"losses":2,"bans":2,"wr":0.0,"presence":2.37},"id":{"picks":2,"wins":1,"losses":1,"bans":0,"wr":50.0,"presence":0.98},"my":{"picks":7,"wins":4,"losses":3,"bans":1,"wr":57.14,"presence":4.88}},"beats":["Silvanna","Bane","Kalea","Nana","Sun"],"ctrBy":["Jawhead","Edith","Badang","Balmond","Claude"]},{"name":"Ixia","lane":"Gold","meta":28.7,"ban":0.72,"tier":"B","magic":false,"tags":["poke","late","carry"],"ag":null,"all":{"picks":1,"wins":1,"losses":0,"bans":2,"leagues":1,"wr":100.0,"presence":3.49},"per":{"mm":{"picks":1,"wins":1,"losses":0,"bans":2,"wr":100.0,"presence":3.49}},"beats":["Balmond","Estes","Diggie","Baxia","Cyclops"],"ctrBy":["Kalea","X.Borg","Roger","Atlas","Beatrix"]},{"name":"Jawhead","lane":"EXP","meta":18.7,"ban":0.25,"tier":"D","magic":false,"tags":["tanky","hardCC","dive","early"],"ag":null,"all":{"picks":1,"wins":1,"losses":0,"bans":0,"leagues":1,"wr":100.0,"presence":1.16},"per":{"mm":{"picks":1,"wins":1,"losses":0,"bans":0,"wr":100.0,"presence":1.16}},"beats":["Thamuz","Irithel","Ruby","Bane","Lukas"],"ctrBy":["Grock","Zhuxin","Hanzo","Hylos","Chip"]},{"name":"Johnson","lane":"Roam","meta":23.2,"ban":1.96,"tier":"C","magic":true,"tags":["tanky","hardCC","aoe"],"ag":null,"all":null,"per":{},"beats":["Baxia","Natalia","Harley","Floryn","Valentina"],"ctrBy":["Lancelot","Luo Yi","Balmond","Zhask","Minsitthar"]},{"name":"Joy","lane":"Jungle","meta":25.5,"ban":0.19,"tier":"C","magic":false,"tags":["dive","early","mobile"],"ag":null,"all":{"picks":9,"wins":1,"losses":8,"bans":13,"leagues":3,"wr":11.11,"presence":4.09},"per":{"ph":{"picks":3,"wins":0,"losses":3,"bans":3,"wr":0.0,"presence":3.55},"id":{"picks":1,"wins":0,"losses":1,"bans":3,"wr":0.0,"presence":1.95},"my":{"picks":5,"wins":1,"losses":4,"bans":7,"wr":20.0,"presence":7.32}},"beats":["Khaleed","Balmond","Benedetta","Luo Yi","Mathilda"],"ctrBy":["Wanwan","Argus","Silvanna","Franco","Lunox"]},{"name":"Julian","lane":"Jungle","meta":29.3,"ban":0.84,"tier":"B","magic":false,"tags":["dive","mobile"],"ag":null,"all":null,"per":{},"beats":["Zilong","Hilda","Dyrroth","Phoveus","Lolita"],"ctrBy":["Zhuxin","Pharsa","Vale","Chip","Silvanna"]},{"name":"Kadita","lane":"Mid","meta":37.0,"ban":4.51,"tier":"A","magic":true,"tags":["hardCC","late","aoe"],"ag":null,"all":{"picks":2,"wins":2,"losses":0,"bans":0,"leagues":1,"wr":100.0,"presence":0.98},"per":{"id":{"picks":2,"wins":2,"losses":0,"bans":0,"wr":100.0,"presence":0.98}},"beats":["Arlott","Lolita","Odette","Ixia","Johnson"],"ctrBy":["Marcel","Tigreal","Alpha","Alice","Helcurt"]},{"name":"Kagura","lane":"Mid","meta":37.0,"ban":1.2,"tier":"A","magic":true,"tags":["hardCC","late","aoe"],"ag":null,"all":{"picks":3,"wins":0,"losses":3,"bans":2,"leagues":3,"wr":0.0,"presence":1.09},"per":{"ph":{"picks":1,"wins":0,"losses":1,"bans":1,"wr":0.0,"presence":1.18},"id":{"picks":1,"wins":0,"losses":1,"bans":0,"wr":0.0,"presence":0.49},"mm":{"picks":1,"wins":0,"losses":1,"bans":1,"wr":0.0,"presence":2.33}},"beats":["Natan","Bane","Lolita","Silvanna","Kimmy"],"ctrBy":["Balmond","Hilda","Terizla","Phoveus","Esmeralda"]},{"name":"Kaja","lane":"Roam","meta":40.0,"ban":20.47,"tier":"B","magic":false,"tags":["tanky","hardCC"],"ag":null,"all":{"picks":17,"wins":10,"losses":7,"bans":27,"leagues":4,"wr":58.82,"presence":7.05},"per":{"ph":{"picks":4,"wins":3,"losses":1,"bans":10,"wr":75.0,"presence":8.28},"id":{"picks":4,"wins":3,"losses":1,"bans":3,"wr":75.0,"presence":3.41},"my":{"picks":2,"wins":1,"losses":1,"bans":3,"wr":50.0,"presence":3.05},"mm":{"picks":7,"wins":3,"losses":4,"bans":11,"wr":42.86,"presence":20.93}},"beats":["Estes","Roger","Valir","Wanwan","Gord"],"ctrBy":["Odette","Hilda","Chip","Lolita","Lunox"]},{"name":"Kalea","lane":"Roam","meta":10.6,"ban":0.33,"tier":"D","magic":true,"tags":["hardCC","sustain","protect","mobile"],"ag":null,"all":{"picks":222,"wins":124,"losses":98,"bans":413,"leagues":6,"wr":55.86,"presence":68.43},"per":{"ph":{"picks":42,"wins":25,"losses":17,"bans":97,"wr":59.52,"presence":82.25},"id":{"picks":56,"wins":28,"losses":28,"bans":85,"wr":50.0,"presence":68.78},"my":{"picks":29,"wins":16,"losses":13,"bans":65,"wr":55.17,"presence":57.32},"mm":{"picks":3,"wins":2,"losses":1,"bans":1,"wr":66.67,"presence":4.65},"tr":{"picks":43,"wins":26,"losses":17,"bans":92,"wr":60.47,"presence":95.07},"cis":{"picks":49,"wins":27,"losses":22,"bans":73,"wr":55.1,"presence":75.31}},"beats":["Edith","Lolita","Ixia","Popol and Kupa","Faramis"],"ctrBy":["Bane","Harley","Gatotkaca","Alpha","Natalia"]},{"name":"Karina","lane":"Flex","meta":22.0,"ban":2.73,"tier":"C","magic":false,"tags":["dive","early","mobile"],"ag":null,"all":null,"per":{},"beats":["Chip","Minsitthar","Natalia","Ling","Hanabi"],"ctrBy":["Granger","Brody","Hilda","Bane","Cici"]},{"name":"Karrie","lane":"Gold","meta":24.4,"ban":0.89,"tier":"C","magic":false,"tags":["late","carry"],"ag":null,"all":{"picks":145,"wins":65,"losses":80,"bans":141,"leagues":5,"wr":44.83,"presence":37.34},"per":{"ph":{"picks":44,"wins":20,"losses":24,"bans":45,"wr":45.45,"presence":52.66},"id":{"picks":32,"wins":10,"losses":22,"bans":23,"wr":31.25,"presence":26.83},"my":{"picks":29,"wins":15,"losses":14,"bans":24,"wr":51.72,"presence":32.32},"mm":{"picks":1,"wins":0,"losses":1,"bans":0,"wr":0.0,"presence":1.16},"tr":{"picks":39,"wins":20,"losses":19,"bans":49,"wr":51.28,"presence":61.97}},"beats":["Benedetta","Yin","Alice","Martis","Balmond"],"ctrBy":["Zilong","Vexana","X.Borg","Sun","Minsitthar"]},{"name":"Khaleed","lane":"EXP","meta":31.5,"ban":0.08,"tier":"B","magic":false,"tags":["hardCC","dive","early"],"ag":null,"all":{"picks":184,"wins":76,"losses":108,"bans":95,"leagues":4,"wr":41.3,"presence":44.71},"per":{"ph":{"picks":60,"wins":26,"losses":34,"bans":30,"wr":43.33,"presence":53.25},"id":{"picks":64,"wins":26,"losses":38,"bans":39,"wr":40.62,"presence":50.24},"my":{"picks":58,"wins":23,"losses":35,"bans":26,"wr":39.66,"presence":51.22},"mm":{"picks":2,"wins":1,"losses":1,"bans":0,"wr":50.0,"presence":2.33}},"beats":["Silvanna","Bane","Luo Yi","X.Borg","Yin"],"ctrBy":["Terizla","Gord","Cyclops","Balmond","Alice"]},{"name":"Khufra","lane":"Roam","meta":45.3,"ban":1.9,"tier":"S","magic":true,"tags":["tanky","hardCC","sustain","aoe","protect"],"ag":null,"all":{"picks":5,"wins":3,"losses":2,"bans":4,"leagues":3,"wr":60.0,"presence":1.67},"per":{"ph":{"picks":2,"wins":1,"losses":1,"bans":2,"wr":50.0,"presence":2.37},"id":{"picks":2,"wins":1,"losses":1,"bans":2,"wr":50.0,"presence":1.95},"my":{"picks":1,"wins":1,"losses":0,"bans":0,"wr":100.0,"presence":0.61}},"beats":["Silvanna","Alucard","Akai","Saber","Sora"],"ctrBy":["Marcel","Zhuxin","Lesley","Alice","Minotaur"]},{"name":"Kimmy","lane":"Gold","meta":24.6,"ban":0.27,"tier":"C","magic":true,"tags":["poke","early","mobile","carry"],"ag":null,"all":{"picks":64,"wins":34,"losses":30,"bans":23,"leagues":4,"wr":53.12,"presence":13.94},"per":{"ph":{"picks":22,"wins":14,"losses":8,"bans":14,"wr":63.64,"presence":21.3},"id":{"picks":17,"wins":8,"losses":9,"bans":0,"wr":47.06,"presence":8.29},"my":{"picks":19,"wins":9,"losses":10,"bans":7,"wr":47.37,"presence":15.85},"mm":{"picks":6,"wins":3,"losses":3,"bans":2,"wr":50.0,"presence":9.3}},"beats":["Esmeralda","Joy","Hanzo","Balmond","Sun"],"ctrBy":["Karina","Saber","Granger","Kaja","Fanny"]},{"name":"Lancelot","lane":"Jungle","meta":6.0,"ban":0.4,"tier":"D","magic":false,"tags":["dive","early","mobile"],"ag":null,"all":{"picks":26,"wins":14,"losses":12,"bans":13,"leagues":3,"wr":53.85,"presence":7.25},"per":{"ph":{"picks":8,"wins":5,"losses":3,"bans":2,"wr":62.5,"presence":5.92},"id":{"picks":12,"wins":7,"losses":5,"bans":7,"wr":58.33,"presence":9.27},"my":{"picks":6,"wins":2,"losses":4,"bans":4,"wr":33.33,"presence":6.1}},"beats":["Johnson","Saber","Layla","Zilong","Helcurt"],"ctrBy":["Yve","Harith","Khaleed","Gatotkaca","Cecilion"]},{"name":"Lapu-Lapu","lane":"Flex","meta":24.6,"ban":0.27,"tier":"C","magic":false,"tags":["hardCC","dive"],"ag":null,"all":{"picks":112,"wins":53,"losses":59,"bans":28,"leagues":3,"wr":47.32,"presence":26.02},"per":{"ph":{"picks":43,"wins":21,"losses":22,"bans":9,"wr":48.84,"presence":30.77},"id":{"picks":43,"wins":23,"losses":20,"bans":12,"wr":53.49,"presence":26.83},"my":{"picks":26,"wins":9,"losses":17,"bans":7,"wr":34.62,"presence":20.12}},"beats":["Alucard","Hilda","Vexana","Hanabi","Jawhead"],"ctrBy":["Baxia","Esmeralda","Claude","Lolita","Franco"]},{"name":"Layla","lane":"Gold","meta":25.6,"ban":0.84,"tier":"B","magic":false,"tags":["poke","late","carry"],"ag":null,"all":null,"per":{},"beats":["Yin","Vale","Odette","Baxia","Valentina"],"ctrBy":["Lancelot","Pharsa","Silvanna","Gatotkaca","Hirara"]},{"name":"Leomord","lane":"EXP","meta":30.1,"ban":0.45,"tier":"B","magic":false,"tags":["tanky","hardCC","dive"],"ag":null,"all":{"picks":274,"wins":129,"losses":145,"bans":105,"leagues":5,"wr":47.08,"presence":48.22},"per":{"ph":{"picks":66,"wins":27,"losses":39,"bans":33,"wr":40.91,"presence":58.58},"id":{"picks":96,"wins":52,"losses":44,"bans":28,"wr":54.17,"presence":60.49},"my":{"picks":64,"wins":33,"losses":31,"bans":27,"wr":51.56,"presence":55.49},"mm":{"picks":3,"wins":1,"losses":2,"bans":1,"wr":33.33,"presence":4.65},"cis":{"picks":45,"wins":16,"losses":29,"bans":16,"wr":35.56,"presence":37.65}},"beats":["Kalea","Wanwan","Zhask","Zilong","Saber"],"ctrBy":["Hylos","Valir","Karina","Zhuxin","Phoveus"]},{"name":"Lesley","lane":"Gold","meta":27.9,"ban":7.11,"tier":"B","magic":false,"tags":["poke","late","carry"],"ag":null,"all":{"picks":1,"wins":0,"losses":1,"bans":1,"leagues":1,"wr":0.0,"presence":1.18},"per":{"ph":{"picks":1,"wins":0,"losses":1,"bans":1,"wr":0.0,"presence":1.18}},"beats":["Claude","Khufra","Marcel","Yve","Belerick"],"ctrBy":["Tigreal","Sun","Helcurt","Gloo","Hayabusa"]},{"name":"Ling","lane":"Jungle","meta":38.4,"ban":0.88,"tier":"A","magic":false,"tags":["dive","early","split","mobile"],"ag":null,"all":{"picks":1,"wins":0,"losses":1,"bans":0,"leagues":1,"wr":0.0,"presence":0.49},"per":{"id":{"picks":1,"wins":0,"losses":1,"bans":0,"wr":0.0,"presence":0.49}},"beats":["Layla","Yve","Gloo","X.Borg","Xavier"],"ctrBy":["Natalia","Saber","Karina","Floryn","Khaleed"]},{"name":"Lolita","lane":"Roam","meta":42.6,"ban":0.18,"tier":"A","magic":false,"tags":["tanky","hardCC","protect"],"ag":null,"all":null,"per":{},"beats":["Cyclops","Franco","Odette","Edith","Chang'e"],"ctrBy":["Phoveus","Kalea","X.Borg","Wanwan","Melissa"]},{"name":"Lukas","lane":"EXP","meta":56.8,"ban":28.05,"tier":"S","magic":false,"tags":["hardCC"],"ag":null,"all":{"picks":4,"wins":1,"losses":3,"bans":2,"leagues":2,"wr":25.0,"presence":2.06},"per":{"id":{"picks":3,"wins":1,"losses":2,"bans":0,"wr":33.33,"presence":1.46},"mm":{"picks":1,"wins":0,"losses":1,"bans":2,"wr":0.0,"presence":3.49}},"beats":["Popol and Kupa","Ruby","Gusion","Chou","Ling"],"ctrBy":["Minsitthar","Valentina","Jawhead","Hylos","Zhuxin"]},{"name":"Lunox","lane":"Mid","meta":25.7,"ban":0.15,"tier":"C","magic":true,"tags":["late","aoe"],"ag":null,"all":{"picks":13,"wins":8,"losses":5,"bans":9,"leagues":3,"wr":61.54,"presence":4.09},"per":{"ph":{"picks":1,"wins":0,"losses":1,"bans":1,"wr":0.0,"presence":1.18},"id":{"picks":7,"wins":6,"losses":1,"bans":6,"wr":85.71,"presence":6.34},"my":{"picks":5,"wins":2,"losses":3,"bans":2,"wr":40.0,"presence":4.27}},"beats":["Joy","Baxia","Kaja","Gloo","Karina"],"ctrBy":["Lylia","Lancelot","Sora","Luo Yi","Odette"]},{"name":"Luo Yi","lane":"Mid","meta":21.4,"ban":0.09,"tier":"C","magic":true,"tags":[],"ag":null,"all":{"picks":13,"wins":6,"losses":7,"bans":12,"leagues":3,"wr":46.15,"presence":4.65},"per":{"ph":{"picks":7,"wins":4,"losses":3,"bans":11,"wr":57.14,"presence":10.65},"id":{"picks":4,"wins":2,"losses":2,"bans":0,"wr":50.0,"presence":1.95},"my":{"picks":2,"wins":0,"losses":2,"bans":1,"wr":0.0,"presence":1.83}},"beats":["Balmond","Johnson","Alpha","Alucard","Zhask"],"ctrBy":["Phoveus","Khaleed","Melissa","Joy","Chou"]},{"name":"Lylia","lane":"Mid","meta":27.7,"ban":0.34,"tier":"B","magic":true,"tags":["hardCC","poke","aoe"],"ag":null,"all":{"picks":62,"wins":31,"losses":31,"bans":42,"leagues":4,"wr":50.0,"presence":16.67},"per":{"ph":{"picks":11,"wins":6,"losses":5,"bans":12,"wr":54.55,"presence":13.61},"id":{"picks":21,"wins":7,"losses":14,"bans":10,"wr":33.33,"presence":15.12},"my":{"picks":23,"wins":14,"losses":9,"bans":9,"wr":60.87,"presence":19.51},"mm":{"picks":7,"wins":4,"losses":3,"bans":11,"wr":57.14,"presence":20.93}},"beats":["Roger","X.Borg","Hylos","Faramis","Eudora"],"ctrBy":["Helcurt","Chou","Vale","Benedetta","Natalia"]},{"name":"Marcel","lane":"Roam","meta":75.7,"ban":32.46,"tier":"S","magic":true,"tags":[],"ag":null,"all":{"picks":115,"wins":63,"losses":52,"bans":397,"leagues":4,"wr":54.78,"presence":82.05},"per":{"ph":{"picks":40,"wins":20,"losses":20,"bans":90,"wr":50.0,"presence":76.92},"id":{"picks":36,"wins":23,"losses":13,"bans":142,"wr":63.89,"presence":86.83},"my":{"picks":33,"wins":17,"losses":16,"bans":88,"wr":51.52,"presence":73.78},"mm":{"picks":6,"wins":3,"losses":3,"bans":77,"wr":50.0,"presence":96.51}},"beats":["Atlas","Zhask","Popol and Kupa","Hanabi","Sun"],"ctrBy":["Saber","Angela","Alice","Esmeralda","Floryn"]},{"name":"Martis","lane":"EXP","meta":18.7,"ban":0.37,"tier":"C","magic":false,"tags":["hardCC","dive","early"],"ag":null,"all":{"picks":1,"wins":0,"losses":1,"bans":0,"leagues":1,"wr":0.0,"presence":0.61},"per":{"my":{"picks":1,"wins":0,"losses":1,"bans":0,"wr":0.0,"presence":0.61}},"beats":["Vale","Harley","Sun","Aamon","Johnson"],"ctrBy":["Valentina","X.Borg","Karrie","Cecilion","Hirara"]},{"name":"Masha","lane":"EXP","meta":74.4,"ban":25.49,"tier":"S","magic":false,"tags":["tanky","hardCC","sustain","dive","early","split","mobile"],"ag":null,"all":{"picks":9,"wins":5,"losses":4,"bans":18,"leagues":3,"wr":55.56,"presence":5.93},"per":{"id":{"picks":6,"wins":3,"losses":3,"bans":10,"wr":50.0,"presence":7.8},"my":{"picks":2,"wins":1,"losses":1,"bans":7,"wr":50.0,"presence":5.49},"mm":{"picks":1,"wins":1,"losses":0,"bans":1,"wr":100.0,"presence":2.33}},"beats":["Atlas","Yu Zhong","Cici","Gloo","Eudora"],"ctrBy":["Aldous","Estes","Cyclops","Mathilda","Popol and Kupa"]},{"name":"Mathilda","lane":"Roam","meta":13.8,"ban":0.18,"tier":"D","magic":true,"tags":["protect","mobile"],"ag":null,"all":{"picks":7,"wins":5,"losses":2,"bans":13,"leagues":1,"wr":71.43,"presence":23.26},"per":{"mm":{"picks":7,"wins":5,"losses":2,"bans":13,"wr":71.43,"presence":23.26}},"beats":["Pharsa","Natalia","X.Borg","Masha","Zilong"],"ctrBy":["Saber","Esmeralda","Hanabi","Khaleed","Joy"]},{"name":"Melissa","lane":"Gold","meta":24.7,"ban":2.14,"tier":"C","magic":false,"tags":["late","carry"],"ag":null,"all":{"picks":22,"wins":13,"losses":9,"bans":44,"leagues":2,"wr":59.09,"presence":26.4},"per":{"my":{"picks":1,"wins":0,"losses":1,"bans":0,"wr":0.0,"presence":0.61},"mm":{"picks":21,"wins":13,"losses":8,"bans":44,"wr":61.9,"presence":75.58}},"beats":["Lolita","Luo Yi","Alucard","Chang'e","Jawhead"],"ctrBy":["Balmond","Terizla","Cecilion","Alpha","Brody"]},{"name":"Minotaur","lane":"Roam","meta":50.2,"ban":6.8,"tier":"S","magic":false,"tags":["tanky","hardCC","sustain"],"ag":{"picks":13,"wins":8,"losses":5,"bans":13,"wr":61.54,"presence":81.25},"all":{"picks":36,"wins":22,"losses":14,"bans":29,"leagues":2,"wr":61.11,"presence":55.08},"per":{"ag":{"picks":13,"wins":8,"losses":5,"bans":13,"wr":61.54,"presence":81.25},"mm":{"picks":23,"wins":14,"losses":9,"bans":16,"wr":60.87,"presence":45.35}},"beats":["Silvanna","Khufra","Cyclops","Lolita","Odette"],"ctrBy":["Natalia","Gloo","Alice","Kimmy","Hylos"]},{"name":"Minsitthar","lane":"Roam","meta":35.4,"ban":5.17,"tier":"B","magic":false,"tags":["tanky","hardCC"],"ag":null,"all":{"picks":3,"wins":1,"losses":2,"bans":4,"leagues":2,"wr":33.33,"presence":1.9},"per":{"id":{"picks":1,"wins":0,"losses":1,"bans":0,"wr":0.0,"presence":0.49},"my":{"picks":2,"wins":1,"losses":1,"bans":4,"wr":50.0,"presence":3.66}},"beats":["Johnson","Aldous","Edith","Freya","Phoveus"],"ctrBy":["Hylos","Karina","Alpha","Natalia","Yin"]},{"name":"Miya","lane":"Gold","meta":33.0,"ban":8.24,"tier":"B","magic":false,"tags":["late","carry"],"ag":null,"all":{"picks":22,"wins":10,"losses":12,"bans":7,"leagues":1,"wr":45.45,"presence":33.72},"per":{"mm":{"picks":22,"wins":10,"losses":12,"bans":7,"wr":45.45,"presence":33.72}},"beats":["Lolita","Zhuxin","Saber","Obsidia","Valentina"],"ctrBy":["Vale","Gord","Estes","Aldous","Belerick"]},{"name":"Moskov","lane":"Gold","meta":31.0,"ban":0.25,"tier":"B","magic":false,"tags":["late","carry"],"ag":null,"all":{"picks":192,"wins":89,"losses":103,"bans":103,"leagues":5,"wr":46.35,"presence":37.53},"per":{"ph":{"picks":39,"wins":14,"losses":25,"bans":13,"wr":35.9,"presence":30.77},"id":{"picks":41,"wins":24,"losses":17,"bans":17,"wr":58.54,"presence":28.29},"my":{"picks":45,"wins":25,"losses":20,"bans":27,"wr":55.56,"presence":43.9},"mm":{"picks":17,"wins":5,"losses":12,"bans":17,"wr":29.41,"presence":39.53},"cis":{"picks":50,"wins":21,"losses":29,"bans":29,"wr":42.0,"presence":48.77}},"beats":["Gloo","Baxia","Thamuz","Joy","Fanny"],"ctrBy":["Aamon","Karina","Ruby","Cyclops","Bane"]},{"name":"Nana","lane":"Mid","meta":22.1,"ban":3.79,"tier":"C","magic":true,"tags":["hardCC","poke","aoe"],"ag":null,"all":{"picks":1,"wins":1,"losses":0,"bans":0,"leagues":1,"wr":100.0,"presence":0.49},"per":{"id":{"picks":1,"wins":1,"losses":0,"bans":0,"wr":100.0,"presence":0.49}},"beats":["Natalia","Aldous","Zhask","Jawhead","Odette"],"ctrBy":["Yve","Akai","Irithel","Balmond","Terizla"]},{"name":"Natalia","lane":"Flex","meta":32.5,"ban":1.33,"tier":"B","magic":false,"tags":["dive","early","mobile"],"ag":null,"all":null,"per":{},"beats":["Harley","Ling","Popol and Kupa","Zhask","Terizla"],"ctrBy":["Aldous","Johnson","Nana","Karina","Esmeralda"]},{"name":"Natan","lane":"Gold","meta":33.2,"ban":0.12,"tier":"B","magic":false,"tags":["poke","late","carry"],"ag":null,"all":null,"per":{},"beats":["Zilong","Balmond","Grock","Sun","Silvanna"],"ctrBy":["Karina","Estes","Yu Zhong","Fanny","Harith"]},{"name":"Nolan","lane":"Jungle","meta":27.4,"ban":2.53,"tier":"B","magic":false,"tags":["dive","early","mobile"],"ag":{"picks":23,"wins":11,"losses":12,"bans":6,"wr":47.83,"presence":90.62},"all":{"picks":67,"wins":35,"losses":32,"bans":24,"leagues":5,"wr":52.24,"presence":13.87},"per":{"ag":{"picks":23,"wins":11,"losses":12,"bans":6,"wr":47.83,"presence":90.62},"ph":{"picks":4,"wins":3,"losses":1,"bans":2,"wr":75.0,"presence":3.55},"id":{"picks":4,"wins":1,"losses":3,"bans":3,"wr":25.0,"presence":3.41},"my":{"picks":19,"wins":12,"losses":7,"bans":9,"wr":63.16,"presence":17.07},"mm":{"picks":17,"wins":8,"losses":9,"bans":4,"wr":47.06,"presence":24.42}},"beats":["Estes","Hylos","Hanabi","Lolita","Karrie"],"ctrBy":["Natalia","Helcurt","Hilda","Saber","Arlott"]},{"name":"Novaria","lane":"Mid","meta":32.0,"ban":4.3,"tier":"B","magic":true,"tags":["poke","late","aoe"],"ag":null,"all":{"picks":14,"wins":7,"losses":7,"bans":7,"leagues":1,"wr":50.0,"presence":24.42},"per":{"mm":{"picks":14,"wins":7,"losses":7,"bans":7,"wr":50.0,"presence":24.42}},"beats":["Lylia","Gatotkaca","Valentina","Valir","Diggie"],"ctrBy":["Zilong","Natalia","Ling","Estes","Aldous"]},{"name":"Obsidia","lane":"Gold","meta":47.0,"ban":8.7,"tier":"S","magic":false,"tags":["carry"],"ag":{"picks":15,"wins":9,"losses":6,"bans":6,"wr":60.0,"presence":65.62},"all":{"picks":69,"wins":32,"losses":37,"bans":43,"leagues":5,"wr":46.38,"presence":17.07},"per":{"ag":{"picks":15,"wins":9,"losses":6,"bans":6,"wr":60.0,"presence":65.62},"ph":{"picks":7,"wins":1,"losses":6,"bans":7,"wr":14.29,"presence":8.28},"id":{"picks":10,"wins":5,"losses":5,"bans":9,"wr":50.0,"presence":9.27},"my":{"picks":15,"wins":6,"losses":9,"bans":10,"wr":40.0,"presence":15.24},"mm":{"picks":22,"wins":11,"losses":11,"bans":11,"wr":50.0,"presence":38.37}},"beats":["Benedetta","Helcurt","Lukas","Granger","Yin"],"ctrBy":["Diggie","Baxia","Miya","Karina","Estes"]},{"name":"Odette","lane":"Mid","meta":27.6,"ban":0.44,"tier":"B","magic":true,"tags":["aoe"],"ag":null,"all":{"picks":5,"wins":3,"losses":2,"bans":3,"leagues":3,"wr":60.0,"presence":1.76},"per":{"id":{"picks":3,"wins":2,"losses":1,"bans":1,"wr":66.67,"presence":1.95},"my":{"picks":1,"wins":1,"losses":0,"bans":0,"wr":100.0,"presence":0.61},"mm":{"picks":1,"wins":0,"losses":1,"bans":2,"wr":0.0,"presence":3.49}},"beats":["Kaja","Hilda","Claude","Lancelot","Cici"],"ctrBy":["Yin","Helcurt","Vale","Lolita","Layla"]},{"name":"Paquito","lane":"EXP","meta":57.7,"ban":45.16,"tier":"B","magic":false,"tags":["hardCC","dive","early","mobile"],"ag":{"picks":11,"wins":5,"losses":6,"bans":13,"wr":45.45,"presence":75.0},"all":{"picks":128,"wins":76,"losses":52,"bans":59,"leagues":5,"wr":59.38,"presence":28.51},"per":{"ag":{"picks":11,"wins":5,"losses":6,"bans":13,"wr":45.45,"presence":75.0},"ph":{"picks":15,"wins":11,"losses":4,"bans":9,"wr":73.33,"presence":14.2},"id":{"picks":24,"wins":12,"losses":12,"bans":14,"wr":50.0,"presence":18.54},"my":{"picks":24,"wins":16,"losses":8,"bans":7,"wr":66.67,"presence":18.9},"mm":{"picks":54,"wins":32,"losses":22,"bans":16,"wr":59.26,"presence":81.4}},"beats":["X.Borg","Natalia","Karina","Valentina","Karrie"],"ctrBy":["Esmeralda","Saber","Hilda","Baxia","Khufra"]},{"name":"Pharsa","lane":"Mid","meta":19.6,"ban":0.17,"tier":"C","magic":true,"tags":["poke","late","aoe"],"ag":null,"all":{"picks":73,"wins":38,"losses":35,"bans":22,"leagues":4,"wr":52.05,"presence":15.22},"per":{"ph":{"picks":30,"wins":13,"losses":17,"bans":11,"wr":43.33,"presence":24.26},"id":{"picks":26,"wins":13,"losses":13,"bans":5,"wr":50.0,"presence":15.12},"my":{"picks":16,"wins":12,"losses":4,"bans":6,"wr":75.0,"presence":13.41},"mm":{"picks":1,"wins":0,"losses":1,"bans":0,"wr":0.0,"presence":1.16}},"beats":["Layla","Wanwan","Aurora","Julian","Tigreal"],"ctrBy":["Baxia","Mathilda","Bane","Chip","Jawhead"]},{"name":"Phoveus","lane":"EXP","meta":21.7,"ban":0.48,"tier":"C","magic":false,"tags":["hardCC","sustain"],"ag":null,"all":{"picks":283,"wins":154,"losses":129,"bans":475,"leagues":6,"wr":54.42,"presence":81.68},"per":{"ph":{"picks":55,"wins":27,"losses":28,"bans":99,"wr":49.09,"presence":91.12},"id":{"picks":66,"wins":43,"losses":23,"bans":116,"wr":65.15,"presence":88.78},"my":{"picks":57,"wins":31,"losses":26,"bans":80,"wr":54.39,"presence":83.54},"mm":{"picks":4,"wins":3,"losses":1,"bans":4,"wr":75.0,"presence":9.3},"tr":{"picks":56,"wins":32,"losses":24,"bans":67,"wr":57.14,"presence":86.62},"cis":{"picks":45,"wins":18,"losses":27,"bans":109,"wr":40.0,"presence":95.06}},"beats":["Lolita","Freya","Luo Yi","Faramis","Wanwan"],"ctrBy":["Aldous","Zilong","Cici","Bane","Cecilion"]},{"name":"Popol and Kupa","lane":"Gold","meta":42.7,"ban":0.27,"tier":"A","magic":false,"tags":[],"ag":null,"all":null,"per":{},"beats":["Grock","Hilda","Aamon","Freya","Granger"],"ctrBy":["Benedetta","Natalia","Wanwan","Marcel","Kalea"]},{"name":"Rafaela","lane":"Roam","meta":70.3,"ban":16.09,"tier":"S","magic":true,"tags":["sustain","protect"],"ag":null,"all":{"picks":25,"wins":13,"losses":12,"bans":23,"leagues":1,"wr":52.0,"presence":55.81},"per":{"mm":{"picks":25,"wins":13,"losses":12,"bans":23,"wr":52.0,"presence":55.81}},"beats":["Valir","Natalia","Lancelot","Balmond","Harley"],"ctrBy":["Diggie","Estes","Ixia","Floryn","Granger"]},{"name":"Roger","lane":"EXP","meta":26.2,"ban":0.11,"tier":"C","magic":false,"tags":["dive","late"],"ag":null,"all":{"picks":2,"wins":0,"losses":2,"bans":1,"leagues":2,"wr":0.0,"presence":0.9},"per":{"ph":{"picks":1,"wins":0,"losses":1,"bans":1,"wr":0.0,"presence":1.18},"my":{"picks":1,"wins":0,"losses":1,"bans":0,"wr":0.0,"presence":0.61}},"beats":["Aamon","Helcurt","Estes","Saber","Bane"],"ctrBy":["Zilong","Kaja","Lylia","Fredrinn","Uranus"]},{"name":"Ruby","lane":"EXP","meta":27.4,"ban":0.25,"tier":"B","magic":false,"tags":["tanky","hardCC","sustain"],"ag":null,"all":{"picks":13,"wins":5,"losses":8,"bans":5,"leagues":3,"wr":38.46,"presence":3.96},"per":{"id":{"picks":1,"wins":0,"losses":1,"bans":0,"wr":0.0,"presence":0.49},"my":{"picks":1,"wins":0,"losses":1,"bans":0,"wr":0.0,"presence":0.61},"mm":{"picks":11,"wins":5,"losses":6,"bans":5,"wr":45.45,"presence":18.6}},"beats":["Bane","Hirara","Gloo","Cici","Sun"],"ctrBy":["Yve","Alpha","Jawhead","Lukas","X.Borg"]},{"name":"Saber","lane":"Flex","meta":39.3,"ban":21.54,"tier":"B","magic":false,"tags":["dive","early","mobile"],"ag":null,"all":{"picks":4,"wins":2,"losses":2,"bans":5,"leagues":3,"wr":50.0,"presence":1.67},"per":{"ph":{"picks":1,"wins":0,"losses":1,"bans":1,"wr":0.0,"presence":1.18},"id":{"picks":1,"wins":0,"losses":1,"bans":0,"wr":0.0,"presence":0.49},"my":{"picks":2,"wins":2,"losses":0,"bans":4,"wr":100.0,"presence":3.66}},"beats":["Marcel","Mathilda","Aulus","Cyclops","Ling"],"ctrBy":["Lancelot","X.Borg","Aurora","Roger","Vexana"]},{"name":"Selena","lane":"Mid","meta":28.8,"ban":3.51,"tier":"B","magic":true,"tags":["hardCC","poke","aoe"],"ag":null,"all":{"picks":34,"wins":16,"losses":18,"bans":27,"leagues":3,"wr":47.06,"presence":13.26},"per":{"ph":{"picks":8,"wins":3,"losses":5,"bans":4,"wr":37.5,"presence":7.1},"id":{"picks":4,"wins":2,"losses":2,"bans":6,"wr":50.0,"presence":4.88},"mm":{"picks":22,"wins":11,"losses":11,"bans":17,"wr":50.0,"presence":45.35}},"beats":["Lylia","Yve","Pharsa","Helcurt","X.Borg"],"ctrBy":["Johnson","Silvanna","Baxia","Gloo","Phoveus"]},{"name":"Silvanna","lane":"EXP","meta":32.1,"ban":1.47,"tier":"B","magic":false,"tags":["tanky","hardCC","late"],"ag":null,"all":null,"per":{},"beats":["Layla","Joy","Argus","Yve","Hanabi"],"ctrBy":["Khaleed","X.Borg","Irithel","Zhask","Natan"]},{"name":"Sora","lane":"Jungle","meta":29.7,"ban":2.82,"tier":"B","magic":false,"tags":["hardCC"],"ag":null,"all":{"picks":155,"wins":68,"losses":87,"bans":129,"leagues":4,"wr":43.87,"presence":45.51},"per":{"ph":{"picks":39,"wins":19,"losses":20,"bans":44,"wr":48.72,"presence":49.11},"id":{"picks":77,"wins":33,"losses":44,"bans":44,"wr":42.86,"presence":59.02},"my":{"picks":29,"wins":12,"losses":17,"bans":38,"wr":41.38,"presence":40.85},"mm":{"picks":10,"wins":4,"losses":6,"bans":3,"wr":40.0,"presence":15.12}},"beats":["Estes","Lunox","Popol and Kupa","Terizla","Rafaela"],"ctrBy":["Khufra","Valentina","Phoveus","Alice","Gatotkaca"]},{"name":"Sun","lane":"EXP","meta":48.7,"ban":18.91,"tier":"A","magic":false,"tags":["tanky","hardCC","sustain","late","split"],"ag":null,"all":{"picks":1,"wins":1,"losses":0,"bans":0,"leagues":1,"wr":100.0,"presence":0.61},"per":{"my":{"picks":1,"wins":1,"losses":0,"bans":0,"wr":100.0,"presence":0.61}},"beats":["Hilda","Cici","X.Borg","Phoveus","Jawhead"],"ctrBy":["Martis","Natan","Marcel","Irithel","Alucard"]},{"name":"Suyou","lane":"Jungle","meta":28.7,"ban":0.96,"tier":"B","magic":false,"tags":["dive","early","mobile"],"ag":null,"all":{"picks":346,"wins":161,"losses":185,"bans":143,"leagues":6,"wr":46.53,"presence":52.69},"per":{"ph":{"picks":78,"wins":40,"losses":38,"bans":49,"wr":51.28,"presence":75.15},"id":{"picks":82,"wins":32,"losses":50,"bans":20,"wr":39.02,"presence":49.76},"my":{"picks":71,"wins":35,"losses":36,"bans":23,"wr":49.3,"presence":57.32},"mm":{"picks":7,"wins":2,"losses":5,"bans":8,"wr":28.57,"presence":17.44},"tr":{"picks":44,"wins":21,"losses":23,"bans":28,"wr":47.73,"presence":50.7},"cis":{"picks":64,"wins":31,"losses":33,"bans":15,"wr":48.44,"presence":48.77}},"beats":["Bane","Faramis","Diggie","Natalia","Aulus"],"ctrBy":["Pharsa","Guinevere","Edith","Arlott","Odette"]},{"name":"Terizla","lane":"EXP","meta":31.2,"ban":0.16,"tier":"B","magic":false,"tags":["tanky","hardCC","sustain","late"],"ag":null,"all":{"picks":70,"wins":37,"losses":33,"bans":45,"leagues":3,"wr":52.86,"presence":21.38},"per":{"ph":{"picks":20,"wins":13,"losses":7,"bans":19,"wr":65.0,"presence":23.08},"id":{"picks":30,"wins":15,"losses":15,"bans":14,"wr":50.0,"presence":21.46},"my":{"picks":20,"wins":9,"losses":11,"bans":12,"wr":45.0,"presence":19.51}},"beats":["Khaleed","Tigreal","Melissa","Silvanna","Lolita"],"ctrBy":["Alucard","Grock","Balmond","Arlott","X.Borg"]},{"name":"Thamuz","lane":"EXP","meta":24.5,"ban":1.46,"tier":"C","magic":false,"tags":["tanky","sustain","late"],"ag":null,"all":{"picks":3,"wins":2,"losses":1,"bans":2,"leagues":2,"wr":66.67,"presence":1.5},"per":{"ph":{"picks":2,"wins":1,"losses":1,"bans":2,"wr":50.0,"presence":2.37},"my":{"picks":1,"wins":1,"losses":0,"bans":0,"wr":100.0,"presence":0.61}},"beats":["Balmond","Baxia","Zilong","Aamon","Phoveus"],"ctrBy":["Jawhead","Edith","Aurora","Yve","Cici"]},{"name":"Tigreal","lane":"Roam","meta":13.1,"ban":5.3,"tier":"D","magic":false,"tags":["tanky","hardCC","aoe"],"ag":null,"all":{"picks":2,"wins":0,"losses":2,"bans":1,"leagues":2,"wr":0.0,"presence":1.03},"per":{"id":{"picks":1,"wins":0,"losses":1,"bans":0,"wr":0.0,"presence":0.49},"mm":{"picks":1,"wins":0,"losses":1,"bans":1,"wr":0.0,"presence":2.33}},"beats":["Aamon","Aldous","Floryn","Baxia","Layla"],"ctrBy":["Terizla","Hylos","Zhuxin","Pharsa","Alice"]},{"name":"Uranus","lane":"EXP","meta":27.1,"ban":0.34,"tier":"C","magic":true,"tags":["tanky","sustain","late"],"ag":{"picks":13,"wins":5,"losses":8,"bans":12,"wr":38.46,"presence":78.12},"all":{"picks":197,"wins":96,"losses":101,"bans":197,"leagues":6,"wr":48.73,"presence":49.37},"per":{"ag":{"picks":13,"wins":5,"losses":8,"bans":12,"wr":38.46,"presence":78.12},"ph":{"picks":34,"wins":16,"losses":18,"bans":41,"wr":47.06,"presence":44.38},"id":{"picks":33,"wins":10,"losses":23,"bans":37,"wr":30.3,"presence":34.15},"my":{"picks":38,"wins":25,"losses":13,"bans":43,"wr":65.79,"presence":49.39},"mm":{"picks":36,"wins":18,"losses":18,"bans":45,"wr":50.0,"presence":94.19},"tr":{"picks":43,"wins":22,"losses":21,"bans":19,"wr":51.16,"presence":43.66}},"beats":["Cici","Lylia","Phoveus","X.Borg","Roger"],"ctrBy":["Hanabi","Gusion","Estes","Karrie","Alpha"]},{"name":"Vale","lane":"Mid","meta":28.7,"ban":0.18,"tier":"B","magic":true,"tags":["hardCC","poke","aoe"],"ag":null,"all":null,"per":{},"beats":["Lylia","Silvanna","Julian","Popol and Kupa","Odette"],"ctrBy":["Akai","Martis","Alpha","Layla","Alucard"]},{"name":"Valentina","lane":"Mid","meta":13.9,"ban":0.16,"tier":"D","magic":true,"tags":["hardCC","late"],"ag":{"picks":6,"wins":6,"losses":0,"bans":6,"wr":100.0,"presence":37.5},"all":{"picks":351,"wins":173,"losses":178,"bans":189,"leagues":7,"wr":49.29,"presence":56.25},"per":{"ag":{"picks":6,"wins":6,"losses":0,"bans":6,"wr":100.0,"presence":37.5},"ph":{"picks":83,"wins":40,"losses":43,"bans":28,"wr":48.19,"presence":65.68},"id":{"picks":61,"wins":27,"losses":34,"bans":42,"wr":44.26,"presence":50.24},"my":{"picks":59,"wins":27,"losses":32,"bans":28,"wr":45.76,"presence":53.05},"mm":{"picks":6,"wins":3,"losses":3,"bans":19,"wr":50.0,"presence":29.07},"tr":{"picks":48,"wins":24,"losses":24,"bans":30,"wr":50.0,"presence":54.93},"cis":{"picks":88,"wins":46,"losses":42,"bans":36,"wr":52.27,"presence":76.54}},"beats":["Grock","Martis","Aldous","Atlas","Akai"],"ctrBy":["Zhask","Harley","Cyclops","Johnson","Layla"]},{"name":"Valir","lane":"Mid","meta":41.1,"ban":1.78,"tier":"A","magic":true,"tags":["poke","aoe"],"ag":null,"all":{"picks":24,"wins":13,"losses":11,"bans":23,"leagues":3,"wr":54.17,"presence":8.74},"per":{"ph":{"picks":6,"wins":2,"losses":4,"bans":3,"wr":33.33,"presence":5.33},"id":{"picks":14,"wins":7,"losses":7,"bans":14,"wr":50.0,"presence":13.66},"my":{"picks":4,"wins":4,"losses":0,"bans":6,"wr":100.0,"presence":6.1}},"beats":["Fredrinn","Akai","Alice","Balmond","Johnson"],"ctrBy":["Kaja","Marcel","Rafaela","Benedetta","X.Borg"]},{"name":"Vexana","lane":"Mid","meta":27.7,"ban":1.1,"tier":"B","magic":true,"tags":["hardCC","late","aoe"],"ag":null,"all":{"picks":12,"wins":3,"losses":9,"bans":6,"leagues":4,"wr":25.0,"presence":2.88},"per":{"ph":{"picks":1,"wins":0,"losses":1,"bans":3,"wr":0.0,"presence":2.37},"id":{"picks":3,"wins":1,"losses":2,"bans":0,"wr":33.33,"presence":1.46},"my":{"picks":1,"wins":1,"losses":0,"bans":1,"wr":100.0,"presence":1.22},"mm":{"picks":7,"wins":1,"losses":6,"bans":2,"wr":14.29,"presence":10.47}},"beats":["Gloo","Saber","Yve","Argus","Karrie"],"ctrBy":["Gatotkaca","Lapu-Lapu","Carmilla","Bane","Alice"]},{"name":"Wanwan","lane":"Gold","meta":23.7,"ban":0.11,"tier":"C","magic":false,"tags":["late","mobile","carry"],"ag":null,"all":{"picks":1,"wins":0,"losses":1,"bans":2,"leagues":1,"wr":0.0,"presence":1.78},"per":{"ph":{"picks":1,"wins":0,"losses":1,"bans":2,"wr":0.0,"presence":1.78}},"beats":["Joy","Johnson","Aurora","Lolita","Aldous"],"ctrBy":["Pharsa","Harith","Phoveus","Hirara","Leomord"]},{"name":"X.Borg","lane":"EXP","meta":29.5,"ban":1.64,"tier":"B","magic":false,"tags":["tanky"],"ag":null,"all":{"picks":1,"wins":0,"losses":1,"bans":2,"leagues":1,"wr":0.0,"presence":1.46},"per":{"id":{"picks":1,"wins":0,"losses":1,"bans":2,"wr":0.0,"presence":1.46}},"beats":["Saber","Silvanna","Barats","Martis","Alpha"],"ctrBy":["Faramis","Lylia","Khaleed","Yve","Zhask"]},{"name":"Xavier","lane":"Mid","meta":28.8,"ban":0.12,"tier":"B","magic":true,"tags":["poke","late","aoe"],"ag":null,"all":null,"per":{},"beats":["Aurora","Saber","Yin","Phoveus","Belerick"],"ctrBy":["Ling","Natalia","Chang'e","Hayabusa","Helcurt"]},{"name":"Yi Sun-shin","lane":"Gold","meta":34.4,"ban":8.26,"tier":"B","magic":false,"tags":[],"ag":null,"all":{"picks":130,"wins":54,"losses":76,"bans":84,"leagues":4,"wr":41.54,"presence":34.29},"per":{"ph":{"picks":24,"wins":10,"losses":14,"bans":14,"wr":41.67,"presence":22.49},"id":{"picks":48,"wins":18,"losses":30,"bans":19,"wr":37.5,"presence":32.68},"my":{"picks":41,"wins":18,"losses":23,"bans":38,"wr":43.9,"presence":48.17},"mm":{"picks":17,"wins":8,"losses":9,"bans":13,"wr":47.06,"presence":34.88}},"beats":["Balmond","Zilong","Layla","Thamuz","Phoveus"],"ctrBy":["Uranus","Karina","Harley","Khaleed","Johnson"]},{"name":"Yin","lane":"EXP","meta":24.5,"ban":1.6,"tier":"C","magic":false,"tags":["hardCC","dive","mobile"],"ag":null,"all":null,"per":{},"beats":["Bane","Odette","Phoveus","Atlas","Minsitthar"],"ctrBy":["Karrie","Layla","Khaleed","Esmeralda","Popol and Kupa"]},{"name":"Yu Zhong","lane":"EXP","meta":26.7,"ban":0.66,"tier":"B","magic":false,"tags":[],"ag":null,"all":{"picks":45,"wins":26,"losses":19,"bans":29,"leagues":4,"wr":57.78,"presence":11.86},"per":{"ph":{"picks":16,"wins":10,"losses":6,"bans":13,"wr":62.5,"presence":17.16},"id":{"picks":16,"wins":9,"losses":7,"bans":8,"wr":56.25,"presence":11.71},"my":{"picks":12,"wins":6,"losses":6,"bans":8,"wr":50.0,"presence":12.2},"mm":{"picks":1,"wins":1,"losses":0,"bans":0,"wr":100.0,"presence":1.16}},"beats":["Hanabi","Natalia","Natan","Minsitthar","Silvanna"],"ctrBy":["Chou","Bruno","Edith","Masha","Cici"]},{"name":"Yve","lane":"Mid","meta":37.2,"ban":0.04,"tier":"A","magic":true,"tags":["poke","late","aoe"],"ag":null,"all":{"picks":297,"wins":163,"losses":134,"bans":226,"leagues":6,"wr":54.88,"presence":56.36},"per":{"ph":{"picks":64,"wins":37,"losses":27,"bans":39,"wr":57.81,"presence":60.95},"id":{"picks":75,"wins":40,"losses":35,"bans":43,"wr":53.33,"presence":57.56},"my":{"picks":55,"wins":29,"losses":26,"bans":22,"wr":52.73,"presence":46.95},"mm":{"picks":1,"wins":1,"losses":0,"bans":0,"wr":100.0,"presence":1.16},"tr":{"picks":51,"wins":30,"losses":21,"bans":42,"wr":58.82,"presence":65.49},"cis":{"picks":51,"wins":26,"losses":25,"bans":80,"wr":50.98,"presence":80.86}},"beats":["Lancelot","Balmond","Hanabi","Ruby","Nana"],"ctrBy":["Benedetta","Silvanna","Marcel","Vexana","Helcurt"]},{"name":"Zetian","lane":"Mid","meta":34.8,"ban":3.85,"tier":"A","magic":true,"tags":["hardCC","mobile"],"ag":null,"all":{"picks":82,"wins":36,"losses":46,"bans":55,"leagues":4,"wr":43.9,"presence":21.96},"per":{"ph":{"picks":11,"wins":4,"losses":7,"bans":14,"wr":36.36,"presence":14.79},"id":{"picks":35,"wins":16,"losses":19,"bans":26,"wr":45.71,"presence":29.76},"my":{"picks":31,"wins":13,"losses":18,"bans":14,"wr":41.94,"presence":27.44},"mm":{"picks":5,"wins":3,"losses":2,"bans":1,"wr":60.0,"presence":6.98}},"beats":["Aamon","Natalia","Lolita","Tigreal","Helcurt"],"ctrBy":["Harley","Gloo","Claude","Floryn","Valentina"]},{"name":"Zhask","lane":"Mid","meta":36.3,"ban":0.35,"tier":"A","magic":true,"tags":["poke","aoe"],"ag":null,"all":{"picks":2,"wins":0,"losses":2,"bans":0,"leagues":1,"wr":0.0,"presence":1.22},"per":{"my":{"picks":2,"wins":0,"losses":2,"bans":0,"wr":0.0,"presence":1.22}},"beats":["Hylos","Johnson","Chip","Silvanna","Valentina"],"ctrBy":["Marcel","Hirara","Natalia","Nana","Harith"]},{"name":"Zhuxin","lane":"Mid","meta":29.6,"ban":0.28,"tier":"B","magic":true,"tags":["poke","late","aoe"],"ag":{"picks":12,"wins":6,"losses":6,"bans":3,"wr":50.0,"presence":46.88},"all":{"picks":417,"wins":194,"losses":223,"bans":463,"leagues":7,"wr":46.52,"presence":91.67},"per":{"ag":{"picks":12,"wins":6,"losses":6,"bans":3,"wr":50.0,"presence":46.88},"ph":{"picks":72,"wins":33,"losses":39,"bans":90,"wr":45.83,"presence":95.86},"id":{"picks":130,"wins":65,"losses":65,"bans":72,"wr":50.0,"presence":98.54},"my":{"picks":93,"wins":39,"losses":54,"bans":63,"wr":41.94,"presence":95.12},"mm":{"picks":25,"wins":10,"losses":15,"bans":16,"wr":40.0,"presence":47.67},"tr":{"picks":34,"wins":15,"losses":19,"bans":108,"wr":44.12,"presence":100.0},"cis":{"picks":51,"wins":26,"losses":25,"bans":111,"wr":50.98,"presence":100.0}},"beats":["Jawhead","Julian","Tigreal","Lolita","Khufra"],"ctrBy":["Yve","Saber","Miya","Minsitthar","Hayabusa"]},{"name":"Zilong","lane":"EXP","meta":13.2,"ban":0.43,"tier":"D","magic":false,"tags":["hardCC","split"],"ag":null,"all":null,"per":{},"beats":["Edith","Hanzo","Phoveus","Roger","Karrie"],"ctrBy":["Lancelot","Julian","Natan","Thamuz","Belerick"]}],"pairs":{"Nolan|Gloo":[6,4],"Nolan|Obsidia":[6,3],"Nolan|Eudora":[5,3],"Nolan|Carmilla":[5,2],"Nolan|Uranus":[5,2],"Hirara|Aulus":[5,4],"Hirara|Gloo":[5,3],"Hirara|Atlas":[4,4],"Hirara|Obsidia":[4,4],"Hirara|Claude":[3,3],"Aulus|Obsidia":[5,4],"Aulus|Eudora":[4,4],"Aulus|Minotaur":[4,3],"Aulus|Belerick":[4,2],"Eudora|Atlas":[6,4],"Eudora|Paquito":[5,3],"Eudora|Esmeralda":[4,3],"Obsidia|Esmeralda":[4,3],"Esmeralda|Atlas":[4,2],"Esmeralda|Nolan":[4,2],"Atlas|Paquito":[5,2],"Atlas|Obsidia":[3,2],"Minotaur|Paquito":[4,2],"Minotaur|Eudora":[3,3],"Minotaur|Nolan":[3,3],"Minotaur|Valentina":[3,3],"Uranus|Zhuxin":[5,3],"Uranus|Eudora":[3,1],"Uranus|Paquito":[3,0],"Uranus|Hirara":[2,2],"Zhuxin|Nolan":[4,2],"Zhuxin|Hirara":[3,3],"Zhuxin|Bruno":[3,2],"Zhuxin|Esmeralda":[3,1],"Gloo|Aulus":[3,3],"Gloo|Obsidia":[3,3],"Gloo|Rafaela":[2,2],"Carmilla|Cecilion":[6,2],"Carmilla|Bruno":[3,0],"Carmilla|Gloo":[2,1],"Carmilla|Minotaur":[2,1],"Belerick|Eudora":[3,1],"Belerick|Nolan":[3,0],"Belerick|Esmeralda":[2,1],"Belerick|Obsidia":[2,1],"Valentina|Aulus":[3,3],"Valentina|Minotaur":[3,3],"Valentina|Claude":[2,2],"Valentina|Esmeralda":[2,2],"Valentina|Hirara":[2,2]},"maxBan":66.28,"leagues":[{"id":"ag","name":"Asian Games 2026","short":"AG26","region":"International","games":32,"note":"MLBB's debut as an official medal event. Gold: Myanmar.","heroes":15},{"id":"ph","name":"MPL Philippines S17","short":"PH","region":"Philippines","games":169,"note":"Team Liquid PH dominant in the regular season.","heroes":75},{"id":"id","name":"MPL Indonesia S17","short":"ID","region":"Indonesia","games":205,"note":"Zhuxin and Claude were the two most-picked heroes.","heroes":83},{"id":"my","name":"MPL Malaysia S17","short":"MY","region":"Malaysia","games":164,"note":"Fanny banned in 142 of 164 games.","heroes":81},{"id":"mm","name":"MSL Myanmar S4","short":"MM","region":"Myanmar","games":86,"note":"Myanmar won Asian Games gold off the back of this league.","heroes":74},{"id":"tr","name":"MTC Turkiye S7","short":"TR","region":"Türkiye","games":142,"note":"Aurora Gaming took a third straight title.","heroes":15},{"id":"cis","name":"MCC S7 (CIS/EECA)","short":"CIS","region":"CIS & E. Europe","games":162,"note":"Zhuxin reached 100% pick/ban presence.","heroes":14}]};
+const HERO = {}; DATA.heroes.forEach(h => HERO[h.name] = h);
+const PAIR = DATA.pairs;
+const MAXBAN = DATA.maxBan || 1;
+const LEAGUES = DATA.leagues || [];
+let MODE = 'ag';   // 'ag' = Asian Games 2026 only | 'all' = AG + all MPL leagues
+
+function lgOf(h){ return MODE === 'ag' ? h.ag : h.all; }
+
+/* Pooled win rate of a lineup = total wins / total picks across its heroes.
+   A naive mean lets a 6-0 hero report a "100% lineup" - pooling prevents that. */
+function lineupWR(picks){
+  let w = 0, p = 0;
+  picks.forEach(function(x){
+    const h = HERO[x]; if(!h) return;
+    const d = lgOf(h); if(!d) return;
+    w += d.wins; p += d.picks;
+  });
+  return p ? w / p * 100 : null;
+}
+
+/* Sample-adjusted win rate for scoring. Pulls small samples toward 50% so a
+   lucky 9-game hero cannot outrank a proven 128-game hero. */
+function adjWR(d){
+  if(!d || !d.picks) return null;
+  const K = 12;
+  return (d.wins + K * 0.5) / (d.picks + K) * 100;
+}
+
+function matchupEst(cand, enemyPicks){
+  const h = HERO[cand]; if(!h || !enemyPicks.length) return null;
+  const beats = h.beats.filter(function(x){ return enemyPicks.indexOf(x) >= 0; });
+  const beaten = h.ctrBy.filter(function(x){ return enemyPicks.indexOf(x) >= 0; });
+  if(!beats.length && !beaten.length) return null;
+  const net = beats.length - beaten.length;
+  return {wr: Math.max(30, Math.min(70, 50 + net * 4.5)), beats:beats, beaten:beaten, net:net};
+}
+
+const SEQ = [
+  {t:'ban',s:'blue'},{t:'ban',s:'red'},{t:'ban',s:'blue'},{t:'ban',s:'red'},
+  {t:'ban',s:'blue'},{t:'ban',s:'red'},
+  {t:'pick',s:'blue'},{t:'pick',s:'red'},{t:'pick',s:'red'},{t:'pick',s:'blue'},
+  {t:'pick',s:'blue'},{t:'pick',s:'red'},
+  {t:'ban',s:'red'},{t:'ban',s:'blue'},{t:'ban',s:'red'},{t:'ban',s:'blue'},
+  {t:'pick',s:'red'},{t:'pick',s:'blue'},{t:'pick',s:'blue'},{t:'pick',s:'red'}
+];
+
+let mySide = null;
+let cursor = 0;
+const filled = new Array(SEQ.length).fill(null);
+
+const $ = id => document.getElementById(id);
+const isBan = i => SEQ[i].t === 'ban';
+const sideOf = i => SEQ[i].s;
+
+function heroLane(n){ const h = HERO[n]; return h ? h.lane : 'Flex'; }
+
+function teamData(side){
+  const bans = [], picks = [];
+  SEQ.forEach((st,i)=>{ if(st.s===side && filled[i]){ (st.t==='ban'?bans:picks).push(filled[i]); } });
+  return {bans, picks};
+}
+function usedSet(){
+  const u = new Set();
+  filled.forEach(n => { if(n) u.add(n); });
+  return u;
+}
+function nextEmpty(from){
+  for(let i=from;i<SEQ.length;i++) if(!filled[i]) return i;
+  return -1;
+}
+
+function pairOf(a,b){
+  const p = PAIR[a+'|'+b] || PAIR[b+'|'+a];
+  return p ? {g:p[0], w:p[1], l:p[0]-p[1]} : null;
+}
+
+function laneNeeds(picks){
+  const have = {};
+  picks.forEach(p => { const l = heroLane(p); have[l] = (have[l]||0)+1; });
+  return have;
+}
+
+function balance(picks){
+  const lanes = picks.map(heroLane);
+  const hasFront = lanes.includes('Roam') || lanes.includes('EXP');
+  const magicDmg = picks.filter(p => ['Mid','Gold'].includes(heroLane(p)) && HERO[p] && HERO[p].magic).length;
+  const physDmg  = picks.filter(p => ['Mid','Gold','Jungle','EXP'].includes(heroLane(p)) && HERO[p] && !HERO[p].magic).length;
+  return {hasFront, needMagic: magicDmg === 0, needPhys: physDmg === 0};
+}
+
+function scorePick(h, myPicks, enemyPicks, used){
+  let sc = 0; const why = [];
+  const needs = laneNeeds(myPicks);
+  const laneOpen = !needs[h.lane];
+
+  if(laneOpen){ sc += 20; why.push('fills your open <b>'+h.lane+'</b> slot'); }
+  else { sc -= 12; why.push('<span class="warn">your '+h.lane+' slot is already taken</span>'); }
+
+  let g=0, w=0, links=[];
+  myPicks.forEach(function(p){ const pr = pairOf(h.name,p); if(pr){ g+=pr.g; w+=pr.w; links.push(p+' '+pr.w+'-'+pr.l); } });
+  if(g>0){
+    const wr = w/g, conf = Math.min(1, g/8);
+    sc += 26 * wr * conf;
+    why.push('measured with <b>'+links.join(', ')+'</b>');
+  }
+
+  const m = matchupEst(h.name, enemyPicks);
+  if(m){
+    sc += (m.wr - 50) * 0.85;
+    if(m.beats.length) why.push('counters <b>'+m.beats.join(', ')+'</b>');
+    if(m.beaten.length) why.push('<span class="warn">beaten by '+m.beaten.join(', ')+'</span>');
+  }
+
+  const d = lgOf(h);
+  const a = adjWR(d);
+  if(d && d.picks >= 3){
+    sc += 26 * ((a - 50) / 50);
+    why.push('<b>'+d.wr.toFixed(1)+'%</b> over '+d.picks+' pro games'
+      + (MODE === 'all' && d.leagues > 1 ? ' ('+d.leagues+' events)' : '')
+      + (d.picks < 15 ? ' <span class="warn">&mdash; small sample, adjusted to '+a.toFixed(0)+'%</span>' : ''));
+  } else if(d){
+    sc += 2;
+    why.push('<span class="warn">only '+d.picks+' pro game'+(d.picks===1?'':'s')+' &mdash; unproven</span>');
+  } else {
+    sc -= 8;
+    why.push('<span class="warn">never picked in this dataset</span>');
+  }
+
+  sc += 18 * (h.meta/100);
+  if(h.meta >= 70) why.push('top-tier ranked meta ('+h.meta.toFixed(0)+')');
+
+  const b = balance(myPicks);
+  if(!b.hasFront && ['Roam','EXP'].includes(h.lane)){ sc += 8; why.push('you still need a frontline'); }
+  if(b.needMagic && ['Mid','Gold'].includes(h.lane) && h.magic){ sc += 9; why.push('you have no magic damage yet'); }
+  if(b.needPhys && ['Mid','Gold'].includes(h.lane) && !h.magic){ sc += 7; why.push('you have no physical carry yet'); }
+
+  if(used.has(h.name)) sc = -999;
+  return {h:h, sc:sc, why:why, syn:links.length ? {g:g,w:w} : null, match:m, d:d};
+}
+
+function diversify(list, cap, want){
+  const out = [], count = {};
+  for(const x of list){
+    const l = x.h.lane;
+    if((count[l]||0) >= cap) continue;
+    count[l] = (count[l]||0)+1; out.push(x);
+    if(out.length >= want) return out;
+  }
+  for(const x of list){ if(out.indexOf(x) < 0){ out.push(x); if(out.length >= want) break; } }
+  return out;
+}
+
+function scoreBan(h, myPicks, enemyPicks, used){
+  let sc = 0; const why = [];
+  sc += 24 * (h.meta/100);
+  if(h.meta >= 70) why.push('top-tier meta ('+h.meta.toFixed(0)+')');
+
+  const beatsMine = h.beats.filter(function(x){ return myPicks.indexOf(x) >= 0; });
+  if(beatsMine.length){ sc += 30 * Math.min(1, beatsMine.length/2); why.push('beats your <b>'+beatsMine.join(', ')+'</b>'); }
+
+  let g=0, w=0, links=[];
+  enemyPicks.forEach(function(p){ const pr = pairOf(h.name,p); if(pr){ g+=pr.g; w+=pr.w; links.push(p+' '+pr.w+'-'+pr.l); } });
+  if(g>0){ sc += 22 * (w/g) * Math.min(1,g/8); why.push('fits the enemy comp (with '+links.join(', ')+')'); }
+
+  const d = lgOf(h);
+  if(d && d.picks >= 3){
+    const a = adjWR(d);
+    sc += 26 * ((a - 50) / 50);
+    if(d.wr >= 55) why.push('wins <b>'+d.wr.toFixed(1)+'%</b> of its pro games ('+d.picks+')');
+    else if(d.wr <= 45) why.push('<span class="warn">only '+d.wr.toFixed(1)+'% in pro play &mdash; low priority</span>');
+    sc += 10 * Math.min(1, d.presence/100);
+    if(d.presence >= 70) why.push('contested in '+d.presence.toFixed(0)+'% of games');
+  } else if(!d){
+    sc -= 8;
+  }
+
+  sc += 14 * (h.ban / MAXBAN);
+  if(h.ban >= 25) why.push('heavily banned in ranked ('+h.ban.toFixed(0)+'%)');
+
+  if(used.has(h.name)) sc = -999;
+  return {h:h, sc:sc, why:why, d:d};
+}
+
+function recommend(){
+  const used = usedSet();
+  const my = teamData(mySide), en = teamData(mySide === 'blue' ? 'red' : 'blue');
+  const turn = SEQ[cursor];
+  const myTurn = turn && turn.s === mySide;
+
+  let mode = null;
+  if(!turn){ mode = null; }
+  else if(myTurn) mode = turn.t;
+  else mode = 'enemy_' + turn.t;
+
+  let list = [];
+  if(mode === 'pick'){
+    list = diversify(DATA.heroes.filter(h => !used.has(h.name))
+      .map(h => scorePick(h, my.picks, en.picks, used)).sort((a,b)=>b.sc-a.sc), 3, 8);
+  } else if(mode === 'ban'){
+    list = diversify(DATA.heroes.filter(h => !used.has(h.name))
+      .map(h => scoreBan(h, my.picks, en.picks, used)).sort((a,b)=>b.sc-a.sc), 3, 8);
+  } else if(mode === 'enemy_pick'){
+    list = diversify(DATA.heroes.filter(h => !used.has(h.name))
+      .map(h => scorePick(h, en.picks, my.picks, used)).sort((a,b)=>b.sc-a.sc), 3, 6);
+  } else if(mode === 'enemy_ban'){
+    list = diversify(DATA.heroes.filter(h => !used.has(h.name))
+      .map(h => scoreBan(h, en.picks, my.picks, used)).sort((a,b)=>b.sc-a.sc), 3, 6);
+  }
+  return {list, mode, turn, myTurn, my, en};
+}
+
+/* ================= post-draft analysis ================= */
+const TAGKEYS = ['tanky','hardCC','sustain','dive','poke','early','late','split','aoe','protect','mobile','carry'];
+const LANE_LIST = ['EXP','Jungle','Mid','Gold','Roam'];
+
+function listJoin(a){
+  if(!a.length) return '';
+  if(a.length === 1) return a[0];
+  if(a.length === 2) return a[0] + ' and ' + a[1];
+  return a.slice(0,-1).join(', ') + ' and ' + a[a.length-1];
+}
+function plural(n, word){ return n + ' ' + word + (n === 1 ? '' : 's'); }
+
+function traits(picks){
+  const t = {tanky:0,hardCC:0,sustain:0,dive:0,poke:0,early:0,late:0,split:0,aoe:0,
+             protect:0,mobile:0,carry:0,phys:0,magic:0,lanes:{},n:picks.length};
+  picks.forEach(function(p){
+    const h = HERO[p]; if(!h) return;
+    const tg = h.tags || [];
+    TAGKEYS.forEach(function(k){ if(tg.indexOf(k) >= 0) t[k]++; });
+    if(h.magic) t.magic++; else t.phys++;
+    t.lanes[h.lane] = (t.lanes[h.lane]||0)+1;
+  });
+  t.missing = LANE_LIST.filter(function(l){ return !t.lanes[l]; });
+  t.curve = t.early - t.late;
+  return t;
+}
+
+function classify(t){
+  // Front-to-Back needs BOTH a frontline and a carry to score at all - otherwise it
+  // becomes a default sink that swallows every comp.
+  const s = {
+    'Setup + AOE':   Math.min(t.hardCC,3)*14 + Math.min(t.aoe,3)*14 + ((t.hardCC>=1 && t.aoe>=1) ? 12 : 0),
+    'Sustain':       t.sustain*20 + Math.min(t.tanky,2)*10,
+    'Pick / Dive':   t.dive*22 + Math.min(t.mobile,3)*7,
+    'Front-to-Back': ((t.tanky>=1 && t.carry>=1) ? 30 : 0) + t.protect*12 + Math.min(t.tanky,2)*6,
+    'Poke / Siege':  t.poke*16,
+    'Split-push':    t.split*40
+  };
+  const r = Object.keys(s).sort(function(a,b){ return s[b]-s[a]; });
+  return {primary:r[0], secondary:r[1], scores:s,
+          hybrid: s[r[1]] >= s[r[0]] * 0.85 && s[r[0]] > 0};
+}
+
+const MACRO = {
+ 'Setup + AOE': {
+  early:"Farm to level 4. Do not fight before your engage ultimate is up — a lockdown comp without its ultimate is just a slow comp.",
+  mid:"Group as five from minute 5. Stage 20-30 seconds before Turtle and Lord spawn so the enemy is forced to walk into your engage.",
+  late:"One clean teamfight ends the game. Never start a fight with your lockdown on cooldown.",
+  fights:"Only fight when 3+ enemies are within one screen of each other. If they are spread out, disengage and reset.",
+  obj:"Turtle and Lord are your trigger — bait the objective to force a grouped fight.",
+  win:"One decisive 5v5 at an objective.",
+  avoid:"Do not chase kills into open ground, and do not trade small skirmishes you cannot convert."
+ },
+ 'Sustain': {
+  early:"Play safe and farm. Concede the first Turtle if contesting it would cost a life — you lose nothing by waiting.",
+  mid:"Take every even trade. A 1-for-1 swap always favours you, because you win the long game.",
+  late:"Extend every fight past 10 seconds. Group tightly and let the healing and shields do the work.",
+  fights:"Fight front-to-back and keep the healer behind the frontline. Losing the healer loses the whole comp.",
+  obj:"Contest everything — you win the war of attrition around Lord.",
+  win:"Out-last them: reach 3 items and win the long fights.",
+  avoid:"Do not get burst down before your healing matters, and never split up to farm alone."
+ },
+ 'Pick / Dive': {
+  early:"Invade the first buff. You want to be ahead before anyone has ultimates online.",
+  mid:"Hunt isolated targets in rotation. Force a 5v4 at Turtle — never take a fair 5v5.",
+  late:"Keep picking off the carry. A single pick before Lord decides the game.",
+  fights:"Fight near walls and bushes. Open ground is your enemy; corners are your friend.",
+  obj:"Convert every pick into an objective immediately. A kill with nothing to take is wasted.",
+  win:"Delete one target, then play the rest of the fight 5v4.",
+  avoid:"Never start a fair 5v5, and never fight when you are behind on gold."
+ },
+ 'Front-to-Back': {
+  early:"Farm safely. Do not contest the first Turtle if it costs a life — you are playing for minute 12.",
+  mid:"Defend turrets rather than chasing kills. Your only job is to reach the item spike.",
+  late:"Group at 3 items and walk down mid as a single unit.",
+  fights:"The frontline stays between the enemy and the carry at all times — never flank with your tank.",
+  obj:"Only take objectives while the carry is alive and positioned behind the frontline.",
+  win:"Protect the carry until it can no longer be stopped.",
+  avoid:"Do not let the carry get isolated, and do not fight before the item spike."
+ },
+ 'Poke / Siege': {
+  early:"Farm and poke. Never commit to a fight you cannot disengage from.",
+  mid:"Hold mid, chip the enemy off turrets, and force them to walk into your range.",
+  late:"Stay spread out. A clumped poke comp loses to a single AOE engage.",
+  fights:"Fight at maximum range. If they close the gap, disengage immediately.",
+  obj:"Zone them off objectives with long-range ultimates instead of fighting for the objective itself.",
+  win:"Take turrets without ever fighting.",
+  avoid:"Never let yourself be forced into a 5v5, and never stand in a clump."
+ },
+ 'Split-push': {
+  early:"Push your lane and rotate. Take turret plates while they group for objectives.",
+  mid:"The pusher takes the lane furthest from the objective; the other four stall and make noise.",
+  late:"Trade structures 1-for-1. Never fight 5v5.",
+  fights:"Only fight 4v3 after they send two heroes to answer the push.",
+  obj:"Objectives are a distraction — the far-lane turret is the real objective.",
+  win:"Out-rotate them and win the structure trade.",
+  avoid:"Do not get caught 4v5 while the pusher is elsewhere, and do not group as five."
+ }
+};
+
+function macroFor(arch, t){
+  const base = MACRO[arch] || MACRO['Sustain'];
+  const m = Object.assign({}, base);
+  if(t.curve >= 2){
+    m.early = "You are stronger right now — force the first two Turtles and invade. Do not let them farm to their spike. " + base.early;
+    m.late  = "You fall off after roughly 16 minutes. Close the game before their carries hit 3 items. " + base.late;
+  } else if(t.curve <= -2){
+    m.early = "You are weaker early. Concede the first Turtle if contesting costs a life. " + base.early;
+    m.late  = "You win the long game. Do not panic at a gold deficit before 12 minutes. " + base.late;
+  }
+  if(t.missing.length){
+    m.avoid = m.avoid + " You are also missing " + t.missing.join(' and ') + ", so avoid committing to fights on that side of the map.";
+  }
+  return m;
+}
+
+function analyse(picks){
+  const t = traits(picks);
+  const cls = classify(t);
+  const S = [], W = [];
+  if(t.tanky === 0) W.push("No frontline — nothing absorbs a rotation, so every engage lands straight on your carries.");
+  else if(t.tanky >= 2) S.push("Double frontline (" + plural(t.tanky,"durable hero") + ") — you can eat a full enemy rotation and still fight.");
+  else S.push("One reliable frontline — enough to start fights, not enough to survive a long one.");
+  if(t.phys === 0) W.push("All-magic damage — the enemy stacks magic defence and your output collapses.");
+  else if(t.magic === 0) W.push("All-physical damage — the enemy stacks physical defence and your output collapses.");
+  else S.push("Mixed damage (" + t.phys + " physical / " + t.magic + " magic) — they cannot itemise against both.");
+
+  if(t.hardCC === 0) W.push("Almost no hard crowd control — you cannot lock a target down or stop a dive.");
+  else if(t.hardCC >= 3) S.push("Heavy crowd control (" + plural(t.hardCC,"source") + ") — any fight you start is on your terms.");
+  else S.push("Enough crowd control to start a fight (" + plural(t.hardCC,"source") + ").");
+
+  if(t.sustain === 0) W.push("No sustain — you lose any fight that runs past ~10 seconds and must reset after every trade.");
+  else if(t.sustain >= 2) S.push("Strong sustain (" + plural(t.sustain,"source") + ") — you win extended fights by attrition.");
+
+  if(t.dive >= 2) S.push("Real dive threat (" + plural(t.dive,"hero") + ") — you can delete an isolated target before the fight starts.");
+  else if(t.dive === 0) W.push("No dive threat — you have no way to reach a well-positioned enemy backline.");
+
+  if(t.poke >= 2) S.push("Strong poke (" + plural(t.poke,"source") + ") — you can take objectives without committing.");
+  if(t.carry >= 1) S.push("A dedicated gold-lane carry — you have a reliable late-game damage source.");
+  else W.push("No dedicated marksman — your sustained damage runs out in long fights.");
+
+  if(t.curve >= 2){ S.push("Early-game power spike — you are stronger than them before 10 minutes."); W.push("Falls off late — past 16 minutes your advantage disappears."); }
+  else if(t.curve <= -2){ W.push("Weak early game — you lose the first two Turtles and any early invade."); S.push("Late-game scaling — you become very hard to stop after 3 items."); }
+
+  if(t.mobile <= 1) W.push("Low mobility — you get caught out of position and cannot rotate to defend.");
+  else if(t.mobile >= 3) S.push("High mobility (" + plural(t.mobile,"hero") + ") — you rotate faster and punish overextension.");
+
+  if(t.missing.length) W.push("Missing " + listJoin(t.missing) + " — you are conceding that lane by default.");
+  if(!S.length) S.push("No standout structural strength — this comp wins on execution, not on draft.");
+  if(!W.length) W.push("No glaring structural weakness — but you have no free win either.");
+  return {t:t, cls:cls, strengths:S, weaknesses:W, macro:macroFor(cls.primary, t)};
+}
+
+const BEATS = {
+ 'Setup + AOE':   ['Front-to-Back','Poke / Siege'],
+ 'Sustain':       ['Setup + AOE','Poke / Siege'],
+ 'Pick / Dive':   ['Poke / Siege','Front-to-Back','Sustain'],
+ 'Front-to-Back': ['Sustain','Poke / Siege'],
+ 'Poke / Siege':  ['Sustain'],
+ 'Split-push':    ['Setup + AOE','Front-to-Back']
+};
+
+function verdictText(mine, theirs){
+  const a = mine.cls.primary, b = theirs.cls.primary;
+  const iBeat = (BEATS[a]||[]).indexOf(b) >= 0;
+  const theyBeat = (BEATS[b]||[]).indexOf(a) >= 0;
+  let cls = 'even', head = '';
+  if(iBeat && !theyBeat){ cls='good'; head='<b>You have the structural edge.</b> '+a+' beats '+b+' on paper.'; }
+  else if(theyBeat && !iBeat){ cls='bad'; head='<b>They have the structural edge.</b> '+b+' beats '+a+' on paper — you need to play around it.'; }
+  else { head='<b>Even matchup.</b> '+a+' versus '+b+' has no structural winner — execution decides.'; }
+
+  const bits = [];
+  bits.push('You win if: ' + mine.macro.win.replace(/\.$/,'') + ' and you keep the game on your terms.');
+  bits.push('You lose if: ' + mine.macro.avoid.replace(/\.$/,'') + '.');
+  if(mine.t.curve - theirs.t.curve >= 3) bits.push('Timing: <b>you must end this before 16 minutes.</b>');
+  else if(theirs.t.curve - mine.t.curve >= 3) bits.push('Timing: <b>you out-scale them — drag the game past 16 minutes.</b>');
+  else bits.push('Timing: both comps peak in a similar window, so the first clean objective fight matters most.');
+  return {cls:cls, html:'<div class="verdict '+cls+'">'+head+'<br>'+bits.join('<br>')+'</div>'};
+}
+
+function edges(myPicks, enemyPicks){
+  const win = [], lose = [];
+  myPicks.forEach(function(m){
+    const h = HERO[m]; if(!h) return;
+    enemyPicks.forEach(function(e){
+      if(h.beats.indexOf(e) >= 0) win.push([m,e]);
+      if(h.ctrBy.indexOf(e) >= 0) lose.push([m,e]);
+    });
+  });
+  return {win:win, lose:lose};
+}
+
+function block(title, items, cls){
+  if(!items.length) return '';
+  return '<div class="blk '+cls+'"><div class="bt">'+title+'</div><ul>'
+    + items.map(function(x){ return '<li>'+x+'</li>'; }).join('') + '</ul></div>';
+}
+function macroBlock(m){
+  return '<div class="blk"><div class="bt">Macro plan</div>'
+    + '<div class="mrow"><div class="mk">0&ndash;5 min</div><div>'+m.early+'</div></div>'
+    + '<div class="mrow"><div class="mk">5&ndash;12 min</div><div>'+m.mid+'</div></div>'
+    + '<div class="mrow"><div class="mk">12 min+</div><div>'+m.late+'</div></div>'
+    + '<div class="mrow"><div class="mk">Fights</div><div>'+m.fights+'</div></div>'
+    + '<div class="mrow"><div class="mk">Objectives</div><div>'+m.obj+'</div></div>'
+    + '<div class="mrow"><div class="mk">Win con</div><div>'+m.win+'</div></div>'
+    + '<div class="mrow"><div class="mk">Never</div><div>'+m.avoid+'</div></div>'
+    + '</div>';
+}
+function tagRow(t){
+  const out = [];
+  const add = function(lbl,val,ok){ if(val) out.push('<span class="tg '+(ok?'ok':'warn')+'">'+lbl+'</span>'); };
+  add('frontline '+t.tanky, t.tanky, t.tanky>0);
+  add('hard CC '+t.hardCC, t.hardCC, t.hardCC>0);
+  add('sustain '+t.sustain, t.sustain, t.sustain>0);
+  add('dive '+t.dive, t.dive, t.dive>0);
+  add('poke '+t.poke, t.poke, t.poke>0);
+  add('physical '+t.phys, t.phys, t.phys>0);
+  add('magic '+t.magic, t.magic, t.magic>0);
+  return '<div class="tagline">'+out.join('')+'</div>';
+}
+function sidePanel(label, picks, a, isMine){
+  const arch = a.cls.hybrid
+    ? a.cls.primary + ' <span style="color:#94a3b8">/ ' + a.cls.secondary + '</span>'
+    : a.cls.primary;
+  const lu = lineupWR(picks);
+  const heroChips = picks.map(function(p){
+    const h = HERO[p]; const d = h ? lgOf(h) : null;
+    const w = d ? d.wr.toFixed(0)+'%' : '&ndash;';
+    const col = d ? (d.wr >= 55 ? '#15803d' : (d.wr < 45 ? '#b91c1c' : '#64748b')) : '#cbd5e1';
+    return '<span class="chip">'+p+' <small style="color:'+col+'">'+w+'</small></span>';
+  }).join('');
+  return '<h3>'+label+'</h3>'
+    + '<div class="archline">Comp archetype: <b>'+arch+'</b></div>'
+    + '<div class="chips" style="margin-bottom:10px">'+heroChips+'</div>'
+    + '<div class="archline">Lineup win rate <b>'+(lu===null?'&ndash;':lu.toFixed(1)+'%')+'</b>'
+    + ' <span style="color:#94a3b8">(mean pro win rate of its proven heroes)</span></div>'
+    + tagRow(a.t)
+    + block('Strengths', a.strengths, 'str')
+    + block('Weaknesses', a.weaknesses, 'wk')
+    + macroBlock(a.macro);
+}
+
+function renderGamePlan(){
+  const el = $('gameplan');
+  if(!mySide){ el.hidden = true; return; }
+  const enSide = mySide === 'blue' ? 'red' : 'blue';
+  const mine = teamData(mySide).picks, theirs = teamData(enSide).picks;
+  if(mine.length < 5 || theirs.length < 5){ el.hidden = true; return; }
+  el.hidden = false;
+
+  const aMine = analyse(mine), aTheirs = analyse(theirs);
+  const v = verdictText(aMine, aTheirs);
+  const e = edges(mine, theirs);
+
+  $('gpVs').innerHTML = '<span class="arch b">'+mySide.toUpperCase()+' &middot; '+aMine.cls.primary+'</span>'
+    + '<span style="color:#94a3b8;font-weight:700">vs</span>'
+    + '<span class="arch r">'+enSide.toUpperCase()+' &middot; '+aTheirs.cls.primary+'</span>';
+  $('gpVerdict').innerHTML = v.html;
+  $('gpMine').innerHTML = sidePanel('Your team ('+mySide.toUpperCase()+')', mine, aMine, true);
+  $('gpTheirs').innerHTML = sidePanel('Enemy team ('+enSide.toUpperCase()+')', theirs, aTheirs, false);
+
+  $('gpWin').innerHTML = e.win.length
+    ? e.win.map(function(p){ return '<div class="pairline"><b>'+p[0]+'</b><span class="arw">beats</span>'+p[1]+'</div>'; }).join('')
+    : '<div class="pairline" style="color:#94a3b8">No direct counter edges — play the archetype, not the matchups.</div>';
+  $('gpLose').innerHTML = e.lose.length
+    ? e.lose.map(function(p){ return '<div class="pairline"><b>'+p[1]+'</b><span class="arw">beats</span>'+p[0]+'</div>'; }).join('')
+    : '<div class="pairline" style="color:#94a3b8">They have no direct counter edges on your picks.</div>';
+}
+
+function renderRecs(){
+  const {list, mode, turn, myTurn} = recommend();
+  const T = $('recTitle'), S = $('recSub'), L = $('recList');
+
+  if(!mySide){ T.textContent='Recommendations'; S.textContent='Choose BLUE or RED to begin.'; L.innerHTML='<div class="empty">No recommendations yet.</div>'; return; }
+  if(!turn){
+    T.textContent='Draft complete';
+    S.textContent='All 20 steps filled. Reset to start again.';
+    L.innerHTML='<div class="empty">Nothing left to recommend.</div>'; return;
+  }
+
+  const labels = {
+    pick:['Your pick','Best heroes for your next pick'],
+    ban:['Your ban','Best bans for you right now'],
+    enemy_pick:['Enemy is picking','What they are likely to take'],
+    enemy_ban:['Enemy is banning','What they are likely to ban']
+  };
+  const lb = labels[mode] || ['',''];
+  T.textContent = (myTurn ? '★ ' : '') + lb[0];
+  S.innerHTML = lb[1] + ' &middot; <span class="pill '+(turn.s==='blue'?'blue':'red')+'">'+turn.s.toUpperCase()+' '+turn.t.toUpperCase()+'</span>'
+    + (myTurn ? ' <b style="color:var(--green)">— your turn</b>' : ' <span style="color:var(--mut)">— enemy turn</span>');
+
+  if(!list.length){ L.innerHTML='<div class="empty">No candidates left.</div>'; return; }
+  const base = myTurn ? teamData(mySide).picks : teamData(mySide === 'blue' ? 'red' : 'blue').picks;
+  const enemyP = myTurn ? teamData(mySide === 'blue' ? 'red' : 'blue').picks : teamData(mySide).picks;
+
+  L.innerHTML = list.map(function(r,i){
+    const h = r.h;
+    const tierCls = h.tier || 'C';
+    const lu = lineupWR(base.concat([h.name]));
+    const me = r.match || matchupEst(h.name, enemyP);
+    const d = r.d;
+    let metrics = '';
+    if(mode === 'pick' || mode === 'enemy_pick'){
+      metrics += '<span class="metric '+(lu !== null && lu >= 52 ? 'good' : (lu !== null && lu < 48 ? 'bad' : ''))+'">'
+        + '<b>'+(lu === null ? '&ndash;' : lu.toFixed(1)+'%')+'</b> lineup win %</span>';
+      metrics += '<span class="metric '+(me ? (me.net > 0 ? 'good' : (me.net < 0 ? 'bad' : '')) : '')+'">'
+        + '<b>'+(me ? me.wr.toFixed(1)+'%' : 'no data')+'</b> vs their lineup</span>';
+    }
+    if(d){
+      metrics += '<span class="metric"><b>'+d.wr.toFixed(1)+'%</b> over '+d.picks+' pro games'
+        + (MODE === 'all' && d.leagues > 1 ? ' &middot; '+d.leagues+' events' : '')+'</span>';
+    } else {
+      metrics += '<span class="metric"><b>&ndash;</b> not picked in dataset</span>';
+    }
+    return '<div class="rec'+(i===0&&myTurn?' top':'')+'" data-hero="'+h.name+'">'
+      + '<div class="rank">'+(i+1)+'</div><div class="recbody">'
+      + '<div class="recname">'+h.name
+      + '<span class="lane '+h.lane+'">'+h.lane+'</span>'
+      + '<span class="tier '+tierCls+'">'+tierCls+'</span></div>'
+      + '<div class="recwhy">'+r.why.join(' &middot; ')+'</div>'
+      + '<div class="recmetrics">'+metrics+'</div></div>'
+      + '<div class="score">'+r.sc.toFixed(0)+'</div></div>';
+  }).join('');
+}
+
+function renderCounters(){
+  const enSide = mySide === 'blue' ? 'red' : 'blue';
+  const en = teamData(enSide);
+  const el = $('cntList');
+  if(!mySide || !en.picks.length){ el.innerHTML='<div class="empty">No enemy picks yet.</div>'; return; }
+  el.innerHTML = en.picks.map(p=>{
+    const h = HERO[p]; if(!h) return '';
+    const counters = h.ctrBy.slice(0,5);
+    return '<div class="cnt"><div class="who">'+p+'<span class="lane '+h.lane+'" style="margin-left:6px">'+h.lane+'</span></div>'
+      + '<div class="ans">counter with <b>'+(counters.length?counters.join(', '):'&ndash;')+'</b></div></div>';
+  }).join('');
+}
+
+function renderBoard(){
+  const fill = (side,type,elId,cap,cls) => {
+    const el = $(elId); let html='';
+    for(let i=0;i<cap;i++){
+      const idx = SEQ.findIndex((st,k)=> st.s===side && st.t===type
+        && SEQ.slice(0,k).filter(x=>x.s===side&&x.t===type).length===i);
+      const val = filled[idx];
+      const isCur = idx===cursor;
+      html += '<div class="slot '+(cls||'')+' '+(val?'filled':'')+' '+(val&&type==='ban'?'banned':'')+' '+(isCur?'cursor':'')+'" data-idx="'+idx+'">'
+        + (val ? val+'<small>'+(type==='ban'?'BAN':'PICK')+'</small>' : '&mdash;')
+        + '</div>';
+    }
+    el.innerHTML = html;
+  };
+  fill('blue','ban','blueBans',5,'banslot');
+  fill('red','ban','redBans',5,'banslot');
+  fill('blue','pick','bluePicks',5,'');
+  fill('red','pick','redPicks',5,'');
+
+  document.querySelectorAll('.slot').forEach(s=>{
+    s.onclick = ()=>{ cursor = parseInt(s.dataset.idx); renderAll(); };
+  });
+}
+
+function renderSeq(){
+  $('seqBar').innerHTML = SEQ.map((st,i)=>{
+    const cls = [st.s==='blue'?'b':'r', i===cursor?'now':'', filled[i]?'done':''].join(' ');
+    return '<div class="seqdot '+cls+'" data-i="'+i+'" title="Step '+(i+1)+': '+st.s+' '+st.t+'">'
+      + (st.t==='ban'?'B':'P') + '</div>';
+  }).join('');
+  document.querySelectorAll('.seqdot').forEach(d=>{
+    d.onclick = ()=>{ cursor = parseInt(d.dataset.i); renderAll(); };
+  });
+}
+
+function renderTurn(){
+  const tl = $('turnLabel');
+  if(!mySide){ tl.innerHTML='Choose your side to begin'; return; }
+  const st = SEQ[cursor];
+  if(!st){ tl.innerHTML='<span class="you">Draft complete</span>'; return; }
+  const you = st.s === mySide;
+  const n = SEQ.slice(0,cursor+1).filter(x=>x.s===st.s&&x.t===st.t).length;
+  const tot = SEQ.filter(x=>x.s===st.s&&x.t===st.t).length;
+  tl.innerHTML = '<span class="pill '+(st.s==='blue'?'blue':'red')+'">'+st.s.toUpperCase()+'</span> '
+    + (you ? '<span class="you">YOUR TURN</span>' : '<span class="them">enemy turn</span>')
+    + ' &mdash; ' + st.t.toUpperCase() + ' ' + n + ' of ' + tot;
+}
+
+function renderPool(){
+  const used = usedSet();
+  const q = ($('search').value||'').toLowerCase();
+  const lf = $('laneF').value;
+  const sf = $('sortF').value;
+
+  const {list} = recommend();
+  const recOrder = {}; list.forEach((r,i)=> recOrder[r.h.name] = i);
+
+  let hs = DATA.heroes.filter(h=>{
+    if(q && h.name.toLowerCase().indexOf(q)<0) return false;
+    if(lf && h.lane !== lf) return false;
+    return true;
+  });
+  if(sf==='rec') hs.sort((a,b)=>{
+    const ra = recOrder[a.name]===undefined?99:recOrder[a.name];
+    const rb = recOrder[b.name]===undefined?99:recOrder[b.name];
+    if(ra!==rb) return ra-rb;
+    return b.meta-a.meta;
+  });
+  else if(sf==='meta') hs.sort((a,b)=>b.meta-a.meta);
+  else if(sf==='ban') hs.sort((a,b)=>b.ban-a.ban);
+  else hs.sort((a,b)=>a.name.localeCompare(b.name));
+
+  const banSet = new Set();
+  ['blue','red'].forEach(s=> teamData(s).bans.forEach(b=>banSet.add(b)));
+
+  $('poolCount').textContent = hs.length + ' heroes';
+  $('pool').innerHTML = hs.map(function(h){
+    const u = used.has(h.name);
+    const cls = u ? (banSet.has(h.name)?'banned':'used') : (recOrder[h.name]!==undefined&&recOrder[h.name]<5?'sug':'');
+    const d = lgOf(h);
+    const pro = d ? ('pro '+d.wr.toFixed(0)+'% <span style="color:#94a3b8">n'+d.picks+'</span>')
+                  : '<span style="color:#cbd5e1">no pro data</span>';
+    return '<div class="hcard '+cls+'" data-hero="'+h.name+'">'
+      + '<div class="hn">'+h.name+'<span class="tier '+(h.tier||'C')+'">'+(h.tier||'C')+'</span></div>'
+      + '<div class="hm"><span class="lane '+h.lane+'">'+h.lane+'</span></div>'
+      + '<div class="hm">'+pro+'</div>'
+      + '<div class="hm">meta '+h.meta.toFixed(0)+' &middot; ban '+h.ban.toFixed(0)+'%</div></div>';
+  }).join('');
+
+  document.querySelectorAll('.hcard').forEach(c=>{
+    c.onclick = ()=>{ if(!c.classList.contains('used')&&!c.classList.contains('banned')) assign(c.dataset.hero); };
+  });
+  document.querySelectorAll('.rec').forEach(r=>{
+    r.onclick = ()=> assign(r.dataset.hero);
+  });
+}
+
+function assign(name){
+  if(!mySide){ alert('Choose BLUE or RED first.'); return; }
+  const used = usedSet();
+  if(used.has(name)) return;
+  if(cursor<0 || cursor>=SEQ.length) return;
+  filled[cursor] = name;
+  const nx = nextEmpty(cursor+1);
+  cursor = nx >= 0 ? nx : SEQ.length;
+  renderAll();
+}
+
+function renderSrcBar(){
+  const total = LEAGUES.reduce(function(a,l){ return a + l.games; }, 0);
+  const active = MODE === 'ag' ? LEAGUES.filter(function(l){ return l.id === 'ag'; }) : LEAGUES;
+  const games = active.reduce(function(a,l){ return a + l.games; }, 0);
+  $('srcBar').innerHTML =
+    '<span>Data source: <b>'+(MODE === 'ag' ? 'Asian Games 2026 only' : 'Asian Games + all current MPL leagues')+'</b></span>'
+    + '<span>&middot; <b>'+games+'</b> pro games across <b>'+active.length+'</b> event'+(active.length===1?'':'s')+'</span>'
+    + LEAGUES.map(function(l){
+        const on = MODE === 'all' || l.id === 'ag';
+        return '<span class="lg '+(on?'on':'')+'">'+l.short+' '+l.games+'g</span>';
+      }).join('');
+}
+
+function renderAll(){
+  renderTurn(); renderSeq(); renderBoard(); renderRecs(); renderCounters(); renderPool(); renderGamePlan(); renderSrcBar();
+  const done = filled.filter(Boolean).length;
+  $('foot').textContent = 'Draft progress: ' + done + ' / ' + SEQ.length + ' steps  ·  You are ' + (mySide?mySide.toUpperCase():'—')
+    + '  ·  Data: 2026 Asian Games (32 games) + Season 42 patch 2.2.16 counters for ' + DATA.heroes.length + ' heroes.';
+}
+
+$('pickBlue').onclick = ()=>{ mySide='blue'; $('pickBlue').classList.add('on'); $('pickRed').classList.remove('on'); cursor=nextEmpty(0); renderAll(); };
+$('pickRed').onclick  = ()=>{ mySide='red';  $('pickRed').classList.add('on');  $('pickBlue').classList.remove('on'); cursor=nextEmpty(0); renderAll(); };
+$('dAg').onclick = ()=>{ MODE='ag'; $('dAg').classList.add('on'); $('dAll').classList.remove('on'); renderAll(); };
+$('dAll').onclick = ()=>{ MODE='all'; $('dAll').classList.add('on'); $('dAg').classList.remove('on'); renderAll(); };
+$('undoBtn').onclick  = ()=>{
+  for(let i=SEQ.length-1;i>=0;i--){ if(filled[i]){ filled[i]=null; cursor=i; renderAll(); return; } }
+};
+$('resetBtn').onclick = ()=>{ filled.fill(null); cursor=nextEmpty(0); renderAll(); };
+$('search').oninput = renderPool;
+$('laneF').onchange = renderPool;
+$('sortF').onchange = renderPool;
+
+renderAll();
+</script>
+</body>
+</html>
