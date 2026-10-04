@@ -158,10 +158,34 @@ EXTRA_LANES = {
  "Kimmy":["Mid","Jungle"], "Natalia":["Gold"], "Ixia":["Mid"],
 }
 
+# ============================================================================
+# USER TIER LIST - authoritative.
+# These are the heroes the player rates as usable in the current meta, by lane.
+# They drive the draft rules, flex detection and lane coverage.
+# The data-derived tier is kept alongside as `tierNow` for comparison, but it is
+# NOT used for recommendations: ranked ban rate measures the ranked ladder, not
+# tournament priority, and the two disagree sharply (Claude has a 0.07% ranked
+# ban rate but was picked in 52% of all 960 professional games).
+# ============================================================================
+USER_TIERS = {
+ "EXP":    ["Aulus","Freya","Uranus","Carmilla","Barats","Gatotkaca","Esmeralda",
+            "Minotaur","Sora","Masha","Atlas"],
+ "Roam":   ["Belerick","Masha","Atlas","Gloo","Minotaur","Rafaela","Estes","Carmilla",
+            "Gatotkaca","Kaja","Marcel"],
+ "Mid":    ["Zhuxin","Eudora","Selena","Rafaela","Zetian","Novaria"],
+ "Jungle": ["Nolan","Hirara","Harley","Aulus","Lukas","Paquito","Fanny"],
+ "Gold":   ["Obsidia","Freya","Aulus","Clint","Brody","Paquito","Claude","Moskov","Miya"],
+}
+
+USER_LANES = {}
+for _L, _names in USER_TIERS.items():
+    for _n in _names:
+        USER_LANES.setdefault(_n, []).append(_L)
+
 def lanes_of(name):
     base = LANE.get(name, "Flex")
     out = [base] if base != "Flex" else []
-    for l in EXTRA_LANES.get(name, []):
+    for l in EXTRA_LANES.get(name, []) + USER_LANES.get(name, []):
         if l not in out:
             out.append(l)
     return out or ["Flex"]
@@ -209,6 +233,7 @@ for name, s in STATS.items():
     lanes = lanes_of(name)
     HEROES.append(dict(
         name=name, lane=lane, lanes=lanes, flex=len(lanes) >= 2,
+        userTier=USER_LANES.get(name, []),
         meta=float(s["RankedMetaScore"] or 0),
         ban=float(s["BanRate%"] or 0),
         tier=s["Tier"],
@@ -254,34 +279,23 @@ for h in HEROES:
 
 TIER_ORDER = ["S", "A", "B", "C", "D"]
 
-# S-tier lists used by the draft rules.
-# Start from heroes that are genuinely S or A tier, then top up to a usable number so
-# the rule still has options when the top pick is banned. Ordering is by jscore, which
-# is ban-rate dominant, so the top-up entries are the next most contested, not filler.
-def rule_list(pred, min_n=4, cap=5):
-    pool = sorted([h for h in HEROES if pred(h)], key=lambda h: -h["jscore"])
-    out = [h["name"] for h in pool if h["tierNow"] in ("S", "A")]
-    for h in pool:
-        if len(out) >= min_n:
-            break
-        if h["name"] not in out:
-            out.append(h["name"])
-    return out[:cap]
-
-S_TIER = [h["name"] for h in HEROES if h["tierNow"] == "S"]
+# --- what the draft rules use: the player's own tier list -------------------
+S_TIER = sorted({n for names in USER_TIERS.values() for n in names})
 JUNGLERS = sorted([h for h in HEROES if h["lane"] == "Jungle"], key=lambda h: -h["jscore"])
 MIDGOLD = sorted([h for h in HEROES if h["lane"] in ("Mid", "Gold")], key=lambda h: -h["jscore"])
-S_JUNGLERS = rule_list(lambda h: h["lane"] == "Jungle")
-META_MIDGOLD = rule_list(lambda h: h["lane"] in ("Mid", "Gold"))
+S_JUNGLERS = USER_TIERS["Jungle"]
+META_MIDGOLD = USER_TIERS["Mid"] + USER_TIERS["Gold"]
 
 FLEXES = sorted([h["name"] for h in HEROES if h["flex"]])
-S_FLEX = [h["name"] for h in sorted([h for h in HEROES if h["flex"]], key=lambda h: -h["jscore"])[:8]]
+S_FLEX = [h["name"] for h in sorted([h for h in HEROES if h["flex"]],
+                                    key=lambda h: -h["jscore"])[:12]]
 
 DATA = dict(
     heroes=HEROES,
     pairs={"%s|%s" % (a, b): [g, w] for a, b, g, w, l in PAIRS},
     maxBan=MAXBAN,
     rankedMeta=RANKED_META,
+    userTiers=USER_TIERS,
     sJunglers=S_JUNGLERS,
     metaMidGold=META_MIDGOLD,
     flexCount=len(FLEXES),
