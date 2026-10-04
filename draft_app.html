@@ -436,9 +436,14 @@ input[type=search]:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 
   <b>vs their lineup</b> = a matchup estimate from the 133-hero counter matrix, capped at 30&ndash;70% because it is an
   estimate, not a measurement. Both are shown on every recommendation.
   <br><br>
-  Switch the data source at the top: <b>AG 2026</b> uses only the 32-game Asian Games dataset,
-  <b>AG + MPL</b> pools every current league, and <b>Ranked + All</b> adds the publisher's own high-rank
-  numbers. The three draft rules apply to the two professional sources only.
+  <b>What each source is.</b>
+  <b>AG 2026</b> is a closed 32-game snapshot of the Asian Games only &mdash; it never changes and is not
+  affected by league updates.
+  <b>AG + MPL</b> pools the Asian Games with every current regional league (960 games) and is the one that
+  updates as leagues finish.
+  <b>Ranked + All</b> adds the publisher's own Mythical Glory+ numbers on top, and switches the draft to the
+  ranked ban/pick order.
+  The three draft rules apply to the two professional sources only.
   <br><br>
   <b>Where the data comes from.</b>
   <b>Ranked win / pick / ban rates</b> are the publisher's own figures, pulled from the public endpoint behind
@@ -448,10 +453,10 @@ input[type=search]:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 
   MTC T&uuml;rkiye S7 (142) and MCC S7 CIS/EECA (162) &mdash; 960 games in total.
   <b>Counter matchups</b> come from a 133-hero ranked counter matrix.
   <br><br>
-  <b>Tiers are driven by ban rate, not win rate.</b> Ban rate is the draft market's own valuation &mdash; it says
-  what high-rank players refuse to play against. A hero with almost no pick or ban presence cannot be top tier
-  however flattering its win rate looks, so every tier is gated on presence.
-  <b>S</b> = banned in 15%+ of games, <b>A</b> = 5%+, <b>B</b> = 1.5%+ or played in 2%+ with a 52%+ win rate.
+  <b>Tiers come from your own list, not from the data.</b> The ranked ladder and tournament priority disagree
+  sharply &mdash; Claude has a 0.07% ranked ban rate but was picked in 52% of all 960 professional games, while
+  Lukas has a 67% ranked ban rate and 36 professional games. Your list drives the rules, flex detection and
+  lane coverage. The ban-rate-derived tier is shown alongside as a comparison only.
 </details>
 
 <div class="foot" id="foot"></div>
@@ -1047,6 +1052,7 @@ function renderRecs(){
     const lu = lineupWR(base.concat([h.name]));
     const me = r.match || matchupEst(h.name, enemyP);
     const d = r.d;
+    const rk = rkOf(h);
     let metrics = '';
     if(mode === 'pick' || mode === 'enemy_pick'){
       metrics += '<span class="metric '+(lu !== null && lu >= 52 ? 'good' : (lu !== null && lu < 48 ? 'bad' : ''))+'">'
@@ -1321,10 +1327,12 @@ function renderSrcBar(){
   const games = active.reduce(function(a,l){ return a + l.games; }, 0);
   const rm = DATA.rankedMeta || {};
   const ranked = MODE === 'ranked';
-  const chips = LEAGUES.map(function(l){
-    const on = MODE !== 'ag' || l.id === 'ag';
-    return '<span class="lg '+(on?'on':'')+'">'+l.short+' '+l.games+'g</span>';
-  }).join('');
+  /* AG 2026 is a closed 32-game snapshot, so only its own chip is relevant there. */
+  const chips = LEAGUES.filter(function(l){ return MODE !== 'ag' || l.id === 'ag'; })
+    .map(function(l){
+      const on = MODE !== 'ag' || l.id === 'ag';
+      return '<span class="lg '+(on?'on':'')+'">'+l.short+' '+l.games+'g</span>';
+    }).join('');
   $('srcBar').innerHTML =
     '<span>Data source: <b>'+(MODE === 'ag' ? 'Asian Games 2026 only'
       : MODE === 'all' ? 'Asian Games + all current MPL leagues'
