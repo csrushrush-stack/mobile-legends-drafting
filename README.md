@@ -30,11 +30,24 @@ Phase 2 picks  R4 → B4 → B5 → R5
 Tell it whether you are blue or red, then click heroes as they are picked or banned. On your turn it shows
 the best options; on the enemy's turn it shows what they are likely to take.
 
-**The draft order changes with the data source.** `Ranked + All` switches to the ranked format:
+**The draft order changes with the data source.** `Ranked + All` switches to the real ranked format —
+**10 bans, five per team, in two blind rounds**:
 
-- 5 bans each, in **two blind rounds** — the enemy's first three bans stay hidden until that round ends,
-  and their last two stay hidden until picks begin
-- Then picks in the ranked order: **B1 → R2 → B2 → R2 → B2 → R1**
+| Phase | Order | Visibility |
+|---|---|---|
+| Round 1 | blue bans 3 → red bans 3 | each side is blind to the other's three until the round ends |
+| Round 2 | blue bans 2 → red bans 2 | the enemy's pair is revealed only when picks begin |
+| Picks | **B1 → R2 → B2 → R2 → B2 → R1** | all 10 bans are public by now |
+
+Bans are **grouped, not alternating** — blue places all three of its round-1 bans before red starts.
+
+**The same hero may be banned by both teams.** Because each side is blind inside a round, blue and red
+can both ban the same hero; it only becomes visible when the round is revealed. Duplicate bans are
+marked `DUPE BAN` on both rows.
+
+While the ban phase is running, a hero you have banned stays in the pick pool — in ranked a ban never
+removes a hero for the *other* side, since they may have banned something else. Heroes leave the pool
+once the ban phase ends, or immediately if both sides banned them.
 
 The other two sources use the tournament order (open bans, B1 → R2 → B2 → R1 in two phases).
 

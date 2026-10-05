@@ -130,6 +130,11 @@ button.sm{padding:6px 11px;font-size:12px}
 .slot.hiddenban{background:#e2e8f0 !important;border-color:#94a3b8 !important;
   color:#64748b !important;font-weight:700}
 .slot.hiddenban small{color:#64748b !important}
+.slot.dupeban{border-color:#f59e0b !important;border-style:solid}
+.slot.dupeban small{color:#b45309 !important}
+.seqdot.blind{opacity:.55;border:1px dashed #94a3b8}
+.revealnote{margin:0 0 12px;padding:9px 12px;border-radius:10px;background:#fffbeb;
+  border:1px solid #fde68a;color:#92400e;font-size:11.5px;line-height:1.5;font-weight:600}
 .recbody{flex:1;min-width:0}
 .recname{font-weight:700;font-size:13.5px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
 .recwhy{font-size:11.5px;color:#475569;margin-top:2px;line-height:1.45}
@@ -354,6 +359,8 @@ input[type=search]:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 
   <button class="mtab active" data-tab="draft">Draft<span class="badge" id="pickBadge" hidden></span></button>
 </nav>
 
+<div class="revealwrap" id="revealWrap"></div>
+
 <div class="tabpane" id="pane-board">
 <div class="board">
   <div class="team blue">
@@ -477,14 +484,36 @@ function lgOf(h){ return MODE === 'ag' ? h.ag : h.all; }
 function rkOf(h){ return MODE === 'ranked' ? h.rk : null; }
 function isRanked(){ return MODE === 'ranked'; }
 
-/* In ranked mode the enemy's bans are blind: round 1 stays hidden until the round
-   ends, round 2 stays hidden until picks begin. Your own bans are always visible. */
+/* Ranked blind bans. Round 1 (3 bans each) stays hidden from the enemy until
+   round 1 is complete; round 2 (2 bans each) stays hidden until the bans are
+   finished and the pick phase begins. Your own bans are always visible. */
+function roundEndAt(b){
+  for(let k=SEQ.length-1;k>=0;k--){
+    const st = SEQ[k];
+    if(st && st.t==='ban' && st.b===b) return k+1;
+  }
+  return 0;
+}
+
 function banHidden(i){
   if(!isRanked()) return false;
   const st = SEQ[i];
   if(!st || st.t !== 'ban' || !st.b) return false;
-  if(st.s === mySide) return false;
-  return cursor < (REVEAL_AT[st.b] || 0);
+  if(st.s === mySide) return false;          // you always see your own bans
+  if(enemyTurnReveals(st)) return false;     // client shows the enemy's list on their turn
+  return cursor < roundEndAt(st.b);          // each round opens on its own schedule
+}
+
+/* When the app is tracking the enemy's turn, their current-round bans are shown
+   so you can keep the board in sync with the real match. A later blind round
+   stays locked until its own reveal point. */
+function enemyTurnReveals(st){
+  if(!isRanked() || !mySide) return false;
+  if(st && st.s === mySide) return false;
+  const cur = SEQ[cursor];
+  if(!cur || cur.s === mySide) return false;      // not on the enemy's turn
+  if(cur.t !== 'ban' || !cur.b) return true;      // picks: everything is public
+  return st && st.b === cur.b;                    // only this round opens
 }
 
 /* Apply a data source. Ranked also switches the draft to the ranked ban/pick order. */
@@ -497,6 +526,8 @@ function setMode(m){
   });
   if(seqChanged || filled.length !== SEQ.length){
     filled = new Array(SEQ.length).fill(null);
+    blueBans = new Array(5).fill(null);
+    redBans  = new Array(5).fill(null);
     cursor = 0;
     gpAutoShown = false;
   }
@@ -542,14 +573,17 @@ const SEQ_TOURNEY = [
   {t:'pick',s:'red'},{t:'pick',s:'blue'},{t:'pick',s:'blue'},{t:'pick',s:'red'}
 ];
 
-/* Ranked draft: 5 bans each in two BLIND rounds, then B1 R2 B2 R2 B2 R1.
-   b:1 = first blind round (enemy's bans revealed once the round ends)
-   b:2 = second blind round (revealed only when picks begin)               */
+/* Ranked draft: 5 bans each in two BLIND rounds, then picks B1 R2 B2 R2 B2 R1.
+   Bans are grouped - blue bans its three, then red bans its three. Each side is
+   blind to the other's bans inside a round, so the same hero can be banned by
+   both sides (duplicate bans are allowed).
+     b:1 = round 1 (3 bans each, revealed once the round ends)
+     b:2 = round 2 (2 bans each, revealed only when picks begin)              */
 const SEQ_RANKED = [
-  {t:'ban',s:'blue',b:1},{t:'ban',s:'red',b:1},{t:'ban',s:'blue',b:1},
-  {t:'ban',s:'red',b:1},{t:'ban',s:'blue',b:1},{t:'ban',s:'red',b:1},
-  {t:'ban',s:'blue',b:2},{t:'ban',s:'red',b:2},
-  {t:'ban',s:'blue',b:2},{t:'ban',s:'red',b:2},
+  {t:'ban',s:'blue',b:1},{t:'ban',s:'blue',b:1},{t:'ban',s:'blue',b:1},
+  {t:'ban',s:'red' ,b:1},{t:'ban',s:'red' ,b:1},{t:'ban',s:'red' ,b:1},
+  {t:'ban',s:'blue',b:2},{t:'ban',s:'blue',b:2},
+  {t:'ban',s:'red' ,b:2},{t:'ban',s:'red' ,b:2},
   {t:'pick',s:'blue'},
   {t:'pick',s:'red'},{t:'pick',s:'red'},
   {t:'pick',s:'blue'},{t:'pick',s:'blue'},
@@ -559,10 +593,11 @@ const SEQ_RANKED = [
 ];
 
 let SEQ = SEQ_TOURNEY;
-const REVEAL_AT = {1: 6, 2: 10};   // step index at which each blind round ends
 
 let mySide = null;
 let cursor = 0;
+let blueBans = new Array(5).fill(null);   // ranked: bans are per-side so they can repeat
+let redBans  = new Array(5).fill(null);
 let filled = new Array(SEQ.length).fill(null);
 let recLimit = 8;
 
@@ -572,18 +607,68 @@ const sideOf = i => SEQ[i].s;
 
 function heroLane(n){ const h = HERO[n]; return h ? h.lane : 'Flex'; }
 
+/* the Nth occurrence of this side+type in the sequence (0-based) */
+function slotIndex(side, type, n){
+  return SEQ.findIndex(function(st,k){
+    if(st.s !== side || st.t !== type) return false;
+    return SEQ.slice(0,k).filter(function(x){ return x.s===side && x.t===type; }).length === n;
+  });
+}
+
+function banArr(side){ return side === 'blue' ? blueBans : redBans; }
+
+/* Read/write a slot. Bans live in per-side arrays in ranked mode so the same
+   hero can occupy a blue ban and a red ban at once. */
+function getSlot(i){
+  const st = SEQ[i];
+  if(!st) return null;
+  if(isRanked() && st.t === 'ban' && st.b){
+    const n = SEQ.slice(0,i).filter(function(x){ return x.s===st.s && x.t==='ban'; }).length;
+    return banArr(st.s)[n] || null;
+  }
+  return filled[i] || null;
+}
+function setSlot(i, val){
+  const st = SEQ[i];
+  if(!st) return;
+  if(isRanked() && st.t === 'ban' && st.b){
+    const n = SEQ.slice(0,i).filter(function(x){ return x.s===st.s && x.t==='ban'; }).length;
+    banArr(st.s)[n] = val;
+    return;
+  }
+  filled[i] = val;
+}
+/* the array that backs a whole row of slots, for row-indexed lookups */
+function rowOf(side, type){
+  if(isRanked() && type === 'ban') return banArr(side);
+  return null;
+}
+
 function teamData(side){
   const bans = [], picks = [];
-  SEQ.forEach((st,i)=>{ if(st.s===side && filled[i]){ (st.t==='ban'?bans:picks).push(filled[i]); } });
+  if(isRanked()){
+    banArr(side).forEach(function(n){ if(n) bans.push(n); });
+  }
+  SEQ.forEach(function(st,i){
+    if(st.s !== side) return;
+    if(st.t === 'ban'){
+      if(!isRanked() && filled[i]) bans.push(filled[i]);
+    } else if(filled[i]) picks.push(filled[i]);
+  });
   return {bans, picks};
 }
+/* Heroes that may not be picked again. Ranked bans are excluded on purpose:
+   both teams can ban the same hero, so a ban never removes a hero for the
+   other side - it only removes it from the pick pool once the ban phase ends. */
 function usedSet(){
   const u = new Set();
-  filled.forEach(n => { if(n) u.add(n); });
+  filled.forEach(function(n){ if(n) u.add(n); });
+  if(isRanked()) teamData('blue').bans.concat(teamData('red').bans)
+    .forEach(function(n){ u.add(n); });
   return u;
 }
 function nextEmpty(from){
-  for(let i=from;i<SEQ.length;i++) if(!filled[i]) return i;
+  for(let i=from;i<SEQ.length;i++) if(!getSlot(i)) return i;
   return -1;
 }
 
@@ -737,20 +822,25 @@ function recommend(){
   else mode = 'enemy_' + turn.t;
 
   let list = [];
+  /* In ranked, do not let a banned hero show up again. Your own bans are gone
+     from the pool from the moment you place them; the enemy's stay in play
+     until their ban is revealed, which is exactly how the real draft behaves. */
+  const dead = new Set(enemyHiddenNames(mySide));
+  const cands = function(){ return DATA.heroes.filter(function(h){ return !dead.has(h.name); }); };
   if(mode === 'pick'){
-    list = diversify(DATA.heroes.filter(h => !used.has(h.name))
+    list = diversify(cands().filter(h => !used.has(h.name))
       .map(h => scorePick(h, my.picks, en.picks, used)).sort((a,b)=>b.sc-a.sc), 3, recLimit);
   } else if(mode === 'ban'){
-    list = diversify(DATA.heroes.filter(h => !used.has(h.name))
+    list = diversify(cands()
       .map(h => scoreBan(h, my.picks, en.picks, used)).sort((a,b)=>b.sc-a.sc), 3, recLimit);
   } else if(mode === 'enemy_pick'){
-    list = diversify(DATA.heroes.filter(h => !used.has(h.name))
+    list = diversify(cands().filter(h => !used.has(h.name))
       .map(h => scorePick(h, en.picks, my.picks, used)).sort((a,b)=>b.sc-a.sc), 3, Math.max(6, recLimit - 2));
   } else if(mode === 'enemy_ban'){
-    list = diversify(DATA.heroes.filter(h => !used.has(h.name))
+    list = diversify(cands()
       .map(h => scoreBan(h, en.picks, my.picks, used)).sort((a,b)=>b.sc-a.sc), 3, Math.max(6, recLimit - 2));
   }
-  const pool = DATA.heroes.filter(function(h){ return !used.has(h.name); }).length;
+  const pool = DATA.heroes.filter(function(h){ return !used.has(h.name) && !dead.has(h.name); }).length;
   return {list, mode, turn, myTurn, my, en, pool};
 }
 
@@ -1105,11 +1195,12 @@ function renderRecs(){
 function renderCounters(){
   const enSide = mySide === 'blue' ? 'red' : 'blue';
   const en = teamData(enSide);
+  const hidden = enemyHiddenNames(mySide);
   const el = $('cntList');
   if(!mySide || !en.picks.length){ el.innerHTML='<div class="empty">No enemy picks yet.</div>'; return; }
   el.innerHTML = en.picks.map(p=>{
     const h = HERO[p]; if(!h) return '';
-    const counters = h.ctrBy.slice(0,5);
+    const counters = h.ctrBy.filter(function(x){ return hidden.indexOf(x) < 0; }).slice(0,5);
     return '<div class="cnt"><div class="who">'+p+'<span class="lane '+h.lane+'" style="margin-left:6px">'+h.lane+'</span></div>'
       + '<div class="ans">counter with <b>'+(counters.length?counters.join(', '):'&ndash;')+'</b></div></div>';
   }).join('');
@@ -1118,17 +1209,20 @@ function renderCounters(){
 function renderBoard(){
   const fill = (side,type,elId,cap,cls) => {
     const el = $(elId); let html='';
+    const row = rowOf(side, type);   // ranked bans are backed by a per-side array
     for(let i=0;i<cap;i++){
-      const idx = SEQ.findIndex((st,k)=> st.s===side && st.t===type
-        && SEQ.slice(0,k).filter(x=>x.s===side&&x.t===type).length===i);
-      const val = filled[idx];
-      const hid = banHidden(idx);
+      const idx = slotIndex(side, type, i);
+      const val = row ? (row[i] || null) : (idx >= 0 ? getSlot(idx) : null);
+      const hid = idx >= 0 && banHidden(idx);
       const isCur = idx===cursor;
       let inner;
+      const dup = val && type==='ban' && !hid && isDupBan(val, side);
       if(hid) inner = '&#128274;<small>BLIND</small>';
-      else if(val) inner = val+'<small>'+(type==='ban'?'BAN':'PICK')+'</small>';
+      else if(val) inner = val+'<small>'+(dup?'DUPE BAN':(type==='ban'?'BAN':'PICK'))+'</small>';
       else inner = '&mdash;';
-      html += '<div class="slot '+(cls||'')+' '+(val?'filled':'')+' '+(val&&type==='ban'&&!hid?'banned':'')+' '+(isCur?'cursor':'')+' '+(hid?'hiddenban':'')+'" data-idx="'+idx+'">'
+      html += '<div class="slot '+(cls||'')+' '+(val?'filled':'')+' '+(val&&type==='ban'&&!hid?'banned':'')+' '
+        + (dup?'dupeban':'')+' '+(isCur?'cursor':'')+' '+(hid?'hiddenban':'')+'" data-idx="'+idx+'"'
+        + (val ? ' data-hero="'+val+'"' : '') + '>'
         + inner + '</div>';
     }
     el.innerHTML = html;
@@ -1141,12 +1235,28 @@ function renderBoard(){
   document.querySelectorAll('.slot').forEach(s=>{
     s.onclick = ()=>{ cursor = parseInt(s.dataset.idx); renderAll(); };
   });
+  document.querySelectorAll('.slot.dupeban').forEach(function(s){
+    s.title = 'Both teams banned ' + s.dataset.hero + ' — duplicate ban';
+  });
+
+  const rw = $('revealWrap');
+  if(rw) rw.innerHTML = mySide ? revealNote() : '';
+}
+
+/* true when the other side has banned the same hero (ranked duplicates) */
+function isDupBan(name, side){
+  if(!isRanked()) return false;
+  const other = side === 'blue' ? 'red' : 'blue';
+  return banArr(other).indexOf(name) >= 0;
 }
 
 function renderSeq(){
   $('seqBar').innerHTML = SEQ.map((st,i)=>{
-    const cls = [st.s==='blue'?'b':'r', i===cursor?'now':'', filled[i]?'done':''].join(' ');
-    return '<div class="seqdot '+cls+'" data-i="'+i+'" title="Step '+(i+1)+': '+st.s+' '+st.t+'">'
+    const v = getSlot(i);
+    const cls = [st.s==='blue'?'b':'r', i===cursor?'now':'', v?'done':'',
+                 banHidden(i)?'blind':''].join(' ');
+    return '<div class="seqdot '+cls+'" data-i="'+i+'" title="Step '+(i+1)+': '+st.s+' '+st.t
+      + (st.b?' (blind round '+st.b+')':'')+'">'
       + (st.t==='ban'?'B':'P') + '</div>';
   }).join('');
   document.querySelectorAll('.seqdot').forEach(d=>{
@@ -1160,12 +1270,23 @@ function renderTurn(){
   const st = SEQ[cursor];
   if(!st){ tl.innerHTML='<span class="you">Draft complete</span> &mdash; see the game plan on the Board tab'; return; }
   const you = st.s === mySide;
-  const n = SEQ.slice(0,cursor+1).filter(function(x){ return x.s===st.s && x.t===st.t; }).length;
-  const tot = SEQ.filter(function(x){ return x.s===st.s && x.t===st.t; }).length;
+  /* ranked bans are counted per blind round so the label tracks the phase you
+     are actually in, not the raw running ban total */
+  const perRound = isRanked() && st.t === 'ban' && st.b;
+  const slotRange = perRound
+    ? SEQ.map(function(x,k){ return {x:x,k:k}; })
+         .filter(function(o){ return o.x.s===st.s && o.x.t==='ban' && o.x.b===st.b; })
+    : SEQ.map(function(x,k){ return {x:x,k:k}; })
+         .filter(function(o){ return o.x.s===st.s && o.x.t===st.t; });
+  const n = slotRange.filter(function(o){ return o.k <= cursor; }).length;
+  const tot = slotRange.length;
   const step = Math.min(cursor + 1, SEQ.length);
+  const blindTag = perRound
+    ? ' <span style="color:#b45309;font-weight:700">&middot; blind round ' + st.b + ' of 2</span>'
+    : '';
   tl.innerHTML = '<span class="pill '+(st.s==='blue'?'blue':'red')+'">'+st.s.toUpperCase()+'</span> '
     + (you ? '<span class="you">YOUR TURN</span>' : '<span class="them">enemy turn</span>')
-    + ' &mdash; ' + st.t.toUpperCase() + ' ' + n + ' of ' + tot
+    + ' &mdash; ' + st.t.toUpperCase() + ' ' + n + ' of ' + tot + blindTag
     + ' <span style="color:#94a3b8;font-weight:600">&middot; step ' + step + '/' + SEQ.length + '</span>';
 }
 
@@ -1195,10 +1316,19 @@ function renderPool(){
 
   const banSet = new Set();
   ['blue','red'].forEach(s=> teamData(s).bans.forEach(b=>banSet.add(b)));
+  const dead = new Set(enemyHiddenNames(mySide));
+  const banningNow = isRanked() && SEQ[cursor] && SEQ[cursor].t === 'ban';
+  const myBanSet = new Set(mySide ? teamData(mySide).bans : []);
+  const enBanSet = new Set(mySide ? teamData(mySide === 'blue' ? 'red' : 'blue').bans : []);
 
   $('poolCount').textContent = hs.length + ' heroes';
   $('pool').innerHTML = hs.map(function(h){
-    const u = used.has(h.name);
+    /* A hero banned by both teams is done - banning it again changes nothing.
+       A hero banned by only one side stays clickable while bans are still being
+       placed, because the other side may ban it too (or it may go unbanned). */
+    const doubleBanned = banningNow && myBanSet.has(h.name) && enBanSet.has(h.name);
+    const u = dead.has(h.name) || doubleBanned
+      || (used.has(h.name) && !(banningNow && myBanSet.has(h.name)));
     const cls = u ? (banSet.has(h.name)?'banned':'used') : (recOrder[h.name]!==undefined&&recOrder[h.name]<5?'sug':'');
     const d = lgOf(h);
     const rk = rkOf(h);
@@ -1226,16 +1356,53 @@ function renderPool(){
   });
 }
 
+/* Ranked: after the ban phase the enemy's second round of bans becomes public. */
+function revealNote(){
+  if(!isRanked()) return '';
+  const n2 = roundEndAt(2);
+  if(cursor >= n2) return '';
+  if(cursor >= roundEndAt(1)){
+    return '<div class="revealnote">Round 1 bans are public. The enemy&rsquo;s last 2 bans stay hidden '
+      + 'until picks begin &mdash; you will not see them until they lock their picks.</div>';
+  }
+  return '<div class="revealnote">Blind bans: you cannot see the enemy&rsquo;s 3 bans until both teams '
+    + 'finish this round. The same hero may be banned by both teams.</div>';
+}
+
 function assign(name){
   if(!mySide){ alert('Choose BLUE or RED first.'); return; }
-  const used = usedSet();
-  if(used.has(name)) return;
   if(cursor<0 || cursor>=SEQ.length) return;
-  filled[cursor] = name;
+  const st = SEQ[cursor];
+  if(!canStillBan(name)) return;
+  if(isRanked() && st.t === 'ban'){
+    /* Ranked: the other team banning the same hero is legal, so the only block
+       is repeating a hero inside your own ban row. */
+    if(banArr(st.s).indexOf(name) >= 0) return;
+  } else if(usedSet().has(name)) return;
+  setSlot(cursor, name);
   recLimit = 8;
   const nx = nextEmpty(cursor+1);
   cursor = nx >= 0 ? nx : SEQ.length;
   renderAll();
+}
+
+/* Once the ban phase is over in ranked, nothing may be banned any more -
+   the last two bans are only revealed to the enemy when picks begin. */
+/* The sequence itself contains no out-of-phase ban slots, so any ban you place
+   goes into the step you are on. Kept as a hook in case ranked gains rules. */
+function canStillBan(name){ return !!name || !isRanked(); }
+
+/* Heroes the enemy has banned that are still blind to us must not leak into the
+   board, the counters panel or the enemy's pick suggestions. */
+function enemyHiddenNames(side){
+  if(!isRanked()) return [];
+  const other = side === 'blue' ? 'red' : 'blue';
+  const out = [];
+  SEQ.forEach(function(st,i){
+    if(st.s !== other || st.t !== 'ban') return;
+    if(banHidden(i)) { const v = getSlot(i); if(v) out.push(v); }
+  });
+  return out;
 }
 
 let MTAB = 'draft';
@@ -1297,10 +1464,22 @@ function renderRules(){
   if(!el) return;
   if(!mySide){ el.innerHTML = ''; return; }
   if(MODE === 'ranked'){
-    el.innerHTML = '<div class="rhead"><span class="rtitle">Draft rules</span>'
-      + '<span class="rprog">off</span></div>'
-      + '<div class="rhint">The three rules are for professional drafting, so they are applied on '
-      + '<b>AG 2026</b> and <b>AG + MPL</b> only. In ranked mode the list is pure value.</div>';
+    const round = SEQ[cursor] && SEQ[cursor].b ? SEQ[cursor].b : 0;
+    el.innerHTML = '<div class="rhead"><span class="rtitle">Ranked ban phase</span>'
+      + '<span class="rprog">' + (round === 1 ? 'round 1 of 2' : round === 2 ? 'round 2 of 2' : 'done') + '</span></div>'
+      + '<div class="rlist">'
+      + '<div class="rule ' + (round===1?'next':'ok') + '"><span class="rnum">1</span>'
+      + '<span class="rmark">' + (round===1?'&#9654;':'&#10003;') + '</span>'
+      + '<span class="rlabel">Round 1 &mdash; <b>3 bans each</b>, blind</span></div>'
+      + '<div class="rule ' + (round===2?'next':(round===1?'todo':'ok')) + '"><span class="rnum">2</span>'
+      + '<span class="rmark">' + (round===2?'&#9654;':'&#9675;') + '</span>'
+      + '<span class="rlabel">Round 2 &mdash; <b>2 bans each</b>, blind</span></div>'
+      + '<div class="rule ' + (round?'todo':'ok') + '"><span class="rnum">3</span>'
+      + '<span class="rmark">' + (round?'&#9675;':'&#10003;') + '</span>'
+      + '<span class="rlabel">Pick phase &mdash; B1 R2 B2 R2 B2 R1</span></div>'
+      + '</div>'
+      + '<div class="rhint">Brave Pick / Brave Ban do not exist here: ranked gives '
+      + '<b>5 bans per team</b>, and the same hero may be banned by both sides.</div>';
     return;
   }
   const my = teamData(mySide).picks;
@@ -1383,9 +1562,14 @@ $('dAll').onclick = ()=> setMode('all');
 $('dRk').onclick = ()=> setMode('ranked');
 $('undoBtn').onclick  = ()=>{
   recLimit = 8;
-  for(let i=SEQ.length-1;i>=0;i--){ if(filled[i]){ filled[i]=null; cursor=i; renderAll(); return; } }
+  for(let i=SEQ.length-1;i>=0;i--){
+    if(getSlot(i)){ setSlot(i, null); cursor=i; renderAll(); return; }
+  }
 };
-$('resetBtn').onclick = ()=>{ filled.fill(null); cursor=nextEmpty(0); gpAutoShown=false; recLimit=8; renderAll(); };
+$('resetBtn').onclick = ()=>{
+  filled.fill(null); blueBans.fill(null); redBans.fill(null);
+  cursor=nextEmpty(0); gpAutoShown=false; recLimit=8; renderAll();
+};
 $('search').oninput = renderPool;
 $('laneF').onchange = renderPool;
 $('sortF').onchange = renderPool;
