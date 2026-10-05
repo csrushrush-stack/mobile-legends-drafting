@@ -59,6 +59,9 @@ button.sm{padding:6px 11px;font-size:12px}
 .rhint.allmet{color:#15803d}
 .flexbadge{display:inline-block;border-radius:5px;padding:1px 6px;font-size:9.5px;font-weight:800;
   background:#fef3c7;color:#92400e;letter-spacing:.3px}
+/* a lane the hero can hold without it being its role - a filler, not a flex */
+.coverbadge{display:inline-block;border-radius:5px;padding:1px 6px;font-size:9.5px;font-weight:800;
+  background:#e0f2fe;color:#0369a1;letter-spacing:.3px;border:1px dashed #7dd3fc}
 /* badge for heroes the player has rated themselves */
 .yours{display:inline-block;border-radius:5px;padding:1px 6px;font-size:9.5px;font-weight:800;
   background:#16a34a;color:#fff;letter-spacing:.3px}
@@ -696,7 +699,18 @@ function scorePick(h, myPicks, enemyPicks, used){
   const needs = laneNeeds(myPicks);
   const laneOpen = !needs[h.lane];
 
+  /* A hero can COVER a lane it does not own - a roam holding EXP, a support
+     holding Mid. That fills the slot, but it is a filler: you would still
+     rather have a natural fit, so it scores below one. */
+  const covers = (h.cover || []).filter(function(l){ return !needs[l]; });
+  const coverLane = covers[0] || null;
+
   if(laneOpen){ sc += 20; why.push('fills your open <b>'+h.lane+'</b> slot'); }
+  else if(coverLane){
+    sc += 8;
+    why.push('can cover your open <b>'+coverLane+'</b> slot &mdash; '
+      + (h.lane === 'Roam' ? 'a roam flexing, not a true '+coverLane : 'not its natural lane'));
+  }
   else { sc -= 12; why.push('<span class="warn">your '+h.lane+' slot is already taken</span>'); }
 
   let g=0, w=0, links=[];
@@ -1170,6 +1184,7 @@ function renderRecs(){
       + '<span class="tier '+tierCls+'">'+tierCls+'</span>'
       + (h.userTier && h.userTier.length ? '<span class="yours" title="You rate this: '+h.userTier.join(', ')+'">YOUR S</span>' : '')
       + (h.flex ? '<span class="flexbadge">FLEX</span>' : '')
+      + ((h.cover && h.cover.length) ? '<span class="coverbadge" title="Can hold '+h.cover.join(', ')+' when needed">COVER '+h.cover.join('/')+'</span>' : '')
       + (r.rule ? '<span class="flexbadge" style="background:#dcfce7;color:#15803d">RULE</span>' : '')
       + '</div>'
       + '<div class="recwhy">'+r.why.join(' &middot; ')+'</div>'
@@ -1301,7 +1316,8 @@ function renderPool(){
 
   let hs = DATA.heroes.filter(h=>{
     if(q && h.name.toLowerCase().indexOf(q)<0) return false;
-    if(lf && h.lane !== lf) return false;
+    /* filtering by a lane also finds heroes that can cover it */
+    if(lf && h.lane !== lf && (h.lanes || []).indexOf(lf) < 0) return false;
     return true;
   });
   if(sf==='rec') hs.sort((a,b)=>{
@@ -1342,6 +1358,7 @@ function renderPool(){
       + '<div class="hn">'+h.name+'<span class="tier '+(h.tierNow||h.tier||'C')+'">'+(h.tierNow||h.tier||'C')+'</span></div>'
       + '<div class="hm"><span class="lane '+h.lane+'">'+(h.lanes && h.lanes.length>1 ? h.lanes.join('/') : h.lane)+'</span>'
       + (h.flex ? ' <span class="flexbadge">FLEX</span>' : '')
+      + ((h.cover && h.cover.length) ? ' <span class="coverbadge" title="Can hold '+h.cover.join(', ')+' when needed">COV '+h.cover.join('/')+'</span>' : '')
       + (h.userTier && h.userTier.length ? ' <span class="yours" title="You rate this: '+h.userTier.join(', ')+'">S</span>' : '')
       + '</div>'
       + '<div class="hm">'+stats+'</div>'

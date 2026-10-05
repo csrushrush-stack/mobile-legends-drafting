@@ -172,7 +172,7 @@ USER_TIERS = {
             "Minotaur","Sora","Masha","Atlas"],
  "Roam":   ["Belerick","Masha","Atlas","Gloo","Minotaur","Rafaela","Estes","Carmilla",
             "Gatotkaca","Kaja","Marcel"],
- "Mid":    ["Zhuxin","Eudora","Selena","Rafaela","Zetian","Novaria"],
+ "Mid":    ["Zhuxin","Eudora","Selena","Zetian","Novaria"],
  "Jungle": ["Nolan","Hirara","Harley","Aulus","Lukas","Paquito","Fanny"],
  "Gold":   ["Obsidia","Freya","Aulus","Clint","Brody","Paquito","Claude","Moskov","Miya"],
 }
@@ -182,10 +182,22 @@ for _L, _names in USER_TIERS.items():
     for _n in _names:
         USER_LANES.setdefault(_n, []).append(_L)
 
+# ---------------------------------------------- "can cover" assignments
+# A hero can COVER a lane without it being its primary role: it is a genuine
+# option there, but it is not what the hero is. The distinction matters in the
+# draft - a roam who can cover EXP fills the slot, but you would still rather
+# have a real EXP hero, so it scores as a filler rather than a natural fit.
+# Player-confirmed: Atlas and Carmilla cover EXP + Roam; Rafaela covers Mid + Roam.
+COVER = {
+ "Atlas":    ["EXP"],
+ "Carmilla": ["EXP"],
+ "Rafaela":  ["Mid"],
+}
+
 def lanes_of(name):
     base = LANE.get(name, "Flex")
     out = [base] if base != "Flex" else []
-    for l in EXTRA_LANES.get(name, []) + USER_LANES.get(name, []):
+    for l in EXTRA_LANES.get(name, []) + USER_LANES.get(name, []) + COVER.get(name, []):
         if l not in out:
             out.append(l)
     return out or ["Flex"]
@@ -231,8 +243,13 @@ for name, s in STATS.items():
 
     rk = RANKED_OFFICIAL.get(name)
     lanes = lanes_of(name)
+    primary = LANE.get(name, "Flex")
+    cover = [l for l in COVER.get(name, []) if l != primary]
+    # FLEX means the hero has a second lane that is a real drafting option.
+    # A mere cover (a roam who can hold EXP) is not flex - it is a filler.
+    flex_lanes = [l for l in lanes if l != primary and l not in cover]
     HEROES.append(dict(
-        name=name, lane=lane, lanes=lanes, flex=len(lanes) >= 2,
+        name=name, lane=primary, lanes=lanes, cover=cover, flex=len(flex_lanes) >= 1,
         userTier=USER_LANES.get(name, []),
         meta=float(s["RankedMetaScore"] or 0),
         ban=float(s["BanRate%"] or 0),

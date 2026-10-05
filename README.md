@@ -83,6 +83,12 @@ The three lists are derived from the data, not hard-coded:
 A *flex hero* is one that can be played in two or more lanes. You pick it early without revealing where it
 goes, so the enemy has to guess — Aulus (EXP/Jungle), Gloo (Roam/EXP), Kimmy (Mid/Gold).
 
+**Flex is not the same as cover.** Some heroes can *hold* a lane without it being their role — Atlas and
+Carmilla are roams that can cover EXP, Rafaela is a roam that can cover Mid. Those are marked `COV` in the
+pool, and they score as a **filler**: they fill an open slot, but a true hero of that lane still outscores
+them (Atlas covering EXP 34.8 vs Freya as a real EXP pick 35.4). Cover lanes do not satisfy the flex rule,
+because a roam standing in EXP reveals nothing about your comp.
+
 Rules only drive **your** recommendations. On the enemy's turn the list answers "what will they take",
 so your own priorities are not applied.
 
