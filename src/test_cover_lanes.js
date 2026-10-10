@@ -49,12 +49,23 @@ console.log('    why: ' + why);
 ok(/can cover your open <b>EXP<\/b>/.test(why), 'Atlas gets the "can cover EXP" reason');
 ok(a.sc > 0, 'cover bonus is positive, not penalised (' + a.sc.toFixed(1) + ')');
 
-/* a hero whose own lane IS open should outscore a mere cover */
-const freya = app.HERO['Freya'];   // EXP primary
+/* The invariant that matters is the PENALTY, not a fixed ordering: the same
+   hero must score strictly less as a cover than as a natural fit. Comparing two
+   different heroes is not meaningful - raw stats can outweigh the penalty
+   (with the S18 data Atlas genuinely beats Freya on merit). So measure the same
+   hero both ways by cloning him with EXP as his primary lane. */
+const atlasAsExp = Object.assign({}, atlas, { lane: 'EXP', cover: [] });
+const aNat = app.scorePick(atlasAsExp, myPicks, [], used);
+console.log('    Atlas as natural EXP -> ' + aNat.sc.toFixed(1));
+ok(aNat.sc > a.sc, 'same hero scores higher as a natural fit than as a cover');
+ok(Math.abs((aNat.sc - a.sc) - 12) < 0.01,
+   'cover costs exactly 12 points vs a natural fit (got ' + (aNat.sc - a.sc).toFixed(1) + ')');
+
+/* and the natural-fit hero of that lane must still be offered as the top option */
+const freya = app.HERO['Freya'];
 const f = app.scorePick(freya, myPicks, [], used);
 console.log('    Freya (true EXP) -> score ' + f.sc.toFixed(1));
-console.log('    why: ' + f.why.join(' | '));
-ok(f.sc > a.sc, 'a true EXP hero outscores a roam covering EXP');
+ok(/fills your open <b>EXP<\/b> slot/.test(f.why.join(' | ')), 'Freya is offered as a true EXP fit');
 
 console.log('\n=== Rafaela covering Mid ===');
 const rm = app.scorePick(raf, ['Hirara','Atlas'], [], new Set(['Hirara','Atlas']));

@@ -106,17 +106,29 @@ Every recommendation shows:
 
 ## Data
 
-960 professional games across 7 events:
+869 professional games across 7 events:
 
 | League | Games | Heroes tracked |
 |---|---|---|
 | Asian Games 2026 | 32 | 15 |
-| MPL Philippines S17 | 169 | 75 |
-| MPL Indonesia S17 | 205 | 83 |
-| MPL Malaysia S17 | 164 | 81 |
-| MSL Myanmar S4 | 86 | 74 |
-| MTC Türkiye S7 | 142 | 15 |
-| MCC S7 (CIS / E. Europe) | 162 | 14 |
+| MPL Philippines S18 | 123 | 82 |
+| MPL Indonesia S18 | 146 | 89 |
+| MPL Malaysia S17 | 164 | 82 |
+| MSL Myanmar S4 | 100 | 75 |
+| MTC Türkiye S7 | 142 | 93 |
+| MCC S7 (CIS / E. Europe) | 162 | 75 |
+
+MPL PH and ID are on the **current season (S18)**; the previous S17 tables were retired rather than
+pooled, because mixing two seasons blends two patches and double-weights those regions in the pooled
+win rates. S18 is still running (ends 30 Oct 2026), so those tables grow as the season continues.
+Myanmar is the current MSL S4, refreshed from 86 to 100 games.
+
+Hero tables come from the Liquipedia MediaWiki API. The rendered HTML pages sit behind a Cloudflare
+browser challenge, but `api.php?action=parse&prop=text` is not challenged and returns the full table,
+including win/loss splits and blue-side/red-side breakdowns. `fetch_liq_stats.py` pulls and parses it.
+
+Every table is validated by back-solving the game count two ways: total picks ÷ 10 and total bans ÷ 10
+must agree, and wins + losses must equal picks for every hero.
 
 Plus patch 2.2.16 ranked statistics and a 133-hero counter matrix.
 
@@ -128,7 +140,7 @@ endpoint behind mobilelegends.com/rank. This is the publisher's own ranked datas
 | Source | What it uses |
 |---|---|
 | `AG 2026` | The 32-game Asian Games sample only |
-| `AG + MPL` | All 960 professional games pooled |
+| `AG + MPL` | All 869 professional games pooled |
 | `Ranked + All` | Official Mythical Glory+ ranked stats **and** the professional dataset |
 
 The high-rank meta is genuinely different from all-ranks. Aulus is 59.7% win / 21.1% ban across all ranks,
@@ -208,7 +220,7 @@ To add a league, append a dict to `LEAGUES` in `src/league_data.py` with its gam
 ## Caveats
 
 - **Small samples.** The Asian Games dataset is 32 games. The same draft can score 64% lineup win rate on
-  that sample and 49% on the pooled 960-game data. Small samples flatter — the toggle lets you see both, but
+  that sample and 49% on the pooled 869-game data. Small samples flatter — the toggle lets you see both, but
   they are not equally solid.
 - **Counter data is ranked-play, not pro-play.** Pro teams exploit counters more consistently than solo queue.
 - **Patch-specific.** Hero recommendations reflect patch 2.2.16. The method carries forward; the hero lists
