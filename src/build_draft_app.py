@@ -77,8 +77,6 @@ MAGIC = {"Eudora","Zhuxin","Yve","Lylia","Novaria","Cecilion","Valentina","Vexan
  "Gloo","Atlas","Belerick","Rafaela","Angela","Chip","Mathilda","Kalea","Marcel","Diggie",
  "Estes","Floryn","Kimmy","Bane","Hylos","Gatotkaca","Barats","Uranus","Khufra","Johnson"}
 
-MAXBAN = max(float(r["BanRate%"]) for r in STATS.values()) or 1.0
-
 # ---------------------------------------------------------------- trait tags
 TANKY = set("""Gloo Atlas Minotaur Belerick Tigreal Khufra Lolita Hylos Franco Gatotkaca
 Johnson Baxia Akai Edith Chip Carmilla Minsitthar Barats Uranus Hilda Terizla Yu Zhong Alice
@@ -202,10 +200,6 @@ def lanes_of(name):
             out.append(l)
     return out or ["Flex"]
 
-def norm(v, lo, hi):
-    if v is None: return 0.5
-    return max(0.0, min(1.0, (v - lo) / (hi - lo)))
-
 HEROES = []
 for name, s in STATS.items():
     lane = LANE.get(name, "Flex")
@@ -250,10 +244,6 @@ for name, s in STATS.items():
     flex_lanes = [l for l in lanes if l != primary and l not in cover]
     HEROES.append(dict(
         name=name, lane=primary, lanes=lanes, cover=cover, flex=len(flex_lanes) >= 1,
-        userTier=USER_LANES.get(name, []),
-        meta=float(s["RankedMetaScore"] or 0),
-        ban=float(s["BanRate%"] or 0),
-        tier=s["Tier"],
         magic=name in MAGIC,
         tags=tags,
         ag=per.get("ag"),
@@ -265,56 +255,22 @@ for name, s in STATS.items():
     ))
 HEROES.sort(key=lambda h: h["name"])
 
-# ------------------------------------------------ tiers, driven by BAN RATE
-# Ban rate is the draft market's own valuation: it says what high-rank players
-# refuse to play against. A hero nobody picks or bans cannot be S-tier however
-# flattering its win rate looks, so presence gates every tier.
-for h in HEROES:
-    rk = h["rk"] or {}
-    # Square-root scaling, not linear: ban rates run from 91% down to 0.1%, so a linear
-    # scale crushes everything below the top hero to roughly zero and destroys the order.
-    def sq(v, cap):
-        return min(1.0, math.sqrt(max(0.0, v or 0.0) / cap))
-    h["jscore"] = round(
-        0.55 * sq(rk.get("ban"), 60) +
-        0.30 * sq(rk.get("pick"), 3.5) +
-        0.15 * norm(rk.get("win"), 47, 60), 4)
-
-def tier_of(h):
-    rk = h["rk"]
-    if not rk:
-        return "D"
-    ban, pick, wr = rk["ban"], rk["pick"], rk["win"]
-    if ban >= 15:                                   return "S"
-    if ban >= 5:                                    return "A"
-    if ban >= 1.5 or (pick >= 2.0 and wr >= 52.0):  return "B"
-    if ban >= 0.3 or pick >= 1.0:                   return "C"
-    return "D"
-
-for h in HEROES:
-    h["tierNow"] = tier_of(h)
-
-TIER_ORDER = ["S", "A", "B", "C", "D"]
-
-# --- what the draft rules use: the player's own tier list -------------------
-S_TIER = sorted({n for names in USER_TIERS.values() for n in names})
-JUNGLERS = sorted([h for h in HEROES if h["lane"] == "Jungle"], key=lambda h: -h["jscore"])
-MIDGOLD = sorted([h for h in HEROES if h["lane"] in ("Mid", "Gold")], key=lambda h: -h["jscore"])
-S_JUNGLERS = USER_TIERS["Jungle"]
-META_MIDGOLD = USER_TIERS["Mid"] + USER_TIERS["Gold"]
-
+# ------------------------------------------------ no tiers
+# The app no longer grades heroes. Tier letters told you nothing about whether
+# picking a hero would win the game, and the ban-rate proxy behind them read the
+# ranked ladder rather than the tournament the player is drafting for. Every
+# recommendation is now scored directly on the current dataset - win rate,
+# presence, and the matchup against what the enemy has actually locked.
+#
+# The three draft rules also read the live dataset at runtime (see topLane() in
+# the template), so they follow the meta instead of a fixed list.
 FLEXES = sorted([h["name"] for h in HEROES if h["flex"]])
-S_FLEX = [h["name"] for h in sorted([h for h in HEROES if h["flex"]],
-                                    key=lambda h: -h["jscore"])[:12]]
+
 
 DATA = dict(
     heroes=HEROES,
     pairs={"%s|%s" % (a, b): [g, w] for a, b, g, w, l in PAIRS},
-    maxBan=MAXBAN,
     rankedMeta=RANKED_META,
-    userTiers=USER_TIERS,
-    sJunglers=S_JUNGLERS,
-    metaMidGold=META_MIDGOLD,
     flexCount=len(FLEXES),
     leagues=[dict(id=x["id"], name=x["name"], short=x["short"], region=x["region"],
                   games=x["games"], note=x["note"], heroes=len(x["rows"])) for x in LEAGUES],
@@ -331,16 +287,26 @@ with open(os.path.join(OUT, "draft_app.html"), "w", encoding="utf-8") as f:
 
 print("heroes:", len(HEROES), "| pairs:", len(PAIRS), "| json KB:", round(len(json.dumps(DATA))/1024, 1))
 print("flex heroes:", len(FLEXES))
-print("S-tier junglers:", S_JUNGLERS)
-print("meta mid/gold:", META_MIDGOLD)
-print("S-tier flex:", S_FLEX)
-print("top junglers by score:")
-for h in JUNGLERS[:6]:
-    rk = h["rk"] or {}
-    print("   %-14s score %.3f  rankWR %s  rankBan %s"
-          % (h["name"], h["jscore"], rk.get("win"), rk.get("ban")))
-print("top mid/gold by score:")
-for h in MIDGOLD[:8]:
-    rk = h["rk"] or {}
-    print("   %-14s %-6s score %.3f  rankWR %s  rankBan %s  meta %.0f"
-          % (h["name"], h["lane"], h["jscore"], rk.get("win"), rk.get("ban"), h["meta"]))
+print("no tiers: candidates are ranked on the live dataset at runtime")
+
+
+# Sanity check - what the draft rules will surface, using the same formula the
+# app applies to the currently selected dataset.
+def rule_score(h, lanes):
+    d = h.get("all")
+    if not d or h["lane"] not in lanes or d["picks"] < 10:
+        return None
+    conf = min(1.0, d["picks"] / 30.0)
+    adj = (d["wins"] + 12 * 0.5) / (d["picks"] + 12) * 100.0     # shrink like the app
+    return (adj - 50) * 2.4 * (0.4 + 0.6 * conf) + min(1.0, d["presence"] / 100.0) * 16
+
+
+for label, lanes in (("top junglers", {"Jungle"}), ("top mid/gold", {"Mid", "Gold"})):
+    rows = [(rule_score(h, lanes), h) for h in HEROES]
+    rows = [(s, h) for s, h in rows if s is not None]
+    rows.sort(key=lambda x: -x[0])
+    print("%s - by the app's rule formula:" % label)
+    for s, h in rows[:6]:
+        d = h["all"]
+        print("   %-14s %-6s score %6.2f   WR %5.1f%%   presence %5.1f%%   n%d"
+              % (h["name"], h["lane"], s, d["wr"], d["presence"], d["picks"]))

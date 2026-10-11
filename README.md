@@ -65,20 +65,19 @@ Once both teams have five picks, a game plan opens automatically:
 
 Every recommendation follows three priorities, applied in order:
 
-1. **S-tier jungler** — secure a top-tier jungler first
+1. **Top-performing jungler** — secure the highest-impact slot with someone who is winning games here
 2. **Flex hero** — a hero that plays two or more lanes, so the enemy cannot read your comp
-3. **Meta mid or gold** — anchor your damage with a strong mid or gold laner
+3. **Top-performing mid or gold** — anchor your damage with a laner who is winning games here
 
 A panel above the recommendations tracks which rules are satisfied and which one is being prioritised.
 The list re-ranks itself to serve the highest unmet rule, then falls back to pure value once all three are done.
 
-The three lists are derived from the data, not hard-coded:
+**Which heroes satisfy a rule is read from the dataset you have selected**, not from a fixed list — so the
+rules move with the meta. Rule 1 does not name a jungler; it names whoever is actually winning in the
+jungle right now. In the current data that is Nolan (59.5% over 131 games) ahead of Fanny and Hirara.
 
-- **S-tier junglers** are ranked on high-rank win rate, ban respect, pick rate, professional record and
-  ranked meta, restricted to heroes whose *primary* lane is jungle — so EXP heroes that can flex into the
-  jungle do not head the list.
-- **Flex heroes** are the 59 heroes with a second genuine pro-play lane.
-- **Meta mid/gold** uses the same composite over mid and gold laners.
+A hero needs at least 10 games in the selected dataset to qualify, so a rule cannot fire on a thin record.
+AG 2026 is only 32 games, so it falls back to whoever got played rather than leaving the rule unsatisfiable.
 
 A *flex hero* is one that can be played in two or more lanes. You pick it early without revealing where it
 goes, so the enemy has to guess — Aulus (EXP/Jungle), Gloo (Roam/EXP), Kimmy (Mid/Gold).
@@ -86,7 +85,7 @@ goes, so the enemy has to guess — Aulus (EXP/Jungle), Gloo (Roam/EXP), Kimmy (
 **Flex is not the same as cover.** Some heroes can *hold* a lane without it being their role — Atlas and
 Carmilla are roams that can cover EXP, Rafaela is a roam that can cover Mid. Those are marked `COV` in the
 pool, and they score as a **filler**: they fill an open slot, but a true hero of that lane still outscores
-them (Atlas covering EXP 34.8 vs Freya as a real EXP pick 35.4). Cover lanes do not satisfy the flex rule,
+them. Cover lanes do not satisfy the flex rule,
 because a roam standing in EXP reveals nothing about your comp.
 
 Rules only drive **your** recommendations. On the enemy's turn the list answers "what will they take",
@@ -100,7 +99,11 @@ Every recommendation shows:
 |---|---|
 | **Lineup win %** | Pooled pro win rate of your five heroes — how proven the lineup is |
 | **vs their lineup** | Matchup estimate against the enemy's five, from the counter matrix |
-| **Pro win rate** | The hero's own record in the selected leagues, with sample size |
+| **Win rate over N pro games** | The hero's own record in the selected leagues, with its sample size |
+| **Presence · picked · banned** | Picks + bans over games — how contested the hero is |
+
+Every hero card in the pool shows its raw win rate with the sample size and its presence, instead of a
+letter grade. A report breaking this down lane by lane is generated as `reports/MLBB_Lane_Review.html`.
 
 ---
 
@@ -162,19 +165,35 @@ hero on a page, so those figures are certain rather than estimated.
 
 ### Scoring
 
-```
-pick = 20×laneOpen − 12×laneTaken
-     + 26×measuredSynergy
-     + 0.85×matchupEdge
-     + 26×adjustedProWinRate
-     + 18×rankedMeta
-     + balance bonuses (frontline, magic damage, physical damage)
+**There are no tiers.** Nothing is graded S, A or B. Every candidate is ranked by one question: does
+taking this hero make my team more likely to win the game?
 
-ban  = 24×rankedMeta + 30×beatsYourPicks + 22×fitsEnemyComp
-     + 26×adjustedProWinRate + 10×presence + 14×banRate
 ```
+pick = 22×laneOpen − 13×laneCover − 14×laneTaken
+     + 2.2×(adjustedProWinRate − 50) × confidence
+     + 14×presence
+     + matchupEdge              (against the enemy's locked picks)
+     + 24×measuredSynergy
+     + 16×rankedWinRate         (only where that mode is on)
+     + balance bonuses          (frontline, magic damage, physical damage)
+     + 30 if it satisfies the highest unmet rule
+
+ban  = 2.2×(adjustedProWinRate − 50) × confidence
+     + 12×presence
+     + 30×beatsYourPicks
+     + 22×fitsEnemyComp
+     + ranked ban rate and win rate (only where that mode is on)
+```
+
+Win rate is scored linearly in percentage points so the arithmetic is legible — every point above 50 is
+worth 2.2. There is no composite index anywhere in the scoring: a hero that wins 58% of its games scores
+above one that wins 52%, whatever anyone thinks of it.
 
 ### Three decisions worth explaining
+
+**Win rate is faded in by sample confidence.** A 6–1 hero is not the same evidence as a 78–53 hero, so the
+win-rate term is multiplied by `0.4 + 0.6 × min(1, games ÷ 30)` and small samples are shrunk first. Without
+this, Hilda's 85.7% over 7 games outranked Nolan's 59.5% over 131 — which is how the weighting came to exist.
 
 **Lineup win % is pooled, not averaged.** Averaging hero win rates lets a 6–0 hero report a "100% lineup".
 The app sums total wins and divides by total picks across the five heroes instead.
@@ -189,7 +208,7 @@ results, so it is deliberately prevented from making strong claims.
 
 ### Measured synergy
 
-Where two heroes actually played together at the 2026 Asian Games, the app shows the real record
+Where two heroes actually played together in the selected dataset, the app shows the real record
 (`Nolan + Gloo 4–2`). Where no such pair exists, it says so rather than inventing a number.
 
 ---
@@ -203,10 +222,16 @@ src/
   draft_app_template.html app source with a data placeholder
   build_draft_app.py      injects the dataset into the template
   league_data.py          per-league hero tables — edit here to add a league
+  refresh_mpl_data.py     fetch -> validate -> rewrite -> rebuild, on a weekly schedule
+  fetch_liq_stats.py      Liquipedia MediaWiki API client (the Cloudflare workaround)
+  verify_roster.py        checks every hero in the tables exists in the roster
+  build_lane_review.py    lane-by-lane performance report
   rank_official.json      official Mythical Glory+ ranked stats
   fetch_rank.js           re-pulls the official ranked data
   draft_data.json         generated dataset
 reports/
+  MLBB_Lane_Review.html   per-lane performance from the current data
+  MLBB_lane_performance.csv
   *.html                  full written analyses (meta, combinations, draft datasheet)
   *.csv                   the underlying tables
 ```
@@ -215,11 +240,13 @@ reports/
 
 ```bash
 cd src
-python build_draft_app.py     # regenerates ../draft_app.html
+python build_draft_app.py      # regenerates ../draft_app.html
+python build_lane_review.py    # regenerates the lane report
 ```
 
 To add a league, append a dict to `LEAGUES` in `src/league_data.py` with its game count and
-`(hero, picks, wins, losses, bans)` rows, then rebuild.
+`(hero, picks, wins, losses, bans)` rows, then rebuild. For an MPL region, prefer
+`python refresh_mpl_data.py` — it fetches and validates the table for you.
 
 ---
 
@@ -228,6 +255,9 @@ To add a league, append a dict to `LEAGUES` in `src/league_data.py` with its gam
 - **Small samples.** The Asian Games dataset is 32 games. The same draft can score 64% lineup win rate on
   that sample and 49% on the pooled 410-game data. Small samples flatter — the toggle lets you see both, but
   they are not equally solid.
+- **A high pick rate is not a high win rate.** Hirara is the most-picked hero in the current data and wins
+  only 47% of her games: she is contested because she is flexible, not because she wins. The app ranks on
+  win rate and reports presence separately so the two do not get confused.
 - **Counter data is ranked-play, not pro-play.** Pro teams exploit counters more consistently than solo queue.
 - **Patch-specific.** Hero recommendations reflect patch 2.2.16. The method carries forward; the hero lists
   will not.

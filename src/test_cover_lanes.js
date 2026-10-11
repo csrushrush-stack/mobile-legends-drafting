@@ -58,8 +58,8 @@ const atlasAsExp = Object.assign({}, atlas, { lane: 'EXP', cover: [] });
 const aNat = app.scorePick(atlasAsExp, myPicks, [], used);
 console.log('    Atlas as natural EXP -> ' + aNat.sc.toFixed(1));
 ok(aNat.sc > a.sc, 'same hero scores higher as a natural fit than as a cover');
-ok(Math.abs((aNat.sc - a.sc) - 12) < 0.01,
-   'cover costs exactly 12 points vs a natural fit (got ' + (aNat.sc - a.sc).toFixed(1) + ')');
+ok(Math.abs((aNat.sc - a.sc) - 13) < 0.01,
+   'cover costs exactly 13 points vs a natural fit (got ' + (aNat.sc - a.sc).toFixed(1) + ')');
 
 /* and the natural-fit hero of that lane must still be offered as the top option */
 const freya = app.HERO['Freya'];

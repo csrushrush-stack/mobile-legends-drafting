@@ -203,8 +203,17 @@ def main():
             print(r.stdout[-2000:])
             print(r.stderr[-2000:])
             sys.exit(1)
-        print('  ' + '\n  '.join(l for l in r.stdout.strip().splitlines()[:4]))
+        print('  ' + '\n  '.join(l for l in r.stdout.strip().splitlines()[:3]))
         print('  build ok')
+
+        print('  rebuilding lane review...')
+        r = subprocess.run([PY, 'build_lane_review.py'], capture_output=True, text=True)
+        if r.returncode != 0:
+            print('  LANE REVIEW FAILED')
+            print(r.stderr[-1500:])
+            sys.exit(1)
+        print('  ' + '\n  '.join(l for l in r.stdout.strip().splitlines()[1:]))
+        print('  lane review ok')
 
     print('refresh done %s' % datetime.datetime.now().strftime('%H:%M'))
 

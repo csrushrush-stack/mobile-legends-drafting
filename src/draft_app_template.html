@@ -62,9 +62,6 @@ button.sm{padding:6px 11px;font-size:12px}
 /* a lane the hero can hold without it being its role - a filler, not a flex */
 .coverbadge{display:inline-block;border-radius:5px;padding:1px 6px;font-size:9.5px;font-weight:800;
   background:#e0f2fe;color:#0369a1;letter-spacing:.3px;border:1px dashed #7dd3fc}
-/* badge for heroes the player has rated themselves */
-.yours{display:inline-block;border-radius:5px;padding:1px 6px;font-size:9.5px;font-weight:800;
-  background:#16a34a;color:#fff;letter-spacing:.3px}
 
 .recmetrics{display:flex;gap:12px;flex-wrap:wrap;margin-top:5px}
 .metric{font-size:11px;color:#64748b}
@@ -167,10 +164,6 @@ input[type=search]:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 
 .hcard.used{opacity:.3;cursor:not-allowed;background:#f1f5f9}
 .hcard.banned{opacity:.3;cursor:not-allowed;background:#f1f5f9;text-decoration:line-through}
 .hcard.sug{border-color:#86efac;background:#f0fdf4}
-.tier{font-size:9px;font-weight:800;border-radius:4px;padding:0 4px;margin-left:4px;vertical-align:1px}
-.tier.S{background:#dc2626;color:#fff}.tier.A{background:#ea580c;color:#fff}
-.tier.B{background:#0891b2;color:#fff}.tier.C{background:#94a3b8;color:#fff}
-.tier.D{background:#cbd5e1;color:#475569}
 
 .cnt{display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:9px;
   border:1px solid var(--line);margin-bottom:6px;background:#fff}
@@ -333,7 +326,7 @@ input[type=search]:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 
 <header class="top">
   <div>
     <h1>MLBB Draft Assistant</h1>
-    <div class="tag">Tournament draft order &middot; 10 bans, 10 picks &middot; powered by the 2026 Asian Games dataset + patch 2.2.16 counters</div>
+    <div class="tag">Ranked on the current MPL season, not on tiers &middot; 10 bans, 10 picks &middot; patch 2.2.16 counters</div>
   </div>
   <div class="sidepick">
     <span>Data</span>
@@ -426,9 +419,9 @@ input[type=search]:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 
     </select>
     <select id="sortF">
       <option value="rec">Sort: recommended first</option>
-      <option value="meta">Sort: meta score</option>
+      <option value="wr">Sort: pro win rate</option>
+      <option value="presence">Sort: presence</option>
       <option value="name">Sort: name</option>
-      <option value="ban">Sort: ban rate</option>
     </select>
     <span id="poolCount" style="font-size:12px;color:var(--mut);font-weight:600"></span>
   </div>
@@ -437,23 +430,25 @@ input[type=search]:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 
 
 <details class="note">
   <summary>How the recommendations work</summary>
-  <b>How the recommendations work.</b> Each candidate is scored on:
+  <b>There are no tiers.</b> Nothing here is graded S, A or B. Every recommendation is ranked by one
+  question: does taking this hero make my team more likely to win the game? Each candidate is scored on
+  <b>pro win rate</b> (its actual record across the selected leagues, the strongest signal) &middot;
+  <b>presence</b> (how often it is picked or banned, i.e. how much the teams in this dataset value it) &middot;
+  <b>matchup</b> (how many of the enemy's locked picks it beats, minus how many beat it) &middot;
   <b>lane fit</b> (does it fill a lane you still need) &middot;
-  <b>measured synergy</b> (real games it played alongside your picks at the 2026 Asian Games) &middot;
-  <b>matchup</b> (how many of the enemy's picks it beats, minus how many beat it) &middot;
-  <b>pro win rate</b> (its actual record across the selected leagues) &middot;
-  <b>ranked meta</b> (patch 2.2.16) &middot;
-  <b>team balance</b> (you need a frontline and both damage types).
+  <b>measured synergy</b> (real games it played alongside your picks) &middot;
+  <b>team balance</b> (you need a frontline and both damage types) &middot;
+  <b>ranked ladder record</b> (only where that mode is on, and kept secondary because it is a different population).
   <br><br>
-  <b>Lineup win %</b> = the mean pro win rate of your five heroes, so it answers "how proven is this lineup".
+  <b>Lineup win %</b> = the pooled pro win rate of your five heroes, so it answers "how proven is this lineup".
   <b>vs their lineup</b> = a matchup estimate from the 133-hero counter matrix, capped at 30&ndash;70% because it is an
   estimate, not a measurement. Both are shown on every recommendation.
   <br><br>
   <b>What each source is.</b>
   <b>AG 2026</b> is a closed 32-game snapshot of the Asian Games only &mdash; it never changes and is not
   affected by league updates.
-  <b>AG + MPL</b> pools the Asian Games with every current regional league (960 games) and is the one that
-  updates as leagues finish.
+  <b>MPL</b> pools the Asian Games with the current season of the three tracked regions &mdash; MPL Philippines S18,
+  MPL Indonesia S18 and MSL Myanmar S4, 410 games &mdash; and refreshes automatically as new matches are played.
   <b>Ranked + All</b> adds the publisher's own Mythical Glory+ numbers on top, and switches the draft to the
   ranked ban/pick order.
   The three draft rules apply to the two professional sources only.
@@ -461,15 +456,15 @@ input[type=search]:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 
   <b>Where the data comes from.</b>
   <b>Ranked win / pick / ban rates</b> are the publisher's own figures, pulled from the public endpoint behind
   <code>mobilelegends.com/rank</code> filtered to <b>Mythical Glory+</b> (133 heroes, patch 2.2.16).
-  <b>Professional records</b> come from the tournament statistics pages on Liquipedia: Asian Games 2026 (32 games),
-  MPL Philippines S17 (169), MPL Indonesia S17 (205), MPL Malaysia S17 (164), MSL Myanmar S4 (86),
-  MTC T&uuml;rkiye S7 (142) and MCC S7 CIS/EECA (162) &mdash; 960 games in total.
+  <b>Professional records</b> come from the tournament statistics pages on Liquipedia (and mlbbhub, whichever is
+  further ahead): Asian Games 2026 (32 games), MPL Philippines S18 (128), MPL Indonesia S18 (146) and
+  MSL Myanmar S4 (104) &mdash; 410 games in total. Past seasons and the other regions were deliberately
+  dropped: mixing patches distorts the win rates.
   <b>Counter matchups</b> come from a 133-hero ranked counter matrix.
   <br><br>
-  <b>Tiers come from your own list, not from the data.</b> The ranked ladder and tournament priority disagree
-  sharply &mdash; Claude has a 0.07% ranked ban rate but was picked in 52% of all 960 professional games, while
-  Lukas has a 67% ranked ban rate and 36 professional games. Your list drives the rules, flex detection and
-  lane coverage. The ban-rate-derived tier is shown alongside as a comparison only.
+  <b>The three draft rules</b> name the slots worth filling first &mdash; a top-performing jungler, a flex hero,
+  and a top-performing mid or gold. Which heroes satisfy them is read from the dataset you currently have
+  selected, so the rules move with the meta instead of being fixed to a list.
 </details>
 
 <div class="foot" id="foot"></div>
@@ -479,7 +474,6 @@ input[type=search]:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 
 const DATA = /*__DRAFT_DATA__*/null;
 const HERO = {}; DATA.heroes.forEach(h => HERO[h.name] = h);
 const PAIR = DATA.pairs;
-const MAXBAN = DATA.maxBan || 1;
 const LEAGUES = DATA.leagues || [];
 let MODE = 'ag';   // 'ag' = Asian Games 2026 only | 'all' = AG + all MPL leagues
 
@@ -694,6 +688,14 @@ function balance(picks){
   return {hasFront, needMagic: magicDmg === 0, needPhys: physDmg === 0};
 }
 
+/* Score a pick by one question: does taking this hero make my team more likely
+   to win the game?
+
+   Every term is a number you can read off the current dataset - win rate over
+   N games, how often the hero is picked or banned, how it does against the
+   heroes the enemy has actually locked. There is no tier letter anywhere in
+   here, and no composite index: a hero that wins 58% of its games scores above
+   one that wins 52%, whatever anyone thinks of it. */
 function scorePick(h, myPicks, enemyPicks, used){
   let sc = 0; const why = [];
   const needs = laneNeeds(myPicks);
@@ -705,55 +707,73 @@ function scorePick(h, myPicks, enemyPicks, used){
   const covers = (h.cover || []).filter(function(l){ return !needs[l]; });
   const coverLane = covers[0] || null;
 
-  if(laneOpen){ sc += 20; why.push('fills your open <b>'+h.lane+'</b> slot'); }
+  if(laneOpen){ sc += 22; why.push('fills your open <b>'+h.lane+'</b> slot'); }
   else if(coverLane){
-    sc += 8;
+    sc += 9;
     why.push('can cover your open <b>'+coverLane+'</b> slot &mdash; '
       + (h.lane === 'Roam' ? 'a roam flexing, not a true '+coverLane : 'not its natural lane'));
   }
-  else { sc -= 12; why.push('<span class="warn">your '+h.lane+' slot is already taken</span>'); }
-
-  let g=0, w=0, links=[];
-  myPicks.forEach(function(p){ const pr = pairOf(h.name,p); if(pr){ g+=pr.g; w+=pr.w; links.push(p+' '+pr.w+'-'+pr.l); } });
-  if(g>0){
-    const wr = w/g, conf = Math.min(1, g/8);
-    sc += 26 * wr * conf;
-    why.push('measured with <b>'+links.join(', ')+'</b>');
-  }
-
-  const m = matchupEst(h.name, enemyPicks);
-  if(m){
-    sc += (m.wr - 50) * 0.85;
-    if(m.beats.length) why.push('counters <b>'+m.beats.join(', ')+'</b>');
-    if(m.beaten.length) why.push('<span class="warn">beaten by '+m.beaten.join(', ')+'</span>');
-  }
+  else { sc -= 14; why.push('<span class="warn">your '+h.lane+' slot is already taken</span>'); }
 
   const d = lgOf(h);
   const a = adjWR(d);
+
+  /* 1. Does it win? The strongest signal, and the one that decides games.
+     Scored linearly in percentage points so the number is legible: every point
+     of win rate above 50 is worth 2.2, faded in by how much the sample can be
+     trusted. A 6-1 hero is not the same evidence as a 78-53 hero, so a thin
+     record is weighted down rather than allowed to top the list. */
   if(d && d.picks >= 3){
-    sc += 26 * ((a - 50) / 50);
-    why.push('<b>'+d.wr.toFixed(1)+'%</b> over '+d.picks+' pro games'
+    const conf = Math.min(1, d.picks / 30);
+    sc += 2.2 * (a - 50) * (0.4 + 0.6 * conf);
+    why.push('<b>'+d.wr.toFixed(1)+'%</b> win rate over '+d.picks+' pro games'
       + (MODE === 'all' && d.leagues > 1 ? ' ('+d.leagues+' events)' : '')
-      + (d.picks < 15 ? ' <span class="warn">&mdash; small sample, adjusted to '+a.toFixed(0)+'%</span>' : ''));
+      + (d.picks < 15 ? ' <span class="warn">&mdash; thin sample, weighted down</span>' : ''));
   } else if(d){
     sc += 2;
     why.push('<span class="warn">only '+d.picks+' pro game'+(d.picks===1?'':'s')+' &mdash; unproven</span>');
   } else {
-    sc -= 8;
+    sc -= 10;
     why.push('<span class="warn">never picked in this dataset</span>');
   }
 
+  /* 2. How much do the teams in this dataset actually value it? Presence is
+     picks + bans over games, so it captures both the heroes people pick and
+     the ones they refuse to play against. */
+  if(d && d.presence != null){
+    sc += 14 * Math.min(1, d.presence / 100);
+    if(d.presence >= 60) why.push('in <b>'+d.presence.toFixed(0)+'%</b> of draft decisions');
+  }
+
+  /* 3. How does it do against the heroes the enemy has already locked? This is
+     the "beat the other team" term - a direct read on the matchup. */
+  const m = matchupEst(h.name, enemyPicks);
+  if(m){
+    sc += (m.wr - 50);
+    if(m.beats.length) why.push('counters <b>'+m.beats.join(', ')+'</b>');
+    if(m.beaten.length) why.push('<span class="warn">beaten by '+m.beaten.join(', ')+'</span>');
+  }
+
+  /* 4. Measured pair record with what I have already picked. */
+  let g=0, w=0, links=[];
+  myPicks.forEach(function(p){ const pr = pairOf(h.name,p); if(pr){ g+=pr.g; w+=pr.w; links.push(p+' '+pr.w+'-'+pr.l); } });
+  if(g>0){
+    const wr = w/g, conf = Math.min(1, g/8);
+    sc += 24 * wr * conf;
+    why.push('measured with <b>'+links.join(', ')+'</b>');
+  }
+
+  /* 5. Ranked ladder data, where the mode includes it. Kept as a secondary
+     signal: it is a different population from pro play. */
   const rk = rkOf(h);
   if(rk){
     const rw = Math.max(-1, Math.min(1.2, (rk.win - 50) / 10));
-    sc += 20 * rw;
+    sc += 16 * rw;
     why.push('<b>'+rk.win.toFixed(1)+'%</b> win rate at '+(DATA.rankedMeta ? DATA.rankedMeta.rank : 'top rank'));
     if(rk.ban >= 40) why.push('<span class="warn">banned in '+rk.ban.toFixed(0)+'% of high-rank games &mdash; may not reach you</span>');
   }
 
-  sc += 18 * (h.meta/100);
-  if(h.meta >= 70) why.push('top-tier ranked meta ('+h.meta.toFixed(0)+')');
-
+  /* 6. Comp integrity: you cannot win without a frontline and both damage types. */
   const b = balance(myPicks);
   if(!b.hasFront && ['Roam','EXP'].includes(h.lane)){ sc += 8; why.push('you still need a frontline'); }
   if(b.needMagic && ['Mid','Gold'].includes(h.lane) && h.magic){ sc += 9; why.push('you have no magic damage yet'); }
@@ -785,30 +805,39 @@ function diversify(list, cap, want){
   return out;
 }
 
+/* Score a ban by one question: which hero would hurt me most if the enemy got
+   it? Same principle as scorePick - it reads the current data, not a tier. */
 function scoreBan(h, myPicks, enemyPicks, used){
   let sc = 0; const why = [];
-  sc += 24 * (h.meta/100);
-  if(h.meta >= 70) why.push('top-tier meta ('+h.meta.toFixed(0)+')');
+  const d = lgOf(h);
 
+  /* 1. Would it beat me? A hero with a high win rate is dangerous in anyone's
+     hands, so denying it has value on its own. Weighted by sample confidence,
+     same as scorePick - a 6-1 record is not a reason to spend a ban. */
+  if(d && d.picks >= 3){
+    const a = adjWR(d);
+    const conf = Math.min(1, d.picks / 30);
+    sc += 2.2 * (a - 50) * (0.4 + 0.6 * conf);
+    if(d.picks < 15) why.push('<b>'+d.wr.toFixed(1)+'%</b> over only '+d.picks+' pro games &mdash; thin sample');
+    else if(d.wr >= 55) why.push('wins <b>'+d.wr.toFixed(1)+'%</b> of its pro games ('+d.picks+')');
+    else if(d.wr <= 45) why.push('<span class="warn">only '+d.wr.toFixed(1)+'% in pro play &mdash; low priority</span>');
+    sc += 12 * Math.min(1, d.presence/100);
+    if(d.presence >= 60) why.push('in <b>'+d.presence.toFixed(0)+'%</b> of draft decisions');
+  } else if(!d){
+    sc -= 10;
+  }
+
+  /* 2. Does it directly counter what I have already locked? The clearest
+     "this specifically beats my team" signal. */
   const beatsMine = h.beats.filter(function(x){ return myPicks.indexOf(x) >= 0; });
   if(beatsMine.length){ sc += 30 * Math.min(1, beatsMine.length/2); why.push('beats your <b>'+beatsMine.join(', ')+'</b>'); }
 
+  /* 3. Would it slot into the enemy's comp? Their picks are known. */
   let g=0, w=0, links=[];
   enemyPicks.forEach(function(p){ const pr = pairOf(h.name,p); if(pr){ g+=pr.g; w+=pr.w; links.push(p+' '+pr.w+'-'+pr.l); } });
   if(g>0){ sc += 22 * (w/g) * Math.min(1,g/8); why.push('fits the enemy comp (with '+links.join(', ')+')'); }
 
-  const d = lgOf(h);
-  if(d && d.picks >= 3){
-    const a = adjWR(d);
-    sc += 26 * ((a - 50) / 50);
-    if(d.wr >= 55) why.push('wins <b>'+d.wr.toFixed(1)+'%</b> of its pro games ('+d.picks+')');
-    else if(d.wr <= 45) why.push('<span class="warn">only '+d.wr.toFixed(1)+'% in pro play &mdash; low priority</span>');
-    sc += 10 * Math.min(1, d.presence/100);
-    if(d.presence >= 70) why.push('contested in '+d.presence.toFixed(0)+'% of games');
-  } else if(!d){
-    sc -= 8;
-  }
-
+  /* 4. Ranked ladder data, where the mode includes it. */
   const rk = rkOf(h);
   if(rk){
     const rw = Math.max(-1, Math.min(1.2, (rk.win - 50) / 10));
@@ -816,9 +845,6 @@ function scoreBan(h, myPicks, enemyPicks, used){
     if(rk.ban >= 40) why.push('banned in <b>'+rk.ban.toFixed(0)+'%</b> of high-rank games');
     if(rk.win >= 55) why.push('<b>'+rk.win.toFixed(1)+'%</b> win rate at high rank');
   }
-
-  sc += 14 * (h.ban / MAXBAN);
-  if(h.ban >= 25) why.push('heavily banned in ranked ('+h.ban.toFixed(0)+'%)');
 
   if(used.has(h.name)) sc = -999;
   return {h:h, sc:sc, why:why, d:d};
@@ -1155,7 +1181,6 @@ function renderRecs(){
 
   L.innerHTML = list.map(function(r,i){
     const h = r.h;
-    const tierCls = h.tierNow || h.tier || 'C';
     const lu = lineupWR(base.concat([h.name]));
     const me = r.match || matchupEst(h.name, enemyP);
     const d = r.d;
@@ -1168,8 +1193,13 @@ function renderRecs(){
         + '<b>'+(me ? me.wr.toFixed(1)+'%' : 'no data')+'</b> vs their lineup</span>';
     }
     if(d){
-      metrics += '<span class="metric"><b>'+d.wr.toFixed(1)+'%</b> over '+d.picks+' pro games'
+      metrics += '<span class="metric '+(d.wr >= 55 ? 'good' : (d.wr < 45 ? 'bad' : ''))+'">'
+        + '<b>'+d.wr.toFixed(1)+'%</b> win rate over '+d.picks+' pro games'
         + (MODE === 'all' && d.leagues > 1 ? ' &middot; '+d.leagues+' events' : '')+'</span>';
+      if(d.presence != null){
+        metrics += '<span class="metric '+(d.presence >= 60 ? 'good' : '')+'">'
+          + '<b>'+d.presence.toFixed(0)+'%</b> presence &middot; '+d.picks+' picked &middot; '+d.bans+' banned</span>';
+      }
     } else {
       metrics += '<span class="metric"><b>&ndash;</b> not picked in dataset</span>';
     }
@@ -1181,8 +1211,6 @@ function renderRecs(){
       + '<div class="rank">'+(i+1)+'</div><div class="recbody">'
       + '<div class="recname">'+h.name
       + '<span class="lane '+h.lane+'">'+(h.lanes && h.lanes.length>1 ? h.lanes.join('/') : h.lane)+'</span>'
-      + '<span class="tier '+tierCls+'">'+tierCls+'</span>'
-      + (h.userTier && h.userTier.length ? '<span class="yours" title="You rate this: '+h.userTier.join(', ')+'">YOUR S</span>' : '')
       + (h.flex ? '<span class="flexbadge">FLEX</span>' : '')
       + ((h.cover && h.cover.length) ? '<span class="coverbadge" title="Can hold '+h.cover.join(', ')+' when needed">COVER '+h.cover.join('/')+'</span>' : '')
       + (r.rule ? '<span class="flexbadge" style="background:#dcfce7;color:#15803d">RULE</span>' : '')
@@ -1324,10 +1352,17 @@ function renderPool(){
     const ra = recOrder[a.name]===undefined?99:recOrder[a.name];
     const rb = recOrder[b.name]===undefined?99:recOrder[b.name];
     if(ra!==rb) return ra-rb;
-    return b.meta-a.meta;
+    const da = lgOf(a), db = lgOf(b);
+    return (db ? db.wr : -1) - (da ? da.wr : -1);
   });
-  else if(sf==='meta') hs.sort((a,b)=>b.meta-a.meta);
-  else if(sf==='ban') hs.sort((a,b)=>b.ban-a.ban);
+  else if(sf==='wr') hs.sort((a,b)=>{
+    const da = lgOf(a), db = lgOf(b);
+    return (db ? db.wr : -1) - (da ? da.wr : -1);
+  });
+  else if(sf==='presence') hs.sort((a,b)=>{
+    const da = lgOf(a), db = lgOf(b);
+    return (db ? db.presence : -1) - (da ? da.presence : -1);
+  });
   else hs.sort((a,b)=>a.name.localeCompare(b.name));
 
   const banSet = new Set();
@@ -1348,21 +1383,24 @@ function renderPool(){
     const cls = u ? (banSet.has(h.name)?'banned':'used') : (recOrder[h.name]!==undefined&&recOrder[h.name]<5?'sug':'');
     const d = lgOf(h);
     const rk = rkOf(h);
-    const bits = [];
-    if(rk) bits.push('<b style="color:#0f172a">'+rk.win.toFixed(0)+'%</b> <span style="color:#94a3b8">rank</span>');
-    if(d) bits.push(d.wr.toFixed(0)+'% <span style="color:#94a3b8">pro n'+d.picks+'</span>');
-    const stats = bits.length ? bits.join(' &middot; ') : '<span style="color:#cbd5e1">no data</span>';
-    const banLine = rk ? ('ban <b style="color:'+(rk.ban>=40?'#b91c1c':'#0f172a')+'">'+rk.ban.toFixed(0)+'%</b>')
-                       : ('meta '+h.meta.toFixed(0)+' &middot; ban '+h.ban.toFixed(0)+'%');
+    /* Show the actual performance, not a letter grade: win rate with its sample
+       size, then how contested the hero is (presence = picks + bans over games). */
+    const stats = d
+      ? '<b>'+d.wr.toFixed(1)+'%</b> <span style="color:#94a3b8">win over '+d.picks+' pro</span>'
+      : (rk ? '<b>'+rk.win.toFixed(1)+'%</b> <span style="color:#94a3b8">high-rank win</span>'
+            : '<span style="color:#cbd5e1">no data</span>');
+    const banLine = d
+      ? ('<b>'+d.presence.toFixed(0)+'%</b> <span style="color:#94a3b8">presence &middot; '
+         + d.bans + ' bans</span>')
+      : (rk ? ('<b>'+rk.ban.toFixed(1)+'%</b> <span style="color:#94a3b8">ban rate, high rank</span>') : '');
     return '<div class="hcard '+cls+'" data-hero="'+h.name+'">'
-      + '<div class="hn">'+h.name+'<span class="tier '+(h.tierNow||h.tier||'C')+'">'+(h.tierNow||h.tier||'C')+'</span></div>'
+      + '<div class="hn">'+h.name+'</div>'
       + '<div class="hm"><span class="lane '+h.lane+'">'+(h.lanes && h.lanes.length>1 ? h.lanes.join('/') : h.lane)+'</span>'
       + (h.flex ? ' <span class="flexbadge">FLEX</span>' : '')
       + ((h.cover && h.cover.length) ? ' <span class="coverbadge" title="Can hold '+h.cover.join(', ')+' when needed">COV '+h.cover.join('/')+'</span>' : '')
-      + (h.userTier && h.userTier.length ? ' <span class="yours" title="You rate this: '+h.userTier.join(', ')+'">S</span>' : '')
       + '</div>'
       + '<div class="hm">'+stats+'</div>'
-      + '<div class="hm">'+banLine+'</div></div>';
+      + (banLine ? '<div class="hm">'+banLine+'</div>' : '') + '</div>';
   }).join('');
 
   document.querySelectorAll('.hcard').forEach(c=>{
@@ -1440,22 +1478,54 @@ function setTab(name, scroll){
 }
 
 /* ---- draft rules: the three priorities applied to every recommendation ---- */
-const S_JUNG = DATA.sJunglers || [];
-const META_MG = DATA.metaMidGold || [];
+/* The draft rules name the slots worth filling first. The heroes that satisfy
+   them are picked from the data you are currently reading, not from a tier
+   list: whoever is winning games and getting respected in this dataset. */
+const RULE_TOP_N = 6;
+
+const _topCache = {};
+function topLane(lanes){
+  const key = lanes.join('/') + '|' + MODE;
+  if(_topCache[key]) return _topCache[key];
+
+  const score = function(h){
+    const d = lgOf(h);
+    const conf = Math.min(1, d.picks / 30);
+    return (adjWR(d) - 50) * 2.4 * (0.4 + 0.6 * conf) + Math.min(1, d.presence / 100) * 16;
+  };
+
+  /* A rule should not fire on a thin sample, so require a real record first.
+     If the selected dataset is too small for that (AG 2026 is only 32 games),
+     fall back to whoever actually got played, rather than leaving the rule
+     permanently unsatisfiable. */
+  let pool = DATA.heroes.filter(function(h){
+    return lanes.indexOf(h.lane) >= 0 && lgOf(h) && lgOf(h).picks >= 10;
+  });
+  if(!pool.length){
+    pool = DATA.heroes.filter(function(h){
+      return lanes.indexOf(h.lane) >= 0 && lgOf(h) && lgOf(h).picks > 0;
+    });
+  }
+
+  const rows = pool.map(function(h){ return { name:h.name, sc:score(h) }; })
+    .sort(function(a,b){ return b.sc - a.sc; });
+  _topCache[key] = rows.slice(0, RULE_TOP_N).map(function(r){ return r.name; });
+  return _topCache[key];
+}
 
 const RULES = [
-  { id:'jung', label:'S-tier jungler',
-    why:'Secure a top-tier jungler first — it is the highest-impact slot.',
-    met: function(my){ return my.some(function(p){ return S_JUNG.indexOf(p) >= 0; }); },
-    match: function(h){ return S_JUNG.indexOf(h.name) >= 0; } },
+  { id:'jung', label:'Top-performing jungler',
+    why:'Secure the highest-impact slot with a jungler who is actually winning games in this dataset.',
+    met: function(my){ const L = topLane(['Jungle']); return my.some(function(p){ return L.indexOf(p) >= 0; }); },
+    match: function(h){ return topLane(['Jungle']).indexOf(h.name) >= 0; } },
   { id:'flex', label:'Flex hero',
     why:'A hero that plays two lanes keeps your comp hidden from the enemy.',
     met: function(my){ return my.some(function(p){ return HERO[p] && HERO[p].flex; }); },
     match: function(h){ return !!h.flex; } },
-  { id:'midgold', label:'Meta mid or gold',
-    why:'Anchor your damage with a strong mid or gold laner.',
-    met: function(my){ return my.some(function(p){ return META_MG.indexOf(p) >= 0; }); },
-    match: function(h){ return META_MG.indexOf(h.name) >= 0; } }
+  { id:'midgold', label:'Top-performing mid or gold',
+    why:'Anchor your damage with a mid or gold laner who is winning games in this dataset.',
+    met: function(my){ const L = topLane(['Mid','Gold']); return my.some(function(p){ return L.indexOf(p) >= 0; }); },
+    match: function(h){ return topLane(['Mid','Gold']).indexOf(h.name) >= 0; } }
 ];
 
 /* the highest-priority rule you have not satisfied yet.
