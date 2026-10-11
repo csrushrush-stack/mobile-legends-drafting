@@ -8,7 +8,7 @@ and ban counts.
 
 Usage:  python fetch_liq_stats.py <Page/Title/With_Slashes> <out.json>
 """
-import json, io, re, sys, urllib.request, gzip
+import json, io, re, sys, urllib.request, urllib.parse, gzip
 
 API = "https://liquipedia.net/mobilelegends/api.php"
 UA = "MLBBDraftApp/1.0 (contact: draft-app@example.com)"
@@ -117,5 +117,4 @@ def main():
 
 
 if __name__ == "__main__":
-    import urllib.parse
     main()

@@ -106,29 +106,35 @@ Every recommendation shows:
 
 ## Data
 
-869 professional games across 7 events:
+410 professional games, and deliberately narrow: **Asian Games 2026 plus the current season of the three
+MPL regions this tool drafts for.**
 
 | League | Games | Heroes tracked |
 |---|---|---|
 | Asian Games 2026 | 32 | 15 |
-| MPL Philippines S18 | 123 | 82 |
+| MPL Philippines S18 | 128 | 82 |
 | MPL Indonesia S18 | 146 | 89 |
-| MPL Malaysia S17 | 164 | 82 |
-| MSL Myanmar S4 | 100 | 75 |
-| MTC Türkiye S7 | 142 | 93 |
-| MCC S7 (CIS / E. Europe) | 162 | 75 |
+| MSL Myanmar S4 | 104 | 77 |
 
-MPL PH and ID are on the **current season (S18)**; the previous S17 tables were retired rather than
-pooled, because mixing two seasons blends two patches and double-weights those regions in the pooled
-win rates. S18 is still running (ends 30 Oct 2026), so those tables grow as the season continues.
-Myanmar is the current MSL S4, refreshed from 86 to 100 games.
+Past MPL seasons and the Malaysia / Türkiye / CIS leagues were **retired, not pooled**. Mixing seasons
+blends two patches and double-weights a region in the pooled win rates — a drafting tool should read the
+patch being played right now. PH and ID are on S18 (ends 30 Oct 2026); Myanmar is the current MSL S4.
 
-Hero tables come from the Liquipedia MediaWiki API. The rendered HTML pages sit behind a Cloudflare
-browser challenge, but `api.php?action=parse&prop=text` is not challenged and returns the full table,
-including win/loss splits and blue-side/red-side breakdowns. `fetch_liq_stats.py` pulls and parses it.
+### Keeping it current
 
-Every table is validated by back-solving the game count two ways: total picks ÷ 10 and total bans ÷ 10
-must agree, and wins + losses must equal picks for every hero.
+`refresh_mpl_data.py` refreshes everything end to end: fetch, validate, rewrite `league_data.py`, rebuild
+the app. It runs automatically every Monday morning via a scheduled task, and can be run by hand at any time.
+
+It prefers whichever source is furthest ahead on games played. Liquipedia's MediaWiki API is the baseline —
+the rendered pages sit behind a Cloudflare challenge, but `api.php?action=parse&prop=text` is not challenged
+and returns the full table including win/loss splits. Where mlbbhub covers the same region and has more
+games, it wins: it updates faster (it ran 5 games ahead on PH when this was written) and still exposes
+Win/WR, so wins and losses are derivable. Myanmar has no mlbbhub page, so it is Liquipedia only.
+
+Validation runs before anything is written, and a region that fails is **held rather than forced**:
+total picks ÷ 10 and total bans ÷ 10 must agree within a margin, and wins + losses must equal picks for
+every hero. PH and ID reconcile exactly; Myanmar runs about 2 games light on bans because a few of its
+games have no bans recorded, so bans get a proportional margin instead of a hard equality check.
 
 Plus patch 2.2.16 ranked statistics and a 133-hero counter matrix.
 
@@ -140,7 +146,7 @@ endpoint behind mobilelegends.com/rank. This is the publisher's own ranked datas
 | Source | What it uses |
 |---|---|
 | `AG 2026` | The 32-game Asian Games sample only |
-| `AG + MPL` | All 869 professional games pooled |
+| `AG + MPL` | All 410 professional games pooled |
 | `Ranked + All` | Official Mythical Glory+ ranked stats **and** the professional dataset |
 
 The high-rank meta is genuinely different from all-ranks. Aulus is 59.7% win / 21.1% ban across all ranks,
@@ -220,7 +226,7 @@ To add a league, append a dict to `LEAGUES` in `src/league_data.py` with its gam
 ## Caveats
 
 - **Small samples.** The Asian Games dataset is 32 games. The same draft can score 64% lineup win rate on
-  that sample and 49% on the pooled 869-game data. Small samples flatter — the toggle lets you see both, but
+  that sample and 49% on the pooled 410-game data. Small samples flatter — the toggle lets you see both, but
   they are not equally solid.
 - **Counter data is ranked-play, not pro-play.** Pro teams exploit counters more consistently than solo queue.
 - **Patch-specific.** Hero recommendations reflect patch 2.2.16. The method carries forward; the hero lists
