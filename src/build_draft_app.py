@@ -192,17 +192,42 @@ COVER = {
  "Rafaela":  ["Mid"],
 }
 
+# ---------------------------------------------- measured lane overrides
+# LANE above is a hand-written guess. lane_roles.py carries the real thing:
+# which lane each hero was actually fielded in, taken from the player's roster
+# role on mldb.gg across every MPL PH S18 game. Where that evidence is thick
+# enough it wins, because it is measurement rather than opinion - it is what
+# showed Paquito is a jungler/gold pick, not the EXP hero this table claimed.
+try:
+    from lane_roles import MEASURED, MIN_N as MEASURED_MIN_N
+except Exception:                                    # file absent: stay hand-coded
+    MEASURED, MEASURED_MIN_N = {}, 6
+
+# These three are modelled as roam-primary heroes that COVER another lane. Their
+# measured splits are close to even (48-61% roam), so measurement alone would
+# flip them and erase the cover distinction the draft logic is built on.
+PRIMARY_LOCKED = {"Atlas", "Carmilla", "Rafaela"}
+
+
+def primary_lane(name):
+    m = MEASURED.get(name)
+    if m and m["n"] >= MEASURED_MIN_N and name not in PRIMARY_LOCKED:
+        return m["primary"]
+    return LANE.get(name, "Flex")
+
+
 def lanes_of(name):
-    base = LANE.get(name, "Flex")
+    base = primary_lane(name)
     out = [base] if base != "Flex" else []
-    for l in EXTRA_LANES.get(name, []) + USER_LANES.get(name, []) + COVER.get(name, []):
+    measured = (MEASURED.get(name) or {}).get("lanes") or []
+    for l in measured + EXTRA_LANES.get(name, []) + USER_LANES.get(name, []) + COVER.get(name, []):
         if l not in out:
             out.append(l)
     return out or ["Flex"]
 
 HEROES = []
 for name, s in STATS.items():
-    lane = LANE.get(name, "Flex")
+    lane = primary_lane(name)
     tags = [t for t, st in TAGSETS.items() if name in st]
 
     per = {}
@@ -237,13 +262,16 @@ for name, s in STATS.items():
 
     rk = RANKED_OFFICIAL.get(name)
     lanes = lanes_of(name)
-    primary = LANE.get(name, "Flex")
+    primary = primary_lane(name)
+    measured = MEASURED.get(name) or {}
     cover = [l for l in COVER.get(name, []) if l != primary]
     # FLEX means the hero has a second lane that is a real drafting option.
     # A mere cover (a roam who can hold EXP) is not flex - it is a filler.
     flex_lanes = [l for l in lanes if l != primary and l not in cover]
     HEROES.append(dict(
         name=name, lane=primary, lanes=lanes, cover=cover, flex=len(flex_lanes) >= 1,
+        ls=measured.get("share") or None,      # measured lane split, when we have it
+        ln=measured.get("n") or 0,
         magic=name in MAGIC,
         tags=tags,
         ag=per.get("ag"),
@@ -281,6 +309,18 @@ with open(os.path.join(OUT, "draft_data.json"), "w", encoding="utf-8") as f:
 
 with open(os.path.join(OUT, "draft_app_template.html"), encoding="utf-8") as f:
     html = f.read()
+# The "where the data comes from" panel quotes live game counts. Fill them from
+# the dataset so the copy can never drift out of sync with the tables again.
+_GL = {x["id"]: x["games"] for x in LEAGUES}
+for _tok, _val in (
+    ("__AG_GAMES__", _GL["ag"]),
+    ("__PH_GAMES__", _GL["ph"]),
+    ("__ID_GAMES__", _GL["id"]),
+    ("__MM_GAMES__", _GL["mm"]),
+    ("__MPL_TOTAL__", _GL["ph"] + _GL["id"] + _GL["mm"]),
+    ("__ALL_TOTAL__", sum(_GL.values())),
+):
+    html = html.replace(_tok, str(_val))
 html = html.replace("/*__DRAFT_DATA__*/null", json.dumps(DATA, ensure_ascii=False, separators=(",", ":")))
 with open(os.path.join(OUT, "draft_app.html"), "w", encoding="utf-8") as f:
     f.write(html)
